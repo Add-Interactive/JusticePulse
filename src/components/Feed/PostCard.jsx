@@ -12,7 +12,9 @@ import {
   HandHeart, 
   Send,
   AlertCircle,
-  Eye
+  Eye,
+  Vote,
+  CheckCircle2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -32,6 +34,10 @@ export default function PostCard({
   const [likesCount, setLikesCount] = useState(post.likesCount);
   const [hasSupported, setHasSupported] = useState(post.userHasSupported || false);
   const [supportsCount, setSupportsCount] = useState(post.supportsCount);
+  
+  // Interactive Poll State
+  const [votedOptionId, setVotedOptionId] = useState(null);
+  const [pollData, setPollData] = useState(post.poll || null);
 
   const handleLikeToggle = () => {
     if (isLiked) {
@@ -60,6 +66,31 @@ export default function PostCard({
   const handleShareClick = () => {
     navigator.clipboard?.writeText(window.location.href);
     showToast('Link copied to clipboard for community distribution!', 'success');
+  };
+
+  const handlePollVote = (optionId) => {
+    if (votedOptionId || !pollData) return;
+
+    const newTotal = pollData.totalVotes + 1;
+    const updatedOptions = pollData.options.map(opt => {
+      const isChosen = opt.id === optionId;
+      const newVotes = isChosen ? opt.votes + 1 : opt.votes;
+      return {
+        ...opt,
+        votes: newVotes,
+        percentage: parseFloat(((newVotes / newTotal) * 100).toFixed(1))
+      };
+    });
+
+    setVotedOptionId(optionId);
+    setPollData({
+      ...pollData,
+      totalVotes: newTotal,
+      options: updatedOptions
+    });
+
+    confetti({ particleCount: 35, spread: 55 });
+    showToast('Your vote has been logged into the community ballot ledger!', 'success');
   };
 
   const handleCommentSubmit = (e) => {
@@ -147,6 +178,60 @@ export default function PostCard({
       <div className="text-slate-200 text-sm leading-relaxed whitespace-pre-line font-normal">
         {post.content}
       </div>
+
+      {/* Interactive Community Poll (if present) */}
+      {pollData && (
+        <div className="p-4 bg-slate-950/90 rounded-2xl border-2 border-indigo-800/50 space-y-3">
+          <div className="flex items-center justify-between">
+            <h5 className="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5 font-mono">
+              <Vote className="w-4 h-4 text-indigo-400" />
+              <span>Civic Ballot: {pollData.question}</span>
+            </h5>
+            <span className="text-[10px] font-mono text-slate-400">
+              {pollData.totalVotes.toLocaleString()} Votes
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            {pollData.options.map(opt => {
+              const isSelected = votedOptionId === opt.id;
+              const hasVoted = votedOptionId !== null;
+
+              return (
+                <div
+                  key={opt.id}
+                  onClick={() => handlePollVote(opt.id)}
+                  className={`p-3 rounded-xl border text-xs relative overflow-hidden transition-all cursor-pointer ${
+                    isSelected
+                      ? 'border-indigo-500 bg-indigo-950/60 shadow-glow'
+                      : 'border-slate-800 bg-slate-900 hover:border-slate-700'
+                  }`}
+                >
+                  {/* Progress Fill Bar */}
+                  {hasVoted && (
+                    <div
+                      className="absolute inset-y-0 left-0 bg-indigo-600/30 transition-all duration-700"
+                      style={{ width: `${opt.percentage}%` }}
+                    ></div>
+                  )}
+
+                  <div className="relative z-10 flex items-center justify-between">
+                    <span className="font-semibold text-slate-100 flex items-center gap-1.5">
+                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" />}
+                      {opt.label}
+                    </span>
+                    {hasVoted && (
+                      <span className="font-mono font-bold text-indigo-300">
+                        {opt.percentage}%
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Media Attachments */}
       {post.media && (
@@ -238,67 +323,62 @@ export default function PostCard({
               raised: post.mutualAidGoal.raised,
               target: post.mutualAidGoal.target
             })}
-            className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shadow-glow-emerald transition-all"
+            className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition-colors shadow-glow-emerald"
           >
-            Contribute to Family Memorial Fund
+            Contribute Direct Family Sanctuary Support (0% Platform Fee)
           </button>
         </div>
       )}
 
-      {/* Action Footer: Like, Support, Comment, Share Counters */}
-      <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+      {/* Action Footer Bar */}
+      <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
         <div className="flex items-center space-x-1 sm:space-x-4">
-          {/* Stand With Them Action */}
-          <button
-            onClick={handleSupportClick}
-            className={`flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg transition-all ${
-              hasSupported 
-                ? 'bg-amber-950/80 text-amber-300 border border-amber-800/60 font-semibold' 
-                : 'hover:bg-slate-800 hover:text-amber-300'
-            }`}
-            title="Stand with this cause"
-          >
-            <Award className={`w-4 h-4 ${hasSupported ? 'fill-amber-400 text-amber-400' : ''}`} />
-            <span className="hidden sm:inline">Stand With Them</span>
-            <span className="font-mono text-xs">({supportsCount})</span>
-          </button>
-
-          {/* Like / Agree */}
           <button
             onClick={handleLikeToggle}
-            className={`flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg transition-all ${
+            className={`flex items-center space-x-1.5 py-1.5 px-2.5 rounded-lg transition-colors ${
               isLiked 
-                ? 'bg-crimson-950/80 text-crimson-400 border border-crimson-800/60 font-semibold' 
-                : 'hover:bg-slate-800 hover:text-crimson-400'
+                ? 'text-crimson-400 bg-crimson-950/40' 
+                : 'hover:text-slate-200 hover:bg-slate-800/50'
             }`}
           >
-            <Heart className={`w-4 h-4 ${isLiked ? 'fill-crimson-500 text-crimson-500' : ''}`} />
-            <span className="font-mono text-xs">{likesCount}</span>
+            <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
+            <span>{likesCount}</span>
           </button>
 
-          {/* Comment Count / Toggle */}
+          <button
+            onClick={handleSupportClick}
+            className={`flex items-center space-x-1.5 py-1.5 px-2.5 rounded-lg transition-colors ${
+              hasSupported 
+                ? 'text-justice-400 bg-justice-950/40 font-semibold' 
+                : 'hover:text-slate-200 hover:bg-slate-800/50'
+            }`}
+          >
+            <Shield className={`w-4 h-4 ${hasSupported ? 'fill-justice-400/20' : ''}`} />
+            <span>Stand With Them ({supportsCount})</span>
+          </button>
+
           <button
             onClick={() => setShowComments(!showComments)}
-            className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg hover:bg-slate-800 hover:text-justice-400 transition-all"
+            className="flex items-center space-x-1.5 py-1.5 px-2.5 rounded-lg hover:text-slate-200 hover:bg-slate-800/50 transition-colors"
           >
             <MessageSquare className="w-4 h-4" />
-            <span className="font-mono text-xs">{(post.comments?.length || 0) + (post.commentsCount || 0)}</span>
+            <span>{post.commentsCount || (post.comments ? post.comments.length : 0)}</span>
           </button>
         </div>
 
-        {/* Share Button */}
         <button
           onClick={handleShareClick}
-          className="flex items-center space-x-1 px-2.5 py-1.5 rounded-lg hover:bg-slate-800 hover:text-white transition-all"
+          className="flex items-center space-x-1 py-1.5 px-2.5 rounded-lg hover:text-slate-200 hover:bg-slate-800/50 transition-colors"
+          title="Share to social networks"
         >
           <Share2 className="w-4 h-4" />
-          <span className="hidden sm:inline">Share</span>
+          <span className="hidden sm:inline">Distribute</span>
         </button>
       </div>
 
-      {/* Comments Section */}
+      {/* Comments Section Drawer */}
       {showComments && (
-        <div className="pt-3 border-t border-slate-800/80 space-y-3 animation-fade-in">
+        <div className="pt-3 border-t border-slate-800/60 space-y-3 animation-fade-in">
           {/* Add Comment Input Form */}
           <form onSubmit={handleCommentSubmit} className="flex items-center space-x-2">
             <img
@@ -308,40 +388,40 @@ export default function PostCard({
             />
             <input
               type="text"
-              placeholder="Add your witness testimony, legal insight, or solidarity..."
+              placeholder="Add your voice, testimony, or legal perspective..."
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-justice-500"
+              className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-justice-500"
             />
             <button
               type="submit"
               disabled={!commentText.trim()}
-              className="p-1.5 bg-justice-600 hover:bg-justice-500 disabled:opacity-40 text-white rounded-lg transition-all"
+              className="p-1.5 bg-justice-600 hover:bg-justice-500 disabled:opacity-40 text-white rounded-xl transition-colors"
             >
-              <Send className="w-3.5 h-3.5" />
+              <Send className="w-4 h-4" />
             </button>
           </form>
 
-          {/* Render Comments */}
+          {/* List of Comments */}
           <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
-            {post.comments && post.comments.map((comment) => (
-              <div key={comment.id} className="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800/80 flex items-start space-x-2.5">
+            {post.comments && post.comments.map(c => (
+              <div key={c.id} className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800/60 flex items-start space-x-2.5 text-xs">
                 <img
-                  src={comment.avatar}
-                  alt={comment.author}
-                  className="w-6 h-6 rounded-full object-cover mt-0.5"
+                  src={c.avatar}
+                  alt={c.author}
+                  className="w-6 h-6 rounded-full object-cover border border-slate-800"
                 />
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs font-bold text-slate-200">{comment.author}</span>
-                    {comment.badge && (
-                      <span className="text-[9px] px-1 py-0.2 bg-slate-800 text-justice-400 rounded border border-slate-700">
-                        {comment.badge}
+                  <div className="flex items-center space-x-1.5">
+                    <span className="font-bold text-slate-200">{c.author}</span>
+                    {c.badge && (
+                      <span className="text-[9px] bg-slate-900 text-justice-400 px-1 rounded border border-slate-800">
+                        {c.badge}
                       </span>
                     )}
-                    <span className="text-[10px] text-slate-500">{comment.timestamp}</span>
+                    <span className="text-[10px] text-slate-500">• {c.timestamp}</span>
                   </div>
-                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">{comment.text}</p>
+                  <p className="text-slate-300 mt-0.5 leading-relaxed">{c.text}</p>
                 </div>
               </div>
             ))}

@@ -50,6 +50,35 @@ export const initialPosts = [
     ]
   },
   {
+    id: 'post-poll-1',
+    author: {
+      name: 'National Civil Rights Policy Caucus',
+      handle: '@policy_caucus_us',
+      avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80',
+      badge: 'Civic Policy Verified',
+      role: 'National Research Group'
+    },
+    timestamp: '45 minutes ago',
+    type: 'POLICY_ALERT',
+    content: '🗳️ NATIONAL COMMUNITY BALLOT: Should Qualified Immunity be completely abolished at the federal level for all law enforcement officers who violate clearly established constitutional rights?\n\nCast your vote to include your voice in our next Congressional Caucus amicus brief.',
+    poll: {
+      id: 'poll-qi-1',
+      question: 'Should Qualified Immunity be abolished for police misconduct?',
+      totalVotes: 14820,
+      options: [
+        { id: 'opt-1', label: 'Yes — Full Abolition & Personal Accountability', votes: 13910, percentage: 93.8 },
+        { id: 'opt-2', label: 'No — Keep Qualified Immunity Protections', votes: 910, percentage: 6.2 }
+      ]
+    },
+    likesCount: 2980,
+    supportsCount: 1840,
+    sharesCount: 950,
+    commentsCount: 142,
+    userHasLiked: true,
+    userHasSupported: true,
+    comments: []
+  },
+  {
     id: 'post-fortson-update',
     author: {
       name: 'National Military Veterans for Civil Rights',
