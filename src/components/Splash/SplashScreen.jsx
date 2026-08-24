@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Sparkles, ChevronRight, CheckCircle2, X, Clock, ArrowRight } from 'lucide-react';
+import { Shield, Sparkles, ChevronRight, CheckCircle2, X, Clock, ArrowRight, ExternalLink } from 'lucide-react';
 
 export default function SplashScreen({ onFinish }) {
   const [progress, setProgress] = useState(0);
@@ -71,7 +71,7 @@ export default function SplashScreen({ onFinish }) {
   };
 
   return (
-    <div className={`fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center p-4 sm:p-6 overflow-y-auto transition-opacity duration-400 select-none ${
+    <div className={`fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-between p-4 sm:p-6 overflow-y-auto transition-opacity duration-400 select-none ${
       isFadingOut ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
     }`}>
       {/* Background Radial Glow & Holographic Grid */}
@@ -80,20 +80,27 @@ export default function SplashScreen({ onFinish }) {
       {/* Light Sweeps */}
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-justice-500/15 via-amber-500/10 to-transparent blur-3xl pointer-events-none"></div>
 
-      {/* Top Close Button */}
-      <button
-        onClick={handleEnter}
-        className="absolute top-5 right-5 p-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-all flex items-center gap-1.5 text-xs z-20 group"
-        title="Close Splash & Enter Platform"
-      >
-        <span className="hidden sm:inline font-mono">Close & Enter</span>
-        <X className="w-4 h-4 group-hover:scale-110 transition-transform" />
-      </button>
+      {/* Top Header Row with Classification & Close Button */}
+      <div className="w-full max-w-4xl flex items-center justify-between z-20 relative pt-1">
+        <div className="flex items-center space-x-2 text-[11px] font-mono text-slate-500 uppercase tracking-widest">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>CIVIC CLEARANCE ENCRYPTED</span>
+        </div>
 
-      {/* Main Center Card */}
-      <div className="relative z-10 max-w-xl w-full flex flex-col items-center text-center space-y-5 my-auto">
+        <button
+          onClick={handleEnter}
+          className="p-2 px-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition-all flex items-center gap-1.5 text-xs group shadow-lg"
+          title="Close Splash & Enter Platform"
+        >
+          <span className="font-mono font-semibold">Skip & Enter</span>
+          <X className="w-4 h-4 group-hover:scale-110 transition-transform text-justice-400" />
+        </button>
+      </div>
+
+      {/* Main Center Content Card */}
+      <div className="relative z-10 max-w-xl w-full flex flex-col items-center text-center space-y-4 my-auto py-2">
         {/* Official Agency Crest / Seal */}
-        <div className="relative w-40 h-40 sm:w-48 sm:h-48 flex items-center justify-center">
+        <div className="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
           {/* Rotating Outer Golden Ring with Stars */}
           <div className="absolute inset-0 rounded-full border-2 border-dashed border-amber-500/40 animate-spin" style={{ animationDuration: '24s' }}></div>
           <div className="absolute inset-1.5 rounded-full border border-justice-400/30"></div>
@@ -235,7 +242,7 @@ export default function SplashScreen({ onFinish }) {
         </div>
 
         {/* Brand Titles with Agency Styling */}
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-slate-900/90 border border-amber-500/40 text-amber-300 text-[10px] sm:text-xs font-bold tracking-widest uppercase font-mono shadow-glow">
             <Shield className="w-3.5 h-3.5 text-amber-400" />
             <span>National Police Accountability & Civic Network</span>
@@ -256,7 +263,7 @@ export default function SplashScreen({ onFinish }) {
         </div>
 
         {/* Civic Oversight Declaration Box */}
-        <div className="p-3.5 bg-slate-900/80 rounded-2xl border border-slate-800 text-left text-xs text-slate-300 space-y-1.5 shadow-xl">
+        <div className="p-3 bg-slate-900/80 rounded-2xl border border-slate-800 text-left text-xs text-slate-300 space-y-1 shadow-xl">
           <div className="flex items-center justify-between text-[11px] font-bold text-amber-400 uppercase tracking-wider">
             <span className="flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5" /> Constitutional Mandate
@@ -269,7 +276,7 @@ export default function SplashScreen({ onFinish }) {
         </div>
 
         {/* Progress Bar & Status */}
-        <div className="w-full max-w-md space-y-2">
+        <div className="w-full max-w-md space-y-1.5">
           <div className="flex items-center justify-between text-[11px] font-mono">
             <span className="text-justice-400 truncate max-w-[280px]">{statusText}</span>
             <span className="text-amber-400 font-bold">{progress}%</span>
@@ -284,10 +291,10 @@ export default function SplashScreen({ onFinish }) {
         </div>
 
         {/* Prominent Action Button & 20s Auto-Close Indicator */}
-        <div className="pt-2 flex flex-col items-center space-y-2.5 w-full">
+        <div className="pt-1 flex flex-col items-center space-y-2 w-full">
           <button
             onClick={handleEnter}
-            className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-justice-600 via-justice-500 to-emerald-500 hover:from-justice-500 hover:to-emerald-400 text-white rounded-2xl font-bold text-sm shadow-glow flex items-center justify-center space-x-2 transition-all hover:scale-105 active:scale-95"
+            className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-justice-600 via-justice-500 to-emerald-500 hover:from-justice-500 hover:to-emerald-400 text-white rounded-2xl font-bold text-sm shadow-glow flex items-center justify-center space-x-2 transition-all hover:scale-105 active:scale-95"
           >
             <span>Enter Justice Pulse Platform</span>
             <ArrowRight className="w-4 h-4" />
@@ -297,16 +304,34 @@ export default function SplashScreen({ onFinish }) {
           <div className="flex items-center space-x-1.5 text-xs text-slate-400 font-mono">
             <Clock className="w-3.5 h-3.5 text-amber-400" />
             <span>
-              Auto-entering in <strong className="text-amber-300">{countdown}s</strong> (or click anywhere/press Enter)
+              Auto-entering in <strong className="text-amber-300">{countdown}s</strong> (or press Enter)
             </span>
           </div>
         </div>
       </div>
 
-      {/* Security Classification Footer */}
-      <div className="relative mt-4 text-center text-[10px] font-mono text-slate-500 uppercase tracking-widest">
-        PUBLIC CIVIC OVERSIGHT CLEARANCE • 50 STATES VERIFIED • IMMUTABLE SHA-256 LEDGER
-      </div>
+      {/* Official Branding Footer: Add Interactive Studios & BY NEXT Justice Media */}
+      <footer className="relative z-20 w-full max-w-4xl pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+        <div className="flex items-center space-x-2 text-slate-400">
+          <span>Engineered & Developed by</span>
+          <a
+            href="https://www.addinteractive.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-justice-400 hover:text-justice-300 underline underline-offset-4 decoration-justice-500/50 hover:decoration-justice-400 flex items-center gap-1 transition-colors"
+          >
+            <span>Add Interactive Studios</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <span className="text-slate-500 font-mono">|</span>
+          <span className="text-amber-400/90 font-bold font-mono uppercase tracking-wider text-[11px] bg-slate-900 px-2.5 py-0.5 rounded-full border border-slate-800">
+            BY NEXT Justice Media
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }

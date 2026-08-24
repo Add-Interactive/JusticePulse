@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import RightSidebar from './components/RightSidebar';
+import Footer from './components/Footer';
 import FeedView from './components/Feed/FeedView';
 import CreatePostModal from './components/Feed/CreatePostModal';
 import CasesView from './components/Cases/CasesView';
@@ -420,6 +421,12 @@ export default function App() {
           onSelectTab={setActiveTab}
         />
       </main>
+
+      {/* Global Footer */}
+      <Footer
+        onSelectTab={setActiveTab}
+        onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
+      />
 
       {/* Global Modals */}
       {selectedCaseData && (
