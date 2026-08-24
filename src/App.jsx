@@ -3,6 +3,8 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import RightSidebar from './components/RightSidebar';
 import Footer from './components/Footer';
+import MobileBottomBar from './components/Navigation/MobileBottomBar';
+import MobileNavDrawer from './components/Navigation/MobileNavDrawer';
 import FeedView from './components/Feed/FeedView';
 import CreatePostModal from './components/Feed/CreatePostModal';
 import CasesView from './components/Cases/CasesView';
@@ -48,6 +50,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('feed');
   const [searchQuery, setSearchQuery] = useState('');
   const [toast, setToast] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Data State
   const [cases, setCases] = useState(initialCases);
@@ -220,6 +223,7 @@ export default function App() {
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
         onReplaySplash={() => setShowSplash(true)}
+        onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         searchQuery={searchQuery}
@@ -231,8 +235,8 @@ export default function App() {
       />
 
       {/* Main Container Layout */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex gap-6">
-        {/* Left Sidebar */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex gap-6 pb-24 lg:pb-8">
+        {/* Left Sidebar on Desktop */}
         <Sidebar
           activeTab={activeTab}
           setActiveTab={(tab) => {
@@ -414,7 +418,7 @@ export default function App() {
           )}
         </div>
 
-        {/* Right Sidebar Widgets */}
+        {/* Right Sidebar Widgets on Desktop */}
         <RightSidebar
           onOpenCaseDetail={handleOpenCaseDetail}
           onOpenDonateModal={handleOpenDonateModal}
@@ -426,6 +430,26 @@ export default function App() {
       <Footer
         onSelectTab={setActiveTab}
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
+      />
+
+      {/* Mobile Bottom Floating Touch Navigation */}
+      <MobileBottomBar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onOpenSOSModal={() => setIsSOSModalOpen(true)}
+        onOpenMenu={() => setIsMobileMenuOpen(true)}
+      />
+
+      {/* Mobile Full Slide-Over Navigation Drawer */}
+      <MobileNavDrawer
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onOpenReportModal={() => setIsReportModalOpen(true)}
+        onOpenSOSModal={() => setIsSOSModalOpen(true)}
+        onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
+        currentUser={currentUser}
       />
 
       {/* Global Modals */}

@@ -3,15 +3,26 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
   body {
     @apply bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden;
+    -webkit-overflow-scrolling: touch;
   }
+}
+
+/* Safe area padding for mobile bottom bar */
+.safe-area-bottom {
+  padding-bottom: max(0.6rem, env(safe-area-inset-bottom));
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
