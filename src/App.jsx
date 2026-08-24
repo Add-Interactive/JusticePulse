@@ -50,6 +50,11 @@ export default function App() {
   // Splash Screen State
   const [showSplash, setShowSplash] = useState(true);
 
+  // Accessibility & Visual Density State
+  const [isHighContrast, setIsHighContrast] = useState(false);
+  const [fontSizeScale, setFontSizeScale] = useState('normal'); // 'normal' | 'large' | 'xlarge'
+  const [isFocusMode, setIsFocusMode] = useState(false);
+
   // Navigation & UI State
   const [activeTab, setActiveTab] = useState('feed');
   const [searchQuery, setSearchQuery] = useState('');
@@ -242,8 +247,15 @@ export default function App() {
 
   const selectedCaseData = cases.find(c => c.id === selectedCaseId);
 
+  const fontScaleClass = 
+    fontSizeScale === 'large' 
+      ? 'font-scale-large' 
+      : fontSizeScale === 'xlarge' 
+      ? 'font-scale-xlarge' 
+      : 'font-scale-normal';
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-justice-500 selection:text-white">
+    <div className={`min-h-screen flex flex-col selection:bg-justice-500 selection:text-white ${isHighContrast ? 'high-contrast-mode' : 'bg-[#090d16] text-slate-100'} ${fontScaleClass}`}>
       {/* Official Agency Splash Loading Screen */}
       {showSplash && (
         <SplashScreen onFinish={() => setShowSplash(false)} />
@@ -261,7 +273,7 @@ export default function App() {
         />
       )}
 
-      {/* Global Navbar */}
+      {/* Global Navbar with High-Contrast & Text Scaling Controls */}
       <Navbar
         onOpenReportModal={() => setIsReportModalOpen(true)}
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
@@ -278,21 +290,29 @@ export default function App() {
         setCurrentUser={setCurrentUser}
         notifications={notifications}
         onNotificationClick={handleNotificationClick}
+        isHighContrast={isHighContrast}
+        setIsHighContrast={setIsHighContrast}
+        fontSizeScale={fontSizeScale}
+        setFontSizeScale={setFontSizeScale}
+        isFocusMode={isFocusMode}
+        setIsFocusMode={setIsFocusMode}
       />
 
       {/* Main Container Layout */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex gap-6 pb-24 lg:pb-8">
         {/* Left Sidebar on Desktop */}
-        <Sidebar
-          activeTab={activeTab}
-          setActiveTab={(tab) => {
-            if (tab === 'investor') {
-              setIsInvestorModalOpen(true);
-            } else {
-              setActiveTab(tab);
-            }
-          }}
-        />
+        {!isFocusMode && (
+          <Sidebar
+            activeTab={activeTab}
+            setActiveTab={(tab) => {
+              if (tab === 'investor') {
+                setIsInvestorModalOpen(true);
+              } else {
+                setActiveTab(tab);
+              }
+            }}
+          />
+        )}
 
         {/* Center Main View Area */}
         <div className="flex-1 min-w-0">
@@ -479,11 +499,13 @@ export default function App() {
         </div>
 
         {/* Right Sidebar Widgets on Desktop */}
-        <RightSidebar
-          onOpenCaseDetail={handleOpenCaseDetail}
-          onOpenDonateModal={handleOpenDonateModal}
-          onSelectTab={setActiveTab}
-        />
+        {!isFocusMode && (
+          <RightSidebar
+            onOpenCaseDetail={handleOpenCaseDetail}
+            onOpenDonateModal={handleOpenDonateModal}
+            onSelectTab={setActiveTab}
+          />
+        )}
       </main>
 
       {/* Global Footer */}
