@@ -11,14 +11,16 @@ import {
   PlusCircle, 
   Flame, 
   Bookmark, 
-  CheckCircle2,
-  Trash2,
-  Lock
+  CheckCircle2, 
+  Trash2, 
+  Lock,
+  Network
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import InvestigationCanvasView from '../InvestigationBoard/InvestigationCanvasView';
 
 export default function ProfileView({ currentUser, setCurrentUser, showToast }) {
-  const [activeTab, setActiveTab] = useState('badges');
+  const [activeTab, setActiveTab] = useState('whiteboard');
   const [emergencyContacts, setEmergencyContacts] = useState([
     { id: '1', name: 'Maya Linnea Johnson', phone: '(555) 392-8812', relation: 'Legal Observer Lead' },
     { id: '2', name: 'James Adams', phone: '(555) 441-2901', relation: 'Spouse / Emergency Next-of-Kin' }
@@ -93,20 +95,20 @@ export default function ProfileView({ currentUser, setCurrentUser, showToast }) 
                 {currentUser.badge}
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-1 font-medium">{currentUser.role} • Member since 2024</p>
-            <p className="text-[11px] text-slate-500 font-mono mt-0.5">UID: JP-CIVIC-889102-SEC</p>
+            <p className="text-xs text-slate-400 mt-1 font-medium">{currentUser.role} • Enterprise Evidence Workspace</p>
+            <p className="text-[11px] text-slate-500 font-mono mt-0.5">UID: JP-CIVIC-889102-SEC • SHA-256 Vault Active</p>
           </div>
         </div>
 
         {/* Quick Stats Banner */}
         <div className="flex items-center space-x-3 bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
           <div className="text-center px-3 border-r border-slate-800">
-            <span className="text-xs font-extrabold font-mono text-emerald-400">$325.00</span>
-            <p className="text-[10px] text-slate-400 uppercase font-semibold">Mutual Aid</p>
+            <span className="text-xs font-extrabold font-mono text-indigo-400">2 Boards</span>
+            <p className="text-[10px] text-slate-400 uppercase font-semibold">Whiteboard</p>
           </div>
           <div className="text-center px-3 border-r border-slate-800">
-            <span className="text-xs font-extrabold font-mono text-amber-400">2 Petitions</span>
-            <p className="text-[10px] text-slate-400 uppercase font-semibold">Signed</p>
+            <span className="text-xs font-extrabold font-mono text-emerald-400">$325.00</span>
+            <p className="text-[10px] text-slate-400 uppercase font-semibold">Mutual Aid</p>
           </div>
           <div className="text-center px-3">
             <span className="text-xs font-extrabold font-mono text-justice-400">4 Badges</span>
@@ -118,6 +120,7 @@ export default function ProfileView({ currentUser, setCurrentUser, showToast }) 
       {/* Sub-Tabs */}
       <div className="border-b border-slate-800 flex space-x-4 overflow-x-auto">
         {[
+          { id: 'whiteboard', label: 'Enterprise Evidence Whiteboard & Connection Matrix' },
           { id: 'badges', label: 'Civic Badges & Credentials' },
           { id: 'sos-contacts', label: 'SOS Emergency Contacts (SMS Dispatch)' },
           { id: 'donations', label: 'Mutual Aid Receipts (Tax Deductible)' },
@@ -128,7 +131,7 @@ export default function ProfileView({ currentUser, setCurrentUser, showToast }) 
             onClick={() => setActiveTab(tab.id)}
             className={`pb-3 text-xs font-bold border-b-2 whitespace-nowrap transition-all ${
               activeTab === tab.id
-                ? 'border-justice-400 text-justice-300'
+                ? 'border-indigo-400 text-indigo-300'
                 : 'border-transparent text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -136,6 +139,13 @@ export default function ProfileView({ currentUser, setCurrentUser, showToast }) 
           </button>
         ))}
       </div>
+
+      {/* Tab 0: Enterprise Evidence Whiteboard */}
+      {activeTab === 'whiteboard' && (
+        <div className="animation-fade-in">
+          <InvestigationCanvasView showToast={showToast} />
+        </div>
+      )}
 
       {/* Tab 1: Badges */}
       {activeTab === 'badges' && (

@@ -24,7 +24,8 @@ import {
   Landmark, 
   ShieldCheck, 
   Volume2, 
-  CheckSquare 
+  CheckSquare,
+  Network
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
@@ -43,6 +44,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     {
       group: 'Accountability & Evidence',
       items: [
+        { id: 'whiteboard', label: 'Evidence Whiteboard', subtitle: 'Visual Connection Matrix', icon: Network, badge: 'Canvas', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
         { id: 'cases', label: 'The Docket', subtitle: 'Verified Case Registry', icon: Scale, badge: '2.4k', badgeColor: 'bg-slate-800 text-slate-300' },
         { id: 'officers', label: 'Officer Index', subtitle: 'Repeat Offender & Brady', icon: ShieldAlert, badge: 'Flagged', badgeColor: 'bg-crimson-900 text-crimson-200 border border-crimson-700/50' },
         { id: 'departments', label: 'Agency Scorecards', subtitle: 'Police Dept Benchmark', icon: Building2, badge: 'Grades', badgeColor: 'bg-slate-800 text-slate-300' },
@@ -63,7 +65,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         { id: 'assistant', label: 'Veritas AI Legal Bot', subtitle: 'Civil Rights Research', icon: Bot, badge: 'AI', badgeColor: 'bg-purple-950 text-purple-300 border border-purple-800' },
         { id: 'support', label: 'Sanctuary & Mutual Aid', subtitle: 'Pro Bono Legal & Family Aid', icon: HeartHandshake, badge: '$11.8M', badgeColor: 'bg-emerald-950 text-emerald-300 border border-emerald-800/40' },
         { id: 'rights', label: 'Know Your Rights', subtitle: 'Constitutional Handbook', icon: BookOpen, badge: 'SOS', badgeColor: 'bg-amber-950 text-amber-300 border border-amber-800/40' },
-        { id: 'profile', label: 'My Civic Profile', subtitle: 'Badges & SOS Contacts', icon: User, badge: 'Me', badgeColor: 'bg-slate-800 text-slate-300' },
+        { id: 'profile', label: 'My Civic Profile', subtitle: 'Badges, Locker & Matrix', icon: User, badge: 'Me', badgeColor: 'bg-slate-800 text-slate-300' },
         { id: 'analytics', label: 'Taxpayer Analytics', subtitle: '$3.2B+ Misconduct Costs', icon: BarChart3, badge: 'Data', badgeColor: 'bg-indigo-950 text-indigo-300' },
         { id: 'investor', label: 'Investor Pitch', subtitle: 'Concept, TAM & Roadmap', icon: Sparkles, badge: 'Deck', badgeColor: 'bg-purple-900 text-purple-200 border border-purple-600/50' }
       ]

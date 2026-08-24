@@ -34,6 +34,7 @@ import LegislationTrackerView from './components/Legislation/LegislationTrackerV
 import FieldObserverView from './components/FieldMode/FieldObserverView';
 import OralHistoryPlayerView from './components/AudioHub/OralHistoryPlayerView';
 import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
+import InvestigationCanvasView from './components/InvestigationBoard/InvestigationCanvasView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
 import SplashScreen from './components/Splash/SplashScreen';
 import Toast from './components/Common/Toast';
@@ -86,6 +87,14 @@ export default function App() {
     },
     {
       id: 'notif-2',
+      title: 'Florida Manslaughter Indictment',
+      desc: 'Former Deputy Eddie Duran formally charged in Senior Airman Roger Fortson shooting.',
+      time: '45m ago',
+      type: 'legal',
+      caseId: 'case-roger-fortson'
+    },
+    {
+      id: 'notif-3',
       title: 'Federal Conviction Upheld',
       desc: 'Hankison federal civil rights conviction entered in Louisville Breonna Taylor docket.',
       time: '1h ago',
@@ -93,7 +102,7 @@ export default function App() {
       caseId: 'case-breonna-taylor'
     },
     {
-      id: 'notif-3',
+      id: 'notif-4',
       title: 'Mutual Aid Milestone',
       desc: 'Violins for Elijah memorial sanctuary fund surpassed 84% of community goal.',
       time: '3h ago',
@@ -275,6 +284,12 @@ export default function App() {
           {activeTab === 'audiohub' && (
             <OralHistoryPlayerView
               onOpenDonateModal={handleOpenDonateModal}
+              showToast={showToast}
+            />
+          )}
+
+          {activeTab === 'whiteboard' && (
+            <InvestigationCanvasView
               showToast={showToast}
             />
           )}
