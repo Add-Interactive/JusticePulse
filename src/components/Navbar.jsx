@@ -15,13 +15,15 @@ import {
   FileText,
   Play,
   Menu,
-  X
+  X,
+  Layers
 } from 'lucide-react';
 
 export default function Navbar({ 
   onOpenReportModal, 
   onOpenSOSModal, 
   onOpenInvestorModal, 
+  onOpenEvidenceSuite,
   onReplaySplash,
   onOpenMobileMenu,
   activeTab, 
@@ -145,6 +147,17 @@ export default function Navbar({
             <Search className="w-4 h-4" />
           </button>
 
+          {/* Direct Launch Evidence Command Suite Window */}
+          <button
+            onClick={onOpenEvidenceSuite}
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white text-xs font-bold shadow-glow border border-indigo-400/40 transition-all active:scale-95"
+            title="Open Dedicated Full-Screen Evidence Command Center"
+          >
+            <Layers className="w-3.5 h-3.5 animate-pulse" />
+            <span className="hidden sm:inline">Evidence Matrix</span>
+            <span className="sm:hidden text-[11px]">Matrix</span>
+          </button>
+
           {/* Quick SOS Encounter Mode on Navbar */}
           <button
             onClick={onOpenSOSModal}
@@ -159,7 +172,7 @@ export default function Navbar({
           {/* Report Incident CTA */}
           <button
             onClick={onOpenReportModal}
-            className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-justice-600 hover:bg-justice-500 text-white text-xs font-semibold shadow-glow transition-all"
+            className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-justice-600 hover:bg-justice-500 text-white text-xs font-semibold shadow-glow transition-all"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Report</span>
@@ -199,19 +212,13 @@ export default function Navbar({
                         onNotificationClick(notif);
                         setShowNotifications(false);
                       }}
-                      className="p-3.5 hover:bg-slate-800/60 cursor-pointer transition-colors flex items-start space-x-3"
+                      className="p-3 hover:bg-slate-800/60 cursor-pointer transition-colors space-y-1"
                     >
-                      <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        {notif.type === 'foia' && <FileText className="w-4 h-4 text-justice-400" />}
-                        {notif.type === 'legal' && <Scale className="w-4 h-4 text-amber-400" />}
-                        {notif.type === 'comment' && <Users className="w-4 h-4 text-emerald-400" />}
-                        {notif.type === 'alert' && <AlertTriangle className="w-4 h-4 text-crimson-400" />}
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white leading-tight">{notif.title}</span>
+                        <span className="text-[10px] text-slate-500 font-mono">{notif.time}</span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-semibold text-slate-200 leading-snug">{notif.title}</p>
-                        <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-2">{notif.desc}</p>
-                        <span className="text-[10px] text-slate-500 mt-1 block">{notif.time}</span>
-                      </div>
+                      <p className="text-xs text-slate-300 leading-snug">{notif.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -223,68 +230,66 @@ export default function Navbar({
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center space-x-1.5 p-1 sm:p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 transition-all"
+              className="flex items-center space-x-2 p-1 pl-1.5 sm:pl-2 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 transition-all"
             >
               <img
                 src={currentUser.avatar}
                 alt={currentUser.name}
-                className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-justice-400/50"
+                className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover border border-justice-400"
               />
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              <span className="text-xs font-medium text-slate-200 hidden lg:inline max-w-[120px] truncate">
+                {currentUser.name}
+              </span>
+              <ChevronDown className="w-3 h-3 text-slate-400" />
             </button>
 
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-64 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl z-50 p-2 animation-fade-in">
-                <div className="px-2 py-1.5 border-b border-slate-800 mb-1.5">
-                  <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Demo User Roles</p>
-                  <p className="text-[11px] text-slate-300">Switch persona to test perspectives:</p>
+              <div className="absolute right-0 mt-2 w-64 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl z-50 p-2 space-y-1 animation-fade-in">
+                <div className="p-2 border-b border-slate-800">
+                  <p className="text-xs font-bold text-white">{currentUser.name}</p>
+                  <p className="text-[10px] text-justice-400 font-mono">{currentUser.role} • {currentUser.badge}</p>
                 </div>
-                {availableRoles.map((user, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      setCurrentUser(user);
-                      setShowUserMenu(false);
-                    }}
-                    className={`w-full text-left p-2 rounded-xl flex items-center space-x-2.5 transition-colors ${
-                      currentUser.name === user.name ? 'bg-justice-950/80 border border-justice-700/50 text-white' : 'hover:bg-slate-800 text-slate-300'
-                    }`}
-                  >
-                    <img src={user.avatar} className="w-8 h-8 rounded-full object-cover" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold truncate">{user.name}</p>
-                      <p className="text-[10px] text-justice-400 truncate">{user.role}</p>
-                    </div>
-                    {currentUser.name === user.name && <CheckCircle className="w-4 h-4 text-justice-400 flex-shrink-0" />}
-                  </button>
-                ))}
+                <div className="pt-1">
+                  <p className="text-[10px] uppercase font-bold text-slate-400 px-2 py-1 font-mono">Switch Civic Persona:</p>
+                  {availableRoles.map((role, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        setCurrentUser(role);
+                        setShowUserMenu(false);
+                      }}
+                      className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs flex items-center space-x-2 transition-colors ${
+                        currentUser.name === role.name 
+                          ? 'bg-justice-950 text-justice-300 font-bold border border-justice-800' 
+                          : 'text-slate-300 hover:bg-slate-800'
+                      }`}
+                    >
+                      <img src={role.avatar} alt={role.name} className="w-5 h-5 rounded-full object-cover" />
+                      <div className="truncate">
+                        <p className="truncate leading-tight">{role.name}</p>
+                        <p className="text-[9px] text-slate-400 truncate">{role.role}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Expandable Search Input on Mobile */}
+      {/* Mobile Search Bar Expansion */}
       {isSearchOpenMobile && (
-        <div className="px-3 py-2 bg-slate-950 border-t border-slate-800 md:hidden animation-fade-in">
+        <div className="p-3 bg-slate-950 border-t border-slate-800 md:hidden animation-fade-in">
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search cases, officers, dockets..."
+              placeholder="Search cases, badge numbers, or dockets..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-8 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-justice-500"
-              autoFocus
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-justice-400"
             />
-            {searchQuery && (
-              <button 
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs"
-              >
-                ✕
-              </button>
-            )}
           </div>
         </div>
       )}

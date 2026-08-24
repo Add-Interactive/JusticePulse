@@ -52,6 +52,8 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [toast, setToast] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isEvidenceSuiteOpen, setIsEvidenceSuiteOpen] = useState(false);
+  const [evidenceInitialTab, setEvidenceInitialTab] = useState('corkboard');
 
   // Data State
   const [cases, setCases] = useState(initialCases);
@@ -217,6 +219,11 @@ export default function App() {
     }
   };
 
+  const handleOpenEvidenceSuite = (subTab = 'corkboard') => {
+    setEvidenceInitialTab(subTab);
+    setIsEvidenceSuiteOpen(true);
+  };
+
   const selectedCaseData = cases.find(c => c.id === selectedCaseId);
 
   return (
@@ -226,11 +233,27 @@ export default function App() {
         <SplashScreen onFinish={() => setShowSplash(false)} />
       )}
 
+      {/* STANDALONE UNCONSTRAINED FULL-SCREEN EVIDENCE COMMAND SUITE ENTITY */}
+      {(isEvidenceSuiteOpen || activeTab === 'evidence_suite') && (
+        <UnifiedEvidenceDashboard
+          onClose={() => {
+            setIsEvidenceSuiteOpen(false);
+            if (activeTab === 'evidence_suite') {
+              setActiveTab('feed');
+            }
+          }}
+          showToast={showToast}
+          onOpenCaseDetail={handleOpenCaseDetail}
+          initialSubTab={evidenceInitialTab}
+        />
+      )}
+
       {/* Global Navbar */}
       <Navbar
         onOpenReportModal={() => setIsReportModalOpen(true)}
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
+        onOpenEvidenceSuite={() => handleOpenEvidenceSuite('corkboard')}
         onReplaySplash={() => setShowSplash(true)}
         onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         activeTab={activeTab}
@@ -251,6 +274,8 @@ export default function App() {
           setActiveTab={(tab) => {
             if (tab === 'investor') {
               setIsInvestorModalOpen(true);
+            } else if (tab === 'evidence_suite') {
+              handleOpenEvidenceSuite('corkboard');
             } else {
               setActiveTab(tab);
             }
@@ -291,21 +316,6 @@ export default function App() {
             <AcademyView
               currentUser={currentUser}
               showToast={showToast}
-            />
-          )}
-
-          {/* UNIFIED FORENSIC EVIDENCE COMMAND SUITE */}
-          {(activeTab === 'evidence_suite' || activeTab === 'whiteboard' || activeTab === 'multicam' || activeTab === 'deposition' || activeTab === 'vault' || activeTab === 'whistleblower' || activeTab === 'pleadings') && (
-            <UnifiedEvidenceDashboard
-              showToast={showToast}
-              onOpenCaseDetail={handleOpenCaseDetail}
-              initialSubTab={
-                activeTab === 'multicam' ? 'multicam' :
-                activeTab === 'deposition' ? 'deposition' :
-                activeTab === 'vault' ? 'vault' :
-                activeTab === 'whistleblower' ? 'whistleblower' :
-                activeTab === 'pleadings' ? 'pleadings' : 'corkboard'
-              }
             />
           )}
 
@@ -471,7 +481,14 @@ export default function App() {
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(tab) => {
+          if (tab === 'evidence_suite') {
+            setIsMobileMenuOpen(false);
+            handleOpenEvidenceSuite('corkboard');
+          } else {
+            setActiveTab(tab);
+          }
+        }}
         onOpenReportModal={() => setIsReportModalOpen(true)}
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
