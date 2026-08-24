@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#090d16" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGlow)"/>
+  <rect width="504" height="504" x="4" y="4" rx="106" fill="none" stroke="#2563eb" stroke-width="4" stroke-opacity="0.6"/>
+
+  <!-- Outer Seal Ring -->
+  <circle cx="256" cy="256" r="215" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-dasharray="8 6"/>
+
+  <!-- Main Shield Emblem -->
+  <path d="M256 65 L405 125 C405 270 345 375 256 445 C167 375 107 270 107 125 Z" 
+        fill="#0b1329" 
+        stroke="url(#shieldGrad)" 
+        stroke-width="12" 
+        stroke-linejoin="round"/>
+
+  <!-- Inner Shield Highlight -->
+  <path d="M256 95 L375 145 C375 255 325 345 256 405 C187 345 137 255 137 145 Z" 
+        fill="none" 
+        stroke="url(#shieldGrad)" 
+        stroke-width="3" 
+        opacity="0.4"/>
+
+  <!-- Scale of Justice / Police Accountability Icon Inside Shield -->
+  <path d="M256 145 V335 M190 200 H322 M190 200 L160 255 H220 L190 200 Z M322 200 L292 255 H352 L322 200 Z M220 335 H292" 
+        fill="none" 
+        stroke="#ffffff" 
+        stroke-width="9" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+
+  <!-- Golden Central Star -->
+  <polygon points="256,170 262,185 278,185 265,195 270,210 256,200 242,210 247,195 234,185 250,185" fill="url(#goldGrad)"/>
+
+  <!-- Latin Motto Slogan Arc -->
+  <path id="textArc" d="M 90 256 A 166 166 0 0 1 422 256" fill="none"/>
+  <text font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="900" fill="#38bdf8" letter-spacing="3">
+    <textPath href="#textArc" startOffset="50%" text-anchor="middle">
+      JUSTICE PULSE • FIAT JUSTITIA
+    </textPath>
+  </text>
+</svg>

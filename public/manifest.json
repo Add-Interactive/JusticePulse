@@ -1,0 +1,48 @@
+{
+  "name": "Justice Pulse — Civil Rights Defense Hub & Forensic Evidence Registry",
+  "short_name": "JusticePulse",
+  "description": "« FIAT JUSTITIA RUAT CAELUM » National Police Accountability Matrix, Verified Brady Officer Registry & Cryptographic Forensic Evidence System. Produced by Add Interactive Studios & BY NEXT Justice Media.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#38aaf6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "social",
+    "government",
+    "news",
+    "productivity"
+  ],
+  "shortcuts": [
+    {
+      "name": "Evidence Platform",
+      "short_name": "Evidence",
+      "description": "Launch FBI-Grade Forensic Whiteboard & Video Studio",
+      "url": "/?tab=evidence",
+      "icons": [{ "src": "/favicon.svg", "sizes": "512x512" }]
+    },
+    {
+      "name": "SOS Emergency Live",
+      "short_name": "SOS",
+      "description": "Immediate Geo-Tagged Audio/Video Legal Backup",
+      "url": "/?tab=sos",
+      "icons": [{ "src": "/favicon.svg", "sizes": "512x512" }]
+    },
+    {
+      "name": "Brady Officer Registry",
+      "short_name": "Officers",
+      "description": "Search verified repeat offender misconduct index",
+      "url": "/?tab=officers",
+      "icons": [{ "src": "/favicon.svg", "sizes": "512x512" }]
+    }
+  ]
+}

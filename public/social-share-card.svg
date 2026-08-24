@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#172554" stop-opacity="1"/>
+      <stop offset="60%" stop-color="#090d16" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#030712" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Surface -->
+  <rect width="1200" height="630" fill="url(#bgGlow)"/>
+
+  <!-- Subtle Forensic Grid Pattern -->
+  <g opacity="0.15" stroke="#38bdf8" stroke-width="1">
+    <line x1="0" y1="105" x2="1200" y2="105"/>
+    <line x1="0" y1="210" x2="1200" y2="210"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="525" x2="1200" y2="525"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Left: Shield Emblem -->
+  <g transform="translate(100, 115)">
+    <!-- Glow behind shield -->
+    <circle cx="200" cy="200" r="180" fill="#3b82f6" opacity="0.25" filter="blur(30px)"/>
+
+    <!-- Outer Seal Ring -->
+    <circle cx="200" cy="200" r="190" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-dasharray="10 8"/>
+
+    <!-- Shield Geometry -->
+    <path d="M200 35 L330 85 C330 215 275 310 200 365 C125 310 70 215 70 85 Z" 
+          fill="#0c1427" 
+          stroke="url(#blueGlow)" 
+          stroke-width="10" 
+          stroke-linejoin="round"/>
+
+    <!-- Scale of Justice -->
+    <path d="M200 100 V270 M145 150 H255 M145 150 L120 195 H170 L145 150 Z M255 150 L230 195 H280 L255 150 Z M170 270 H230" 
+          fill="none" 
+          stroke="#ffffff" 
+          stroke-width="7" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+
+    <!-- Golden Star -->
+    <polygon points="200,120 205,133 218,133 207,141 211,154 200,146 189,154 193,141 182,133 195,133" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Right: Typography & Slogan -->
+  <g transform="translate(540, 130)">
+    <!-- Top Classification Badge -->
+    <rect width="360" height="34" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+    <text x="180" y="22" font-family="monospace" font-size="12" font-weight="bold" fill="#a5b4fc" text-anchor="middle" letter-spacing="2">
+      • NATIONAL POLICE ACCOUNTABILITY •
+    </text>
+
+    <!-- Latin Slogan -->
+    <text x="0" y="85" font-family="monospace" font-size="16" font-weight="900" fill="#38bdf8" letter-spacing="4">
+      « FIAT JUSTITIA RUAT CAELUM »
+    </text>
+
+    <!-- Main Title -->
+    <text x="0" y="155" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="900" fill="#ffffff" letter-spacing="-1">
+      JUSTICE<tspan fill="#38bdf8">PULSE</tspan>
+    </text>
+
+    <!-- Subtitle Description -->
+    <text x="0" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="600" fill="#cbd5e1">
+      Civil Rights Defense Hub &amp; Forensic Evidence Registry
+    </text>
+
+    <!-- Features Pill Row -->
+    <g transform="translate(0, 240)">
+      <!-- Pill 1 -->
+      <rect width="180" height="36" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+      <text x="90" y="23" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#e2e8f0" text-anchor="middle">
+        ⚖️ Brady Registry
+      </text>
+
+      <!-- Pill 2 -->
+      <rect x="195" width="205" height="36" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+      <text x="297" y="23" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#e2e8f0" text-anchor="middle">
+        🔒 FBI Evidence Vault
+      </text>
+
+      <!-- Pill 3 -->
+      <rect x="415" width="180" height="36" rx="10" fill="#111827" stroke="#374151" stroke-width="1.5"/>
+      <text x="505" y="23" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#e2e8f0" text-anchor="middle">
+        🛡️ SOS Encounter
+      </text>
+    </g>
+
+    <!-- Footer Producer Line -->
+    <text x="0" y="340" font-family="monospace" font-size="13" fill="#64748b" letter-spacing="1">
+      Produced by <tspan fill="#38bdf8" font-weight="bold">Add Interactive Studios</tspan> • BY NEXT Justice Media
+    </text>
+  </g>
+</svg>
