@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { 
   ShieldCheck, 
   AlertTriangle, 
@@ -62,7 +62,7 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
 
   // Interactive Whiteboard Canvas Panning & Zooming
   const [zoomLevel, setZoomLevel] = useState(1);
-  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 }); // Move around whiteboard canvas
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 }); // Moves canvas workspace
   const [isPanning, setIsPanning] = useState(false);
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
 
@@ -142,6 +142,24 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     };
   }, [activeTab]);
 
+  // Window-level safety release so dragging pins never get stuck if pointer leaves container
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      if (draggingPinId || isPanning) {
+        setDraggingPinId(null);
+        setIsPanning(false);
+      }
+    };
+
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    window.addEventListener('touchend', handleGlobalMouseUp);
+
+    return () => {
+      window.removeEventListener('mouseup', handleGlobalMouseUp);
+      window.removeEventListener('touchend', handleGlobalMouseUp);
+    };
+  }, [draggingPinId, isPanning]);
+
   // Status Styling & Badges
   const getStatusBadge = (status) => {
     switch (status) {
@@ -196,22 +214,13 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
   };
 
   const handleCanvasMouseMove = (e) => {
-    // If user is panning the whole canvas
-    if (isPanning && !draggingPinId) {
-      setPanOffset({
-        x: e.clientX - panStart.x,
-        y: e.clientY - panStart.y
-      });
-      return;
-    }
-
     // If user is dragging a specific pin
     if (draggingPinId) {
       const rect = canvasViewportRef.current?.getBoundingClientRect();
       if (!rect) return;
 
-      const newX = Math.max(10, Math.min(1800, Math.round(((e.clientX - rect.left - panOffset.x) / zoomLevel) - dragOffset.x)));
-      const newY = Math.max(10, Math.min(1200, Math.round(((e.clientY - rect.top - panOffset.y) / zoomLevel) - dragOffset.y)));
+      const newX = Math.max(10, Math.min(2200, Math.round(((e.clientX - rect.left - panOffset.x) / zoomLevel) - dragOffset.x)));
+      const newY = Math.max(10, Math.min(1400, Math.round(((e.clientY - rect.top - panOffset.y) / zoomLevel) - dragOffset.y)));
 
       setBoards(boards.map(b => {
         if (b.id === activeBoardId) {
@@ -222,6 +231,15 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
         }
         return b;
       }));
+      return;
+    }
+
+    // If user is panning the whole canvas
+    if (isPanning) {
+      setPanOffset({
+        x: e.clientX - panStart.x,
+        y: e.clientY - panStart.y
+      });
     }
   };
 
@@ -230,9 +248,10 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     setDraggingPinId(null);
   };
 
-  // Pin Mouse Down (Starts moving a pin)
+  // Pin Mouse Down (Starts moving ONLY the pin, disables canvas panning)
   const handlePinMouseDown = (e, pin) => {
     e.stopPropagation(); // Prevents triggering canvas pan
+    setIsPanning(false);
 
     if (isConnectMode) {
       handlePinConnectClick(pin.id);
@@ -264,6 +283,7 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
 
   const handlePinTouchStart = (e, pin) => {
     e.stopPropagation();
+    setIsPanning(false); // Lock canvas pan so only the pin moves
     if (e.touches.length !== 1) return;
     const touch = e.touches[0];
     const rect = canvasViewportRef.current?.getBoundingClientRect();
@@ -292,22 +312,14 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     if (e.touches.length !== 1) return;
     const touch = e.touches[0];
 
-    // Panning canvas on touch
-    if (isPanning && !draggingPinId) {
-      setPanOffset({
-        x: touch.clientX - panStart.x,
-        y: touch.clientY - panStart.y
-      });
-      return;
-    }
-
-    // Dragging pin on touch
+    // Dragging pin on touch (Moves ONLY the pin!)
     if (draggingPinId) {
+      e.preventDefault();
       const rect = canvasViewportRef.current?.getBoundingClientRect();
       if (!rect) return;
 
-      const newX = Math.max(10, Math.min(1800, Math.round(((touch.clientX - rect.left - panOffset.x) / zoomLevel) - dragOffset.x)));
-      const newY = Math.max(10, Math.min(1200, Math.round(((touch.clientY - rect.top - panOffset.y) / zoomLevel) - dragOffset.y)));
+      const newX = Math.max(10, Math.min(2200, Math.round(((touch.clientX - rect.left - panOffset.x) / zoomLevel) - dragOffset.x)));
+      const newY = Math.max(10, Math.min(1400, Math.round(((touch.clientY - rect.top - panOffset.y) / zoomLevel) - dragOffset.y)));
 
       setBoards(boards.map(b => {
         if (b.id === activeBoardId) {
@@ -318,6 +330,16 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
         }
         return b;
       }));
+      return;
+    }
+
+    // Panning canvas on touch
+    if (isPanning) {
+      e.preventDefault();
+      setPanOffset({
+        x: touch.clientX - panStart.x,
+        y: touch.clientY - panStart.y
+      });
     }
   };
 
@@ -545,7 +567,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
             Collaborative Detective Corkboard & Verification Matrix
           </h2>
           <p className="text-xs text-slate-300 max-w-2xl mt-1 leading-relaxed">
-            Drag empty space to pan the canvas smoothly. Drag polaroid cards freely. Tap pins to inspect forensic exhibits.
+            Drag empty space to move the canvas. Drag individual polaroid cards to place evidence. Tap pins to inspect forensic details.
           </p>
         </div>
 
@@ -686,7 +708,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
             onTouchCancel={handleCanvasTouchEnd}
             style={{ touchAction: 'none' }}
             className={`bg-[#17120e] rounded-3xl border-4 border-[#3e2c1c] shadow-2xl relative h-[560px] sm:h-[700px] overflow-hidden select-none touch-none overscroll-none ${
-              isPanning ? 'cursor-grabbing' : 'cursor-grab'
+              draggingPinId ? 'cursor-grabbing' : isPanning ? 'cursor-grabbing' : 'cursor-grab'
             }`}
           >
             {/* Corkboard Background Pattern */}
@@ -794,6 +816,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                 const statusInfo = getStatusBadge(pin.status);
                 const isSelected = inspectedPin?.id === pin.id;
                 const isConnectSource = connectSourcePinId === pin.id;
+                const isBeingDragged = draggingPinId === pin.id;
 
                 return (
                   <div
@@ -802,22 +825,24 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                     onTouchStart={(e) => handlePinTouchStart(e, pin)}
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (!isConnectMode) {
+                      if (!isConnectMode && !isBeingDragged) {
                         setInspectedPin(pin);
                       }
                     }}
                     style={{
                       left: `${pin.x}px`,
                       top: `${pin.y}px`,
-                      cursor: isConnectMode ? 'pointer' : 'grab',
+                      cursor: isConnectMode ? 'pointer' : isBeingDragged ? 'grabbing' : 'grab',
                       touchAction: 'none'
                     }}
-                    className={`absolute z-20 w-40 sm:w-44 bg-[#f4ebd0] text-slate-900 rounded-sm shadow-2xl p-2.5 pb-3.5 transition-shadow hover:shadow-[0_20px_35px_rgba(0,0,0,0.8)] hover:z-30 select-none group border border-[#d6c7a1] touch-none ${
-                      isSelected
+                    className={`absolute w-40 sm:w-44 bg-[#f4ebd0] text-slate-900 rounded-sm shadow-2xl p-2.5 pb-3.5 transition-all select-none group border border-[#d6c7a1] touch-none ${
+                      isBeingDragged
+                        ? 'z-50 shadow-[0_25px_50px_rgba(0,0,0,0.9)] scale-105 ring-4 ring-indigo-400 -rotate-1'
+                        : isSelected
                         ? 'ring-4 ring-indigo-500 shadow-glow scale-105 z-40'
                         : isConnectSource
                         ? 'ring-4 ring-amber-400 animate-pulse z-40'
-                        : ''
+                        : 'z-20 hover:shadow-[0_20px_35px_rgba(0,0,0,0.8)] hover:z-30'
                     }`}
                   >
                     {/* Metallic Push Pin at Top */}
