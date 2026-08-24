@@ -299,6 +299,23 @@ export default function App() {
         />
       )}
 
+      {/* STANDALONE FULL-SCREEN DEDICATED INVESTOR CAPITAL & PRODUCTION ROADMAP PORTAL */}
+      {(isInvestorModalOpen || activeTab === 'investor') && (
+        <InvestorPortalView
+          onClose={() => {
+            setIsInvestorModalOpen(false);
+            if (activeTab === 'investor') {
+              setActiveTab('home');
+            }
+          }}
+          showToast={showToast}
+          onOpenEvidenceSuite={handleOpenEvidenceSuite}
+          onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
+          currentTheme={currentTheme}
+          isHighContrast={isHighContrast}
+        />
+      )}
+
       {/* Global Navbar with Settings, Role Persona & Auth Trigger */}
       <Navbar
         onOpenReportModal={() => setIsReportModalOpen(true)}
@@ -526,13 +543,6 @@ export default function App() {
           {activeTab === 'analytics' && (
             <NationalAnalyticsView
               showToast={showToast}
-            />
-          )}
-
-          {activeTab === 'investor' && (
-            <InvestorPortalView
-              showToast={showToast}
-              onOpenEvidenceSuite={handleOpenEvidenceSuite}
             />
           )}
         </div>
