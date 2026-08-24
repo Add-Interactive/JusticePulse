@@ -30,7 +30,7 @@ export default function FeedView({
   const filteredPosts = posts.filter(post => {
     const matchesFilter = filter === 'ALL' || post.type === filter;
     const matchesSearch = !searchQuery || 
-      post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchQuery.toLowerCase()) || 
       post.author.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (post.caseTag?.title && post.caseTag.title.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesFilter && matchesSearch;
@@ -45,45 +45,45 @@ export default function FeedView({
   };
 
   return (
-    <div className="space-y-4">
-      {/* Quick Post Creator Trigger Card (Facebook-style) */}
-      <div className="bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-800 p-4 shadow-xl">
+    <div className="space-y-4 select-none">
+      {/* Quick Post Creator Trigger Card (High Contrast) */}
+      <div className="bg-[#111726] rounded-3xl border-2 border-[#243147] p-4 sm:p-5 shadow-2xl space-y-3">
         <div className="flex items-center space-x-3">
           <img
             src={currentUser.avatar}
             alt={currentUser.name}
-            className="w-10 h-10 rounded-full object-cover border border-slate-700 ring-1 ring-justice-500/20"
+            className="w-10 h-10 rounded-full object-cover border-2 border-slate-600 ring-2 ring-justice-500/30"
           />
           <button
             onClick={onOpenCreatePost}
-            className="flex-1 bg-slate-950/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl px-4 py-2.5 text-left text-xs text-slate-400 hover:text-slate-200 transition-all flex items-center justify-between"
+            className="flex-1 bg-[#080c14] hover:bg-[#151f33] border-2 border-[#1e2a3f] hover:border-justice-500/80 rounded-2xl px-4 py-2.5 text-left text-xs text-slate-300 hover:text-white transition-all flex items-center justify-between shadow-inner"
           >
             <span>What injustice, legal update, or mutual aid need do you want to share?</span>
             <Sparkles className="w-4 h-4 text-justice-400" />
           </button>
         </div>
 
-        <div className="mt-3 pt-3 border-t border-slate-800/80 flex items-center justify-around text-xs text-slate-300">
+        <div className="pt-3 border-t border-[#1c273a] flex items-center justify-around text-xs text-slate-300">
           <button
             onClick={onOpenCreatePost}
-            className="flex items-center space-x-2 py-1 px-2.5 rounded-lg hover:bg-slate-800 hover:text-crimson-400 transition-all"
+            className="flex items-center space-x-2 py-1.5 px-3 rounded-xl bg-[#080c14] border border-[#1e2a3f] hover:border-crimson-600 hover:text-crimson-400 transition-all active:scale-95"
           >
             <ShieldAlert className="w-4 h-4 text-crimson-500" />
-            <span className="font-semibold text-[11px]">Eyewitness Report</span>
+            <span className="font-bold text-[11px]">Eyewitness Report</span>
           </button>
           <button
             onClick={onOpenCreatePost}
-            className="flex items-center space-x-2 py-1 px-2.5 rounded-lg hover:bg-slate-800 hover:text-justice-400 transition-all"
+            className="flex items-center space-x-2 py-1.5 px-3 rounded-xl bg-[#080c14] border border-[#1e2a3f] hover:border-justice-600 hover:text-justice-400 transition-all active:scale-95"
           >
             <FileText className="w-4 h-4 text-justice-400" />
-            <span className="font-semibold text-[11px]">FOIA / Document</span>
+            <span className="font-bold text-[11px]">FOIA / Document</span>
           </button>
           <button
             onClick={onOpenCreatePost}
-            className="flex items-center space-x-2 py-1 px-2.5 rounded-lg hover:bg-slate-800 hover:text-emerald-400 transition-all"
+            className="flex items-center space-x-2 py-1.5 px-3 rounded-xl bg-[#080c14] border border-[#1e2a3f] hover:border-emerald-600 hover:text-emerald-400 transition-all active:scale-95"
           >
             <HeartHandshake className="w-4 h-4 text-emerald-400" />
-            <span className="font-semibold text-[11px]">Mutual Aid Goal</span>
+            <span className="font-bold text-[11px]">Mutual Aid Goal</span>
           </button>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function FeedView({
       {/* Posts List */}
       <div className="space-y-4">
         {filteredPosts.length > 0 ? (
-          filteredPosts.map(post => (
+          filteredPosts.map((post) => (
             <PostCard
               key={post.id}
               post={post}
@@ -112,18 +112,12 @@ export default function FeedView({
             />
           ))
         ) : (
-          <div className="bg-slate-900/60 rounded-2xl p-8 border border-slate-800 text-center space-y-3">
+          <div className="bg-[#111726] rounded-3xl border-2 border-[#243147] p-10 text-center space-y-3 shadow-2xl">
             <Info className="w-8 h-8 text-slate-500 mx-auto" />
-            <h4 className="text-sm font-bold text-slate-200">No Dispatches Found</h4>
+            <h4 className="text-sm font-bold text-white uppercase font-mono">No Dispatches Found</h4>
             <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              No posts matched your current category or search criteria. Be the first to publish an eyewitness report or legal update.
+              No matching community reports for this filter. Try selecting "All Dispatches" or clearing your search term.
             </p>
-            <button
-              onClick={onOpenCreatePost}
-              className="px-4 py-2 bg-justice-600 hover:bg-justice-500 text-white rounded-xl text-xs font-bold shadow-glow"
-            >
-              Publish New Dispatch
-            </button>
           </div>
         )}
       </div>
