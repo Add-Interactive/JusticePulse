@@ -36,6 +36,7 @@ import OralHistoryPlayerView from './components/AudioHub/OralHistoryPlayerView';
 import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
 import InvestigationCanvasView from './components/InvestigationBoard/InvestigationCanvasView';
 import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
+import AcademyView from './components/Academy/AcademyView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
 import SplashScreen from './components/Splash/SplashScreen';
 import Toast from './components/Common/Toast';
@@ -284,6 +285,13 @@ export default function App() {
 
           {activeTab === 'nexus' && (
             <EmergencyNexusView
+              showToast={showToast}
+            />
+          )}
+
+          {activeTab === 'academy' && (
+            <AcademyView
+              currentUser={currentUser}
               showToast={showToast}
             />
           )}
