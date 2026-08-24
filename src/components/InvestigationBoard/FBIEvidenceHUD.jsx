@@ -35,7 +35,9 @@ import {
   Unlink,
   HardDrive,
   FolderPlus,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Smartphone,
+  Move
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { fbiEvidenceLibrary, fbiBoardTemplates } from '../../data/fbiEvidenceData';
@@ -52,7 +54,7 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
   const [selectedTypeFilter, setSelectedTypeFilter] = useState('ALL');
 
   // Interactive Whiteboard Selection State
-  const [inspectedPin, setInspectedPin] = useState(null); // When clicked, opens enterprise inspector
+  const [inspectedPin, setInspectedPin] = useState(null); // When clicked/tapped, opens enterprise inspector
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isConnectMode, setIsConnectMode] = useState(false);
   const [connectSourcePinId, setConnectSourcePinId] = useState(null);
@@ -84,9 +86,10 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     { label: 'Eyewitness Witness', url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80' }
   ];
 
-  // Dragging State
+  // Dragging & Touch State
   const [draggingPinId, setDraggingPinId] = useState(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const touchStartRef = useRef({ time: 0, x: 0, y: 0, pinId: null });
   const canvasRef = useRef(null);
 
   const activeBoard = boards.find(b => b.id === activeBoardId) || boards[0];
@@ -132,7 +135,7 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     }
   };
 
-  // Drag Handlers
+  // MOUSE Drag Handlers
   const handlePinMouseDown = (e, pin) => {
     if (isConnectMode) {
       handlePinConnectClick(pin.id);
@@ -156,8 +159,8 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     const rect = canvasRef.current?.getBoundingClientRect();
     if (!rect) return;
 
-    const newX = Math.max(10, Math.min(1400, Math.round((e.clientX - rect.left) / zoomLevel - dragOffset.x)));
-    const newY = Math.max(10, Math.min(800, Math.round((e.clientY - rect.top) / zoomLevel - dragOffset.y)));
+    const newX = Math.max(10, Math.min(1300, Math.round((e.clientX - rect.left) / zoomLevel - dragOffset.x)));
+    const newY = Math.max(10, Math.min(750, Math.round((e.clientY - rect.top) / zoomLevel - dragOffset.y)));
 
     setBoards(boards.map(b => {
       if (b.id === activeBoardId) {
@@ -174,12 +177,79 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     setDraggingPinId(null);
   };
 
+  // TOUCH SCREEN Drag & Tap Handlers for Mobile / Tablets / Touch Laptops
+  const handlePinTouchStart = (e, pin) => {
+    if (e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    touchStartRef.current = {
+      time: Date.now(),
+      x: touch.clientX,
+      y: touch.clientY,
+      pinId: pin.id
+    };
+
+    if (isConnectMode) {
+      handlePinConnectClick(pin.id);
+      return;
+    }
+
+    setDraggingPinId(pin.id);
+    setDragOffset({
+      x: (touch.clientX - rect.left) / zoomLevel - pin.x,
+      y: (touch.clientY - rect.top) / zoomLevel - pin.y
+    });
+  };
+
+  const handleCanvasTouchMove = (e) => {
+    if (!draggingPinId || e.touches.length !== 1) return;
+
+    const touch = e.touches[0];
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    // Check if moved more than 8px - if so, it's a drag, prevent scroll
+    const moveDist = Math.hypot(touch.clientX - touchStartRef.current.x, touch.clientY - touchStartRef.current.y);
+    if (moveDist > 8) {
+      e.preventDefault(); // Prevent page scrolling during pin drag
+    }
+
+    const newX = Math.max(10, Math.min(1300, Math.round((touch.clientX - rect.left) / zoomLevel - dragOffset.x)));
+    const newY = Math.max(10, Math.min(750, Math.round((touch.clientY - rect.top) / zoomLevel - dragOffset.y)));
+
+    setBoards(boards.map(b => {
+      if (b.id === activeBoardId) {
+        return {
+          ...b,
+          pins: b.pins.map(p => p.id === draggingPinId ? { ...p, x: newX, y: newY } : p)
+        };
+      }
+      return b;
+    }));
+  };
+
+  const handleCanvasTouchEnd = (e) => {
+    if (!draggingPinId) return;
+
+    const touchDuration = Date.now() - touchStartRef.current.time;
+    const targetPin = activeBoard.pins.find(p => p.id === draggingPinId);
+
+    // If it was a quick tap (< 280ms) without much movement, open the inspector!
+    if (touchDuration < 280 && !isConnectMode && targetPin) {
+      setInspectedPin(targetPin);
+    }
+
+    setDraggingPinId(null);
+  };
+
   // Connect / Red String Handler
   const handlePinConnectClick = (pinId) => {
     if (!connectSourcePinId) {
       setConnectSourcePinId(pinId);
       const sourcePin = activeBoard.pins.find(p => p.id === pinId);
-      showToast(`Selected "${sourcePin?.title}". Now click target pin to tie red string!`, 'info');
+      showToast(`Selected "${sourcePin?.title}". Now tap target pin to tie red string!`, 'info');
     } else {
       if (connectSourcePinId === pinId) {
         showToast('Cannot connect a pin to itself', 'error');
@@ -229,8 +299,8 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
       role: newPinRole,
       category: newPinCategory,
       photo: newPinPhoto || 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&auto=format&fit=crop&q=80',
-      x: 120 + (activeBoard.pins.length * 40) % 500,
-      y: 120 + (activeBoard.pins.length * 30) % 350,
+      x: 60 + (activeBoard.pins.length * 35) % 400,
+      y: 80 + (activeBoard.pins.length * 30) % 300,
       status: newPinStatus,
       hash: `SHA256:${Math.random().toString(16).substring(2, 10).toUpperCase()}...${Math.random().toString(16).substring(2, 6).toUpperCase()}`,
       notes: newPinNotes || 'Forensic exhibit pinned by investigator.'
@@ -250,7 +320,7 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     setNewPinNotes('');
     setIsAddPinModalOpen(false);
     confetti({ particleCount: 35, spread: 60 });
-    showToast(`Pinned "${newPin.title}" onto the investigation corkboard!`, 'success');
+    showToast(`Pinned "${newPin.title}" onto the investigation whiteboard!`, 'success');
   };
 
   // Create Brand New Custom Board
@@ -359,34 +429,34 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950/80 to-slate-900 rounded-3xl p-6 border-2 border-indigo-500/40 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-slate-900 via-indigo-950/80 to-slate-900 rounded-3xl p-4 sm:p-6 border-2 border-indigo-500/40 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2 text-indigo-400 mb-1">
             <Layers className="w-5 h-5 animate-pulse" />
-            <span className="text-xs font-bold uppercase tracking-wider font-mono">FBI-Grade Forensic Whiteboard System</span>
+            <span className="text-xs font-bold uppercase tracking-wider font-mono">Touch-Ready Forensic Whiteboard</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-white font-display">
+          <h2 className="text-lg sm:text-2xl font-black text-white font-display">
             Collaborative Detective Corkboard & Verification Matrix
           </h2>
           <p className="text-xs text-slate-300 max-w-2xl mt-1 leading-relaxed">
-            Add, link, and inspect forensic exhibits with dynamic red strings. Click any polaroid on the whiteboard to inspect its full SHA-256 chain of custody and connected evidence.
+            Optimized for phones, iPads, touchscreens, and laptops. Tap to inspect evidence nodes, drag polaroids freely, and tie forensic red strings.
           </p>
         </div>
 
         <div className="flex items-center space-x-2 flex-wrap">
           <button
             onClick={() => setIsAddPinModalOpen(true)}
-            className="flex items-center space-x-1.5 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow-indigo transition-all"
+            className="flex items-center space-x-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow-indigo transition-all active:scale-95"
           >
             <Plus className="w-4 h-4" />
-            <span>Add Item to Whiteboard</span>
+            <span>+ Add Item</span>
           </button>
 
           <button
             onClick={() => setIsCreateBoardModalOpen(true)}
-            className="flex items-center space-x-1.5 px-4 py-2.5 bg-purple-900 hover:bg-purple-800 text-purple-200 border border-purple-700 rounded-xl text-xs font-bold transition-all"
+            className="flex items-center space-x-1.5 px-3 sm:px-3.5 py-2 sm:py-2.5 bg-purple-900 hover:bg-purple-800 text-purple-200 border border-purple-700 rounded-xl text-xs font-bold transition-all"
           >
             <FolderPlus className="w-4 h-4" />
             <span>+ New Board</span>
@@ -394,10 +464,10 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
 
           <button
             onClick={handleExportDossier}
-            className="flex items-center space-x-1.5 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-bold transition-all"
+            className="flex items-center space-x-1.5 px-3 sm:px-3.5 py-2 sm:py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-bold transition-all"
           >
             <Download className="w-4 h-4" />
-            <span>Export Dossier</span>
+            <span className="hidden sm:inline">Export Dossier</span>
           </button>
         </div>
       </div>
@@ -406,14 +476,14 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
       <div className="flex items-center justify-between border-b border-slate-800 pb-2 overflow-x-auto gap-3">
         <div className="flex space-x-2">
           {[
-            { id: 'corkboard', label: '🕵️ Hollywood Detective Corkboard', icon: Pin },
-            { id: 'library', label: '📁 FBI Evidence Master Vault', icon: FileText },
-            { id: 'verification', label: '⚖️ Community Verification Triage', icon: ShieldCheck }
+            { id: 'corkboard', label: '🕵️ Detective Corkboard', icon: Pin },
+            { id: 'library', label: '📁 Evidence Vault', icon: FileText },
+            { id: 'verification', label: '⚖️ Verification Triage', icon: ShieldCheck }
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-2 ${
+              className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-1.5 sm:space-x-2 ${
                 activeTab === tab.id
                   ? 'bg-indigo-600 text-white shadow-glow'
                   : 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white'
@@ -426,14 +496,14 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
 
         {activeTab === 'corkboard' && (
           <div className="flex items-center space-x-2 flex-shrink-0">
-            <span className="text-[11px] text-slate-400 font-mono">Case Board:</span>
+            <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">Board:</span>
             <select
               value={activeBoardId}
               onChange={(e) => {
                 setActiveBoardId(e.target.value);
                 setInspectedPin(null);
               }}
-              className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-semibold"
+              className="bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-semibold max-w-[180px] sm:max-w-none truncate"
             >
               {boards.map(b => (
                 <option key={b.id} value={b.id}>{b.title}</option>
@@ -443,33 +513,27 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
         )}
       </div>
 
-      {/* TAB 1: MOVIE-STYLE DETECTIVE CORKBOARD CANVAS */}
+      {/* TAB 1: MOVIE-STYLE DETECTIVE CORKBOARD CANVAS (TOUCH & DESKTOP) */}
       {activeTab === 'corkboard' && (
-        <div className="space-y-4 animation-fade-in select-none">
+        <div className="space-y-3 sm:space-y-4 animation-fade-in select-none">
           {/* Corkboard Top Bar */}
-          <div className="bg-slate-900/90 rounded-2xl border border-slate-800 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center space-x-3">
+          <div className="bg-slate-900/90 rounded-2xl border border-slate-800 p-3 sm:p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div className="flex items-center space-x-2.5 flex-wrap">
               <span className="text-xs font-mono font-bold text-indigo-300">
-                📌 {activeBoard.pins.length} Evidence Pins • 🧵 {activeBoard.redStrings.length} Red Strings Active
+                📌 {activeBoard.pins.length} Pins • 🧵 {activeBoard.redStrings.length} Strings
               </span>
-              <div className="h-3.5 w-px bg-slate-700"></div>
-              <span className="text-[11px] text-slate-400">Click any pin to inspect evidence & connected nodes.</span>
+              <div className="h-3.5 w-px bg-slate-700 hidden sm:block"></div>
+              <span className="text-[10px] sm:text-[11px] text-amber-300 font-mono flex items-center gap-1">
+                <Smartphone className="w-3.5 h-3.5 text-amber-400" /> Tap pin to open • Drag to move
+              </span>
             </div>
 
             <div className="flex items-center space-x-2">
               <button
-                onClick={() => setIsAddPinModalOpen(true)}
-                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-glow"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>+ Add Item</span>
-              </button>
-
-              <button
                 onClick={() => {
                   setIsConnectMode(!isConnectMode);
                   setConnectSourcePinId(null);
-                  showToast(isConnectMode ? 'Red string mode cancelled' : 'Click Pin A then Pin B to tie a red string!', 'info');
+                  showToast(isConnectMode ? 'Red string mode cancelled' : 'Tap Pin A then Pin B to tie red string!', 'info');
                 }}
                 className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   isConnectMode
@@ -478,23 +542,23 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                 }`}
               >
                 <Link2 className="w-3.5 h-3.5" />
-                <span>{isConnectMode ? 'Click 2 Pins to Connect' : 'Tie Red String'}</span>
+                <span>{isConnectMode ? 'Tap 2 Pins' : 'Tie String'}</span>
               </button>
 
-              <button onClick={() => setZoomLevel(Math.min(1.4, zoomLevel + 0.1))} className="p-1.5 bg-slate-800 text-slate-300 hover:text-white rounded-lg">
+              <button onClick={() => setZoomLevel(Math.min(1.4, zoomLevel + 0.1))} className="p-2 sm:p-1.5 bg-slate-800 text-slate-300 hover:text-white rounded-lg active:scale-95">
                 <ZoomIn className="w-3.5 h-3.5" />
               </button>
-              <button onClick={() => setZoomLevel(Math.max(0.7, zoomLevel - 0.1))} className="p-1.5 bg-slate-800 text-slate-300 hover:text-white rounded-lg">
+              <button onClick={() => setZoomLevel(Math.max(0.7, zoomLevel - 0.1))} className="p-2 sm:p-1.5 bg-slate-800 text-slate-300 hover:text-white rounded-lg active:scale-95">
                 <ZoomOut className="w-3.5 h-3.5" />
               </button>
-              <button onClick={() => setZoomLevel(1)} className="p-1.5 bg-slate-800 text-slate-300 hover:text-white rounded-lg">
+              <button onClick={() => setZoomLevel(1)} className="p-2 sm:p-1.5 bg-slate-800 text-slate-300 hover:text-white rounded-lg active:scale-95">
                 <Maximize2 className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
-          {/* Corkboard Workspace */}
-          <div className="bg-[#17120e] rounded-3xl border-4 border-[#3e2c1c] shadow-2xl relative min-h-[680px] overflow-hidden">
+          {/* Touch-Friendly Responsive Canvas Wrapper (Scrollable & Pannable on Mobile) */}
+          <div className="bg-[#17120e] rounded-3xl border-4 border-[#3e2c1c] shadow-2xl relative min-h-[520px] sm:min-h-[660px] overflow-auto touch-pan-x touch-pan-y">
             {/* Cork Texture Overlay */}
             <div className="absolute inset-0 opacity-40 bg-[radial-gradient(#4a3525_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
 
@@ -503,7 +567,10 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
               onMouseMove={handleCanvasMouseMove}
               onMouseUp={handleCanvasMouseUp}
               onMouseLeave={handleCanvasMouseUp}
-              className="relative w-full h-full min-h-[670px] cursor-crosshair"
+              onTouchMove={handleCanvasTouchMove}
+              onTouchEnd={handleCanvasTouchEnd}
+              onTouchCancel={handleCanvasTouchEnd}
+              className="relative w-[1100px] sm:w-[1400px] h-[600px] sm:h-[750px] cursor-crosshair touch-none"
               style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'top left' }}
             >
               {/* Dynamic SVG Red Strings Layer */}
@@ -513,9 +580,9 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                   const toPin = activeBoard.pins.find(p => p.id === str.to);
                   if (!fromPin || !toPin) return null;
 
-                  const x1 = fromPin.x + 85;
+                  const x1 = fromPin.x + 80;
                   const y1 = fromPin.y + 10;
-                  const x2 = toPin.x + 85;
+                  const x2 = toPin.x + 80;
                   const y2 = toPin.y + 10;
                   const midX = (x1 + x2) / 2;
                   const midY = (y1 + y2) / 2;
@@ -534,7 +601,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                         className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                       />
                       {/* Center Push-Pin Tag */}
-                      <circle cx={midX} cy={midY} r="4" fill="#fbbf24" stroke="#78350f" strokeWidth="1.5" />
+                      <circle cx={midX} cy={midY} r="4.5" fill="#fbbf24" stroke="#78350f" strokeWidth="1.5" />
                       {/* String Relation Label */}
                       <text
                         x={midX}
@@ -556,15 +623,15 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
               {/* Empty Board Helper Notice */}
               {activeBoard.pins.length === 0 && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="p-6 bg-black/70 backdrop-blur-md rounded-2xl border border-dashed border-amber-600/50 text-center space-y-2 max-w-sm pointer-events-auto">
+                  <div className="p-6 bg-black/75 backdrop-blur-md rounded-2xl border border-dashed border-amber-600/60 text-center space-y-2 max-w-sm pointer-events-auto shadow-2xl">
                     <Pin className="w-8 h-8 text-amber-400 mx-auto animate-bounce" />
                     <h4 className="text-sm font-bold text-white uppercase font-mono">Whiteboard is Empty</h4>
                     <p className="text-xs text-slate-300 leading-relaxed">
-                      Click <span className="text-amber-300 font-bold">"+ Add Item"</span> above to place your first polaroid evidence card onto this investigation board!
+                      Tap <span className="text-amber-300 font-bold">"+ Add Item"</span> above to place your first polaroid evidence card onto this investigation board!
                     </p>
                     <button
                       onClick={() => setIsAddPinModalOpen(true)}
-                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow mt-2"
+                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow mt-2 active:scale-95"
                     >
                       + Add First Evidence Pin
                     </button>
@@ -572,7 +639,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                 </div>
               )}
 
-              {/* Polaroid Evidence Pins */}
+              {/* Polaroid Evidence Pins with Mouse & Touch Event Listeners */}
               {activeBoard.pins.map((pin) => {
                 const statusInfo = getStatusBadge(pin.status);
                 const isSelected = inspectedPin?.id === pin.id;
@@ -582,6 +649,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                   <div
                     key={pin.id}
                     onMouseDown={(e) => handlePinMouseDown(e, pin)}
+                    onTouchStart={(e) => handlePinTouchStart(e, pin)}
                     onClick={() => {
                       if (!isConnectMode) {
                         setInspectedPin(pin);
@@ -592,7 +660,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                       top: `${pin.y}px`,
                       cursor: isConnectMode ? 'pointer' : 'grab'
                     }}
-                    className={`absolute z-20 w-44 bg-[#f4ebd0] text-slate-900 rounded-sm shadow-2xl p-2.5 pb-3.5 transition-shadow hover:shadow-[0_20px_35px_rgba(0,0,0,0.8)] hover:z-30 select-none group border border-[#d6c7a1] ${
+                    className={`absolute z-20 w-40 sm:w-44 bg-[#f4ebd0] text-slate-900 rounded-sm shadow-2xl p-2.5 pb-3.5 transition-shadow hover:shadow-[0_20px_35px_rgba(0,0,0,0.8)] hover:z-30 select-none group border border-[#d6c7a1] touch-none ${
                       isSelected
                         ? 'ring-4 ring-indigo-500 shadow-glow scale-105 z-40'
                         : isConnectSource
@@ -611,18 +679,18 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                         e.stopPropagation();
                         handleDeletePin(pin.id);
                       }}
-                      className="absolute top-1 right-1 p-1 rounded-full bg-black/60 hover:bg-crimson-600 text-white opacity-0 group-hover:opacity-100 transition-all z-40"
+                      className="absolute top-1 right-1 p-1 rounded-full bg-black/70 hover:bg-crimson-600 text-white transition-all z-40"
                       title="Remove Pin"
                     >
                       <Trash2 className="w-3 h-3" />
                     </button>
 
                     {/* Photo Area */}
-                    <div className="w-full h-28 bg-slate-950 rounded-sm overflow-hidden mb-2 relative border border-[#d6c7a1]">
+                    <div className="w-full h-24 sm:h-28 bg-slate-950 rounded-sm overflow-hidden mb-2 relative border border-[#d6c7a1]">
                       <img
                         src={pin.photo}
                         alt={pin.title}
-                        className="w-full h-full object-cover grayscale-[30%] contrast-110 group-hover:grayscale-0 transition-all pointer-events-none"
+                        className="w-full h-full object-cover grayscale-[25%] contrast-110 group-hover:grayscale-0 transition-all pointer-events-none"
                       />
                       {/* Status Stamp */}
                       <div className="absolute bottom-1 left-1 right-1">
@@ -637,7 +705,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                       <h4 className="text-[11px] font-black text-slate-950 truncate leading-tight uppercase">
                         {pin.title}
                       </h4>
-                      <p className="text-[9px] font-semibold text-rose-950 uppercase tracking-tight truncate">
+                      <p className="text-[8.5px] sm:text-[9px] font-semibold text-rose-950 uppercase tracking-tight truncate">
                         {pin.role}
                       </p>
                     </div>
@@ -647,9 +715,9 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                       "{pin.notes}"
                     </p>
 
-                    {/* Inspector Click Hint */}
+                    {/* Inspector Click / Tap Hint */}
                     <div className="mt-1.5 pt-1 border-t border-[#d6c7a1] flex items-center justify-between text-[8px] font-mono text-indigo-900 font-bold">
-                      <span>Click to Open</span>
+                      <span>Tap to Inspect</span>
                       <ChevronRight className="w-3 h-3" />
                     </div>
                   </div>
@@ -745,13 +813,13 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
 
       {/* TAB 3: COMMUNITY VERIFICATION TRIAGE */}
       {activeTab === 'verification' && (
-        <div className="bg-slate-900 rounded-3xl border border-slate-800 p-6 space-y-5">
+        <div className="bg-slate-900 rounded-3xl border border-slate-800 p-4 sm:p-6 space-y-5">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 className="text-base font-bold text-white">Democratic Community Evidence Verification Triage</h3>
               <p className="text-xs text-slate-400">Vote to validate authentic evidence or flag disproven police narratives.</p>
             </div>
-            <span className="text-xs font-mono text-emerald-400 bg-emerald-950 px-3 py-1 rounded-full border border-emerald-800">
+            <span className="text-xs font-mono text-emerald-400 bg-emerald-950 px-3 py-1 rounded-full border border-emerald-800 hidden sm:inline-block">
               100% Cryptographic Consensus
             </span>
           </div>
@@ -769,7 +837,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                         <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase ${statusInfo.color}`}>
                           {statusInfo.label}
                         </span>
-                        <span className="text-[10px] text-slate-400 font-mono">{evd.sha256Hash}</span>
+                        <span className="text-[10px] text-slate-400 font-mono truncate">{evd.sha256Hash}</span>
                       </div>
                       <h4 className="text-xs font-bold text-white mt-1 truncate">{evd.title}</h4>
                       <p className="text-[11px] text-slate-300 leading-snug line-clamp-1">{evd.forensicSummary}</p>
@@ -782,7 +850,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                         confetti({ particleCount: 25, spread: 40 });
                         showToast(`Voted TRUE: Validated "${evd.title}" into community record!`, 'success');
                       }}
-                      className="px-3 py-1.5 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700 rounded-xl text-xs font-bold flex items-center gap-1.5"
+                      className="px-3 py-1.5 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95"
                     >
                       <ThumbsUp className="w-3.5 h-3.5" /> Validate True ({evd.votes.verified})
                     </button>
@@ -791,7 +859,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                       onClick={() => {
                         showToast(`Voted FABRICATION: Flagged "${evd.title}" as police fabrication!`, 'info');
                       }}
-                      className="px-3 py-1.5 bg-crimson-950 hover:bg-crimson-900 text-crimson-300 border border-crimson-700 rounded-xl text-xs font-bold flex items-center gap-1.5"
+                      className="px-3 py-1.5 bg-crimson-950 hover:bg-crimson-900 text-crimson-300 border border-crimson-700 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95"
                     >
                       <ThumbsDown className="w-3.5 h-3.5" /> Refute Fabrication ({evd.votes.debunked})
                     </button>
@@ -804,25 +872,25 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
       )}
 
       {/* ========================================================================= */}
-      {/* ENTERPRISE FORENSIC EVIDENCE DEEP INSPECTOR MODAL (OPENS ON PIN CLICK)    */}
+      {/* ENTERPRISE FORENSIC EVIDENCE DEEP INSPECTOR MODAL (TOUCH-FRIENDLY)        */}
       {/* ========================================================================= */}
       {inspectedPin && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/90 backdrop-blur-md animation-fade-in select-text">
           <div className="bg-slate-900 border-2 border-indigo-500/70 rounded-3xl w-full max-w-4xl max-h-[92vh] shadow-2xl overflow-hidden flex flex-col justify-between">
             {/* Modal Header */}
-            <div className="p-5 bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 border-b border-indigo-900/60 flex items-center justify-between">
-              <div className="flex items-center space-x-2.5">
-                <Pin className="w-5 h-5 text-indigo-400" />
-                <div>
+            <div className="p-4 sm:p-5 bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 border-b border-indigo-900/60 flex items-center justify-between">
+              <div className="flex items-center space-x-2.5 min-w-0">
+                <Pin className="w-5 h-5 text-indigo-400 flex-shrink-0" />
+                <div className="min-w-0">
                   <div className="flex items-center space-x-2">
-                    <h3 className="text-base sm:text-lg font-black text-white font-display uppercase tracking-wide">
+                    <h3 className="text-sm sm:text-lg font-black text-white font-display uppercase tracking-wide truncate">
                       {inspectedPin.title}
                     </h3>
-                    <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase ${getStatusBadge(inspectedPin.status).color}`}>
+                    <span className={`text-[8.5px] sm:text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase ${getStatusBadge(inspectedPin.status).color} flex-shrink-0`}>
                       {getStatusBadge(inspectedPin.status).label}
                     </span>
                   </div>
-                  <p className="text-xs text-indigo-300 font-mono">{inspectedPin.role}</p>
+                  <p className="text-xs text-indigo-300 font-mono truncate">{inspectedPin.role}</p>
                 </div>
               </div>
 
@@ -835,19 +903,19 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 overflow-y-auto space-y-5 flex-1">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-5 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5">
                 {/* Left: Media & Hash (5 Cols) */}
                 <div className="md:col-span-5 space-y-3">
-                  <div className="h-56 bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner relative">
+                  <div className="h-48 sm:h-56 bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner relative">
                     <img src={inspectedPin.photo} alt={inspectedPin.title} className="w-full h-full object-cover" />
                     <div className="absolute top-2 left-2 bg-black/80 px-2 py-0.5 rounded text-[9px] font-mono text-emerald-400 border border-emerald-800">
                       FORENSIC EXHIBIT
                     </div>
                   </div>
 
-                  <div className="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 space-y-1 font-mono text-xs">
-                    <span className="text-[10px] text-slate-500 font-bold uppercase block">SHA-256 Digital Checksum:</span>
+                  <div className="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-1 font-mono text-xs">
+                    <span className="text-[10px] text-slate-500 font-bold uppercase block">SHA-256 Checksum:</span>
                     <p className="text-indigo-400 break-all text-[11px] select-all">{inspectedPin.hash || 'SHA256:8F91B02C7841EA09B29910D94A71295F8102CBA1902834E1'}</p>
                   </div>
                 </div>
@@ -871,7 +939,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                     <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
                       {getConnectedPinsFor(inspectedPin.id).length === 0 ? (
                         <p className="text-xs text-slate-500 italic p-2 bg-slate-950 rounded-xl border border-slate-800">
-                          No red strings attached to this pin yet. Click "Tie Red String" to connect it with other exhibits!
+                          No red strings attached to this pin yet. Tap "Tie String" to connect it with other exhibits!
                         </p>
                       ) : (
                         getConnectedPinsFor(inspectedPin.id).map((conn, idx) => (
@@ -904,7 +972,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                           confetti({ particleCount: 30, spread: 50 });
                           showToast('Verified True vote cast!', 'success');
                         }}
-                        className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-glow-emerald"
+                        className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-glow-emerald active:scale-95"
                       >
                         ✓ Validate True
                       </button>
@@ -915,17 +983,17 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
             </div>
 
             {/* Modal Footer Actions */}
-            <div className="p-4 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
+            <div className="p-3 sm:p-4 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
               <button
                 onClick={() => handleDeletePin(inspectedPin.id)}
-                className="px-4 py-2 bg-crimson-950 hover:bg-crimson-900 text-crimson-300 border border-crimson-800 rounded-xl text-xs font-bold flex items-center gap-1.5"
+                className="px-3.5 sm:px-4 py-2 bg-crimson-950 hover:bg-crimson-900 text-crimson-300 border border-crimson-800 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95"
               >
-                <Trash2 className="w-3.5 h-3.5" /> Remove Pin from Whiteboard
+                <Trash2 className="w-3.5 h-3.5" /> Remove Pin
               </button>
 
               <button
                 onClick={() => setInspectedPin(null)}
-                className="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow"
+                className="px-5 sm:px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow active:scale-95"
               >
                 Done Inspecting
               </button>
@@ -935,15 +1003,15 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
       )}
 
       {/* ========================================================================= */}
-      {/* ADD ITEM TO WHITEBOARD MODAL                                              */}
+      {/* ADD ITEM TO WHITEBOARD MODAL (TOUCH-FRIENDLY)                             */}
       {/* ========================================================================= */}
       {isAddPinModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animation-fade-in">
-          <div className="bg-slate-900 border border-indigo-500/60 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden p-6 space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/90 backdrop-blur-md animation-fade-in">
+          <div className="bg-slate-900 border border-indigo-500/60 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <h3 className="text-base font-bold text-white font-display flex items-center gap-2">
                 <Plus className="w-5 h-5 text-indigo-400" />
-                <span>Add Item to Investigation Whiteboard</span>
+                <span>Add Item to Whiteboard</span>
               </h3>
               <button onClick={() => setIsAddPinModalOpen(false)} className="text-slate-400 hover:text-white">
                 <X className="w-5 h-5" />
@@ -963,7 +1031,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-slate-400 font-bold uppercase mb-1">Classification / Role</label>
                   <input
@@ -993,13 +1061,13 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
               {/* Photo Presets Selector */}
               <div>
                 <label className="block text-slate-400 font-bold uppercase mb-1">Select Curated Evidence Photo Preset or Custom URL</label>
-                <div className="grid grid-cols-3 gap-2 mb-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2">
                   {imagePresets.map((preset, idx) => (
                     <button
                       key={idx}
                       type="button"
                       onClick={() => setNewPinPhoto(preset.url)}
-                      className={`p-1.5 rounded-xl border text-[10px] text-center transition-all ${
+                      className={`p-2 rounded-xl border text-[10px] text-center transition-all ${
                         newPinPhoto === preset.url
                           ? 'bg-indigo-950 text-indigo-300 border-indigo-500 font-bold'
                           : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700'
@@ -1051,15 +1119,15 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
       )}
 
       {/* ========================================================================= */}
-      {/* CREATE NEW CUSTOM WHITEBOARD MODAL                                        */}
+      {/* CREATE NEW CUSTOM WHITEBOARD MODAL (TOUCH-FRIENDLY)                       */}
       {/* ========================================================================= */}
       {isCreateBoardModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animation-fade-in">
-          <div className="bg-slate-900 border border-purple-500/60 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden p-6 space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/90 backdrop-blur-md animation-fade-in">
+          <div className="bg-slate-900 border border-purple-500/60 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <h3 className="text-base font-bold text-white font-display flex items-center gap-2">
                 <FolderPlus className="w-5 h-5 text-purple-400" />
-                <span>Create New Investigation Whiteboard</span>
+                <span>Create Investigation Whiteboard</span>
               </h3>
               <button onClick={() => setIsCreateBoardModalOpen(false)} className="text-slate-400 hover:text-white">
                 <X className="w-5 h-5" />
