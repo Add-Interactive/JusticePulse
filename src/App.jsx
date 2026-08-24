@@ -19,6 +19,7 @@ import EmergencyRecorderModal from './components/RightsGuide/EmergencyRecorderMo
 import NationalAnalyticsView from './components/Analytics/NationalAnalyticsView';
 import UnifiedEvidenceDashboard from './components/EvidenceSuite/UnifiedEvidenceDashboard';
 import InvestorPitchModal from './components/Investor/InvestorPitchModal';
+import InvestorPortalView from './components/Investor/InvestorPortalView';
 import StateHeatmapView from './components/Map/StateHeatmapView';
 import FOIAGeneratorView from './components/FOIAGenerator/FOIAGeneratorView';
 import MemorialSanctuaryView from './components/Memorial/MemorialSanctuaryView';
@@ -331,13 +332,7 @@ export default function App() {
         {!isFocusMode && (
           <Sidebar
             activeTab={activeTab}
-            setActiveTab={(tab) => {
-              if (tab === 'investor') {
-                setIsInvestorModalOpen(true);
-              } else {
-                setActiveTab(tab);
-              }
-            }}
+            setActiveTab={setActiveTab}
           />
         )}
 
@@ -531,6 +526,13 @@ export default function App() {
           {activeTab === 'analytics' && (
             <NationalAnalyticsView
               showToast={showToast}
+            />
+          )}
+
+          {activeTab === 'investor' && (
+            <InvestorPortalView
+              showToast={showToast}
+              onOpenEvidenceSuite={handleOpenEvidenceSuite}
             />
           )}
         </div>
