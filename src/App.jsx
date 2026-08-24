@@ -36,6 +36,7 @@ import OralHistoryPlayerView from './components/AudioHub/OralHistoryPlayerView';
 import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
 import FBIEvidenceHUD from './components/InvestigationBoard/FBIEvidenceHUD';
 import MultiCamStudioView from './components/MultiCam/MultiCamStudioView';
+import DepositionSimulatorView from './components/Deposition/DepositionSimulatorView';
 import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
 import AcademyView from './components/Academy/AcademyView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
@@ -313,6 +314,12 @@ export default function App() {
 
           {activeTab === 'multicam' && (
             <MultiCamStudioView
+              showToast={showToast}
+            />
+          )}
+
+          {activeTab === 'deposition' && (
+            <DepositionSimulatorView
               showToast={showToast}
             />
           )}
