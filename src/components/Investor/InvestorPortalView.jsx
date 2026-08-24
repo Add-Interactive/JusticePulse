@@ -26,19 +26,29 @@ import {
   Mail,
   Zap,
   Globe,
-  Award
+  Award,
+  MapPin,
+  Clock,
+  Server,
+  Cpu,
+  ShieldAlert,
+  ChevronDown
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { INVESTOR_PORTAL_DATA } from '../../data/investorPortalData';
 
 export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
-  const [activeTab, setActiveTab] = useState('tiers'); // 'tiers' | 'monetization' | 'marketplace' | 'projections' | 'ask'
+  const [activeTab, setActiveTab] = useState('roadmap'); // 'roadmap' | 'tiers' | 'monetization' | 'marketplace' | 'projections' | 'ask'
   const [billingCycle, setBillingCycle] = useState('annual'); // 'monthly' | 'annual'
+  const [selectedPhaseId, setSelectedPhaseId] = useState('phase-1');
   
   // Interactive Financial Calculator Sliders
   const [firmSubscribers, setFirmSubscribers] = useState(1200);
   const [govContracts, setGovContracts] = useState(75);
   const [avgCaseProcessingPerMonth, setAvgCaseProcessingPerMonth] = useState(350);
+
+  // Interactive Burn / Headcount Slider for Roadmap
+  const [engineeringTeamSize, setEngineeringTeamSize] = useState(8);
 
   // Financial Calculations
   const firmAnnualRev = firmSubscribers * (billingCycle === 'annual' ? 479 * 12 : 599 * 12);
@@ -47,9 +57,11 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
   const totalCalculatedARR = firmAnnualRev + govAnnualRev + processingAnnualRev;
   const estimatedValuation = totalCalculatedARR * 12; // 12x ARR multiple for high-growth vertical SaaS
 
+  const selectedPhase = INVESTOR_PORTAL_DATA.productionRoadmap.phases.find(p => p.id === selectedPhaseId) || INVESTOR_PORTAL_DATA.productionRoadmap.phases[0];
+
   const handleDownloadDeck = () => {
     confetti({ particleCount: 50, spread: 70 });
-    showToast('Justice Pulse Series Seed Deck & Financial Model downloaded (PDF/XLSX)!', 'success');
+    showToast('Justice Pulse Full Production Roadmap & Series Seed Deck downloaded (PDF/XLSX)!', 'success');
   };
 
   const handleScheduleMeeting = (e) => {
@@ -59,6 +71,7 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
   };
 
   const tabs = [
+    { id: 'roadmap', label: '🗺️ Production Roadmap & Cost Scaffolding', icon: Server },
     { id: 'tiers', label: '💎 Subscription Tiers & Pricing', icon: Zap },
     { id: 'monetization', label: '💰 6-Stream Revenue Engine', icon: DollarSign },
     { id: 'marketplace', label: '⚖️ Legal Services & Retainers', icon: HeartHandshake },
@@ -77,11 +90,11 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-purple-950/80 border border-purple-500/80 text-purple-300 text-xs font-mono font-bold tracking-wider uppercase">
               <Sparkles className="w-3.5 h-3.5 text-purple-300" />
-              <span>INVESTOR PORTAL &amp; CAPITAL ALLOCATION DASHBOARD</span>
+              <span>INVESTOR PORTAL • FULL PRODUCTION RELEASE DASHBOARD</span>
             </div>
 
             <div className="flex items-center space-x-2 text-xs font-mono">
-              <span className="text-slate-400">ROUND:</span>
+              <span className="text-slate-400">ROUND ASK:</span>
               <span className="px-3 py-1 rounded-xl bg-purple-900/60 border border-purple-500 text-purple-200 font-black">
                 $3,500,000 SEED
               </span>
@@ -90,22 +103,38 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
 
           <div className="space-y-2 max-w-3xl">
             <h1 className="text-3xl sm:text-5xl font-black text-white font-display tracking-tight leading-tight">
-              THE <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">$42B LEGALTECH</span> INFRASTRUCTURE FOR POLICE ACCOUNTABILITY
+              PRODUCTION ROADMAP &amp; <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">COST SCAFFOLDING</span> DASHBOARD
             </h1>
             <p className="text-sm sm:text-base text-purple-200/90 font-normal leading-relaxed">
-              Monetizing vertical legal software, enterprise municipal oversight API telemetry, contingency retainer matchmaking, and on-demand cryptographic evidence forensics.
+              Transparent, itemized capital allocation showing exact infrastructure costs, NVIDIA AI GPU compute scaling, CJIS compliance milestones, and nationwide production release.
             </p>
           </div>
 
           {/* Quick Metrics Strip */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            {INVESTOR_PORTAL_DATA.executiveSummary.keyMetrics.map((m, idx) => (
-              <div key={idx} className="p-3.5 rounded-2xl bg-[#080c14]/90 border border-purple-800/50 space-y-0.5">
-                <span className="text-[10px] font-mono text-purple-300 font-bold uppercase block truncate">{m.label}</span>
-                <p className="text-xl sm:text-2xl font-black text-white font-mono">{m.value}</p>
-                <p className="text-[10px] text-slate-400 font-medium truncate">{m.sub}</p>
-              </div>
-            ))}
+            <div className="p-3.5 rounded-2xl bg-[#080c14]/90 border border-purple-800/50 space-y-0.5">
+              <span className="text-[10px] font-mono text-purple-300 font-bold uppercase block truncate">Total Seed Budget</span>
+              <p className="text-xl sm:text-2xl font-black text-white font-mono">$3,500,000</p>
+              <p className="text-[10px] text-slate-400 font-medium truncate">18-Month Target Runway</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-[#080c14]/90 border border-purple-800/50 space-y-0.5">
+              <span className="text-[10px] font-mono text-indigo-300 font-bold uppercase block truncate">Monthly Burn Rate</span>
+              <p className="text-xl sm:text-2xl font-black text-indigo-300 font-mono">$194,444/mo</p>
+              <p className="text-[10px] text-slate-400 font-medium truncate">Optimal Capital Velocity</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-[#080c14]/90 border border-purple-800/50 space-y-0.5">
+              <span className="text-[10px] font-mono text-pink-300 font-bold uppercase block truncate">Execution Phases</span>
+              <p className="text-xl sm:text-2xl font-black text-pink-300 font-mono">5 Phases</p>
+              <p className="text-[10px] text-slate-400 font-medium truncate">Beta ➔ Federal Court Scale</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-[#080c14]/90 border border-purple-800/50 space-y-0.5">
+              <span className="text-[10px] font-mono text-emerald-400 font-bold uppercase block truncate">Compliance Node</span>
+              <p className="text-xl sm:text-2xl font-black text-emerald-400 font-mono">CJIS &amp; FRE 1006</p>
+              <p className="text-[10px] text-slate-400 font-medium truncate">FIPS 140-3 HSM Certified</p>
+            </div>
           </div>
 
           {/* Action CTAs */}
@@ -115,7 +144,7 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
               className="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-glow flex items-center space-x-2 active:scale-95 transition-all"
             >
               <Download className="w-4 h-4" />
-              <span>Download Pitch Deck &amp; Financial Model</span>
+              <span>Download Production Roadmap &amp; Budget (PDF/XLSX)</span>
             </button>
 
             {onOpenEvidenceSuite && (
@@ -124,7 +153,7 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
                 className="px-5 py-3 rounded-2xl bg-[#080c14] hover:bg-[#1a243b] text-slate-200 hover:text-white font-bold text-xs sm:text-sm border-2 border-purple-700 transition-all flex items-center space-x-2 active:scale-95"
               >
                 <Layers className="w-4 h-4 text-purple-400" />
-                <span>Test Live Product (Evidence Suite)</span>
+                <span>Test Live Working Platform</span>
               </button>
             )}
           </div>
@@ -154,7 +183,182 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
       </div>
 
       {/* ========================================================================= */}
-      {/* TAB 1: SUBSCRIPTION TIERS & PRICING MATRIX                                */}
+      {/* TAB 1: FULL PRODUCTION ROADMAP & COST SCAFFOLDING                         */}
+      {/* ========================================================================= */}
+      {activeTab === 'roadmap' && (
+        <section className="space-y-8 animation-fade-in">
+          {/* Section 1.1: Visual Cost Scaffolding Matrix */}
+          <div className="p-5 sm:p-8 rounded-3xl bg-[#111726] border-2 border-purple-600/70 space-y-6 shadow-2xl">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-[9.5px] font-mono px-2.5 py-0.5 rounded-full bg-purple-900 text-purple-200 border border-purple-600 font-bold uppercase">
+                  CAPITAL ALLOCATION WATERFALL
+                </span>
+                <span className="text-xs font-mono text-purple-300 font-bold">18-Month Burn Model</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black text-white font-display mt-1">
+                Where Capital &amp; Infrastructure Costs Are Deployed
+              </h3>
+              <p className="text-xs text-slate-300 font-mono mt-0.5">
+                Itemized breakdown across AI compute clusters, CJIS security audits, legal engineering, and enterprise distribution
+              </p>
+            </div>
+
+            {/* Stacked Progress Bar */}
+            <div className="space-y-2">
+              <div className="w-full h-4 bg-slate-900 rounded-full overflow-hidden flex border border-[#243147]">
+                {INVESTOR_PORTAL_DATA.costScaffoldingBreakdown.map((cat, idx) => (
+                  <div
+                    key={idx}
+                    style={{ width: `${cat.percentage}%` }}
+                    className={`h-full ${cat.color} transition-all relative group cursor-pointer`}
+                    title={`${cat.category}: ${cat.allocation} (${cat.percentage}%)`}
+                  ></div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 pt-1">
+                <span>Total Series Seed: $3,500,000</span>
+                <span>Runway: 18 Months to Series A ($6.0M ARR)</span>
+              </div>
+            </div>
+
+            {/* Cost Allocation Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+              {INVESTOR_PORTAL_DATA.costScaffoldingBreakdown.map((cat, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded-2xl bg-[#080c14] border border-[#1e2a3f] hover:border-purple-500/60 transition-all space-y-2 flex flex-col justify-between"
+                >
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
+                        <span className={`w-2.5 h-2.5 rounded-full ${cat.color}`}></span>
+                        <span>{cat.category}</span>
+                      </span>
+                      <span className="text-xs font-mono font-black text-purple-300">
+                        {cat.allocation}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">{cat.description}</p>
+                  </div>
+
+                  <div className="pt-2 border-t border-[#1c273a] text-[10.5px] font-mono text-slate-400 flex items-center justify-between">
+                    <span>Share of Seed Ask:</span>
+                    <span className="text-white font-bold">{cat.percentage}%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 1.2: Interactive 5-Phase Production Roadmap */}
+          <div className="p-5 sm:p-8 rounded-3xl bg-[#111726] border-2 border-[#243147] space-y-6 shadow-2xl">
+            <div>
+              <span className="text-[9.5px] font-mono px-2.5 py-0.5 rounded-full bg-indigo-900 text-indigo-200 border border-indigo-600 font-bold uppercase">
+                5-PHASE EXECUTION TIMELINE
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-white font-display mt-1">
+                Full Production Release Roadmap (Non-Demo Infrastructure)
+              </h3>
+              <p className="text-xs text-slate-300 font-mono mt-0.5">
+                Click any phase below to inspect exact engineering milestones, lead roles, and scaffolding line items
+              </p>
+            </div>
+
+            {/* Phase Selector Pills */}
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2">
+              {INVESTOR_PORTAL_DATA.productionRoadmap.phases.map((phase) => {
+                const isSelected = selectedPhaseId === phase.id;
+                return (
+                  <button
+                    key={phase.id}
+                    onClick={() => setSelectedPhaseId(phase.id)}
+                    className={`p-3 rounded-2xl text-left transition-all border ${
+                      isSelected
+                        ? 'bg-gradient-to-b from-purple-900/90 to-[#111726] border-purple-400 shadow-glow ring-2 ring-purple-500/40'
+                        : 'bg-[#080c14] border-[#1e2a3f] hover:border-purple-500/50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between text-[10px] font-mono">
+                      <span className="text-purple-300 font-bold">{phase.phaseNumber}</span>
+                      <span className="text-slate-400">{phase.percentOfSeed}</span>
+                    </div>
+                    <h5 className="text-xs font-bold text-white mt-1 leading-snug truncate">{phase.name}</h5>
+                    <p className="text-[10px] text-slate-400 font-mono mt-0.5 truncate">{phase.budget}</p>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Selected Phase Deep-Dive Card */}
+            <div className="p-6 rounded-3xl bg-[#080c14] border-2 border-purple-600/70 space-y-6 shadow-inner">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#1c273a]">
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs font-mono font-black text-purple-400 uppercase">
+                      {selectedPhase.phaseNumber} • {selectedPhase.timeline}
+                    </span>
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border ${selectedPhase.statusColor}`}>
+                      {selectedPhase.status}
+                    </span>
+                  </div>
+                  <h4 className="text-lg sm:text-xl font-black text-white">{selectedPhase.name}</h4>
+                  <p className="text-xs text-slate-400 font-mono">
+                    Accountability Lead: <span className="text-purple-300 font-bold">{selectedPhase.lead}</span>
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-[#111726] border border-purple-800/60 text-right flex-shrink-0">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase block">Phase Budget</span>
+                  <span className="text-xl font-black text-white font-mono">{selectedPhase.budget}</span>
+                  <span className="text-[10px] text-purple-300 font-mono block">({selectedPhase.percentOfSeed} of Seed)</span>
+                </div>
+              </div>
+
+              {/* Deliverables & Cost Scaffolding 2-Column Split */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Left: Key Deliverables Checklist (6 Cols) */}
+                <div className="lg:col-span-6 space-y-3">
+                  <h5 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <span>Key Engineering Scaffolding Deliverables</span>
+                  </h5>
+
+                  <div className="space-y-2">
+                    {selectedPhase.keyDeliverables.map((deliv, dIdx) => (
+                      <div key={dIdx} className="p-3 rounded-xl bg-[#111726] border border-[#1e2a3f] flex items-start space-x-2.5 text-xs text-slate-200">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <span className="leading-relaxed">{deliv}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right: Itemized Cost Line Items (6 Cols) */}
+                <div className="lg:col-span-6 space-y-3">
+                  <h5 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <DollarSign className="w-4 h-4 text-purple-400" />
+                    <span>Itemized Cost Scaffolding Line Items</span>
+                  </h5>
+
+                  <div className="space-y-2">
+                    {selectedPhase.costScaffolding.map((item, iIdx) => (
+                      <div key={iIdx} className="p-3 rounded-xl bg-[#111726] border border-[#1e2a3f] flex items-center justify-between text-xs font-mono">
+                        <span className="text-slate-200 font-medium">{item.item}</span>
+                        <span className="text-purple-300 font-black flex-shrink-0 ml-2">{item.cost}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ========================================================================= */}
+      {/* TAB 2: SUBSCRIPTION TIERS & PRICING MATRIX                                */}
       {/* ========================================================================= */}
       {activeTab === 'tiers' && (
         <section className="space-y-6 animation-fade-in">
@@ -269,7 +473,7 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 2: 6-STREAM REVENUE ENGINE                                            */}
+      {/* TAB 3: 6-STREAM REVENUE ENGINE                                            */}
       {/* ========================================================================= */}
       {activeTab === 'monetization' && (
         <section className="space-y-6 animation-fade-in">
@@ -313,7 +517,7 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 3: LEGAL ASSISTANCE & SERVICES MARKETPLACE                            */}
+      {/* TAB 4: LEGAL ASSISTANCE & SERVICES MARKETPLACE                            */}
       {/* ========================================================================= */}
       {activeTab === 'marketplace' && (
         <section className="space-y-6 animation-fade-in">
@@ -372,7 +576,7 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 4: 5-YEAR FINANCIAL PROJECTIONS & INTERACTIVE CALCULATOR              */}
+      {/* TAB 5: 5-YEAR FINANCIAL PROJECTIONS & INTERACTIVE CALCULATOR              */}
       {/* ========================================================================= */}
       {activeTab === 'projections' && (
         <section className="space-y-6 animation-fade-in">
@@ -499,7 +703,7 @@ export default function InvestorPortalView({ showToast, onOpenEvidenceSuite }) {
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 5: $3.5M SEED ASK & USE OF FUNDS                                      */}
+      {/* TAB 6: $3.5M SEED ASK & USE OF FUNDS                                      */}
       {/* ========================================================================= */}
       {activeTab === 'ask' && (
         <section className="space-y-6 animation-fade-in">

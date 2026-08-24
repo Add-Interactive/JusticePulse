@@ -177,5 +177,167 @@ export const INVESTOR_PORTAL_DATA = {
     { category: 'Enterprise Sales & Legal Partnership Distribution', percentage: 30, amount: '$1,050,000', details: 'Direct sales to top 5,000 civil rights trial firms, CLE partnerships.' },
     { category: 'Regulatory, CJIS Compliance & Cryptographic Auditing', percentage: 15, amount: '$525,000', details: 'Federal Rule 1006 certification, third-party security & SOC2 Type II audits.' },
     { category: 'Community Sanctuary & Mutual Aid Reserve', percentage: 15, amount: '$525,000', details: 'Direct community defense subsidies and grassroots legal observer hubs.' }
+  ],
+
+  // Full Production Release Roadmap & Cost Breakdown
+  productionRoadmap: {
+    totalBudget: '$3,500,000',
+    runwayMonths: 18,
+    monthlyBurn: '$194,444 / mo',
+    phases: [
+      {
+        id: 'phase-1',
+        phaseNumber: 'Phase 1',
+        name: 'CJIS GovCloud Infrastructure & Multi-Tenant Security Node',
+        timeline: 'Q3 2026 – Q4 2026 (Months 1–4)',
+        budget: '$650,000',
+        percentOfSeed: '18.6%',
+        status: 'In Progress (Active Sprint)',
+        statusColor: 'bg-emerald-950 text-emerald-300 border-emerald-700',
+        lead: 'Lead Systems Architect & Security Officer',
+        keyDeliverables: [
+          'Deploy isolated AWS GovCloud (US-East/West) with FIPS 140-3 HSM cryptographic key vaults',
+          'Complete SOC2 Type II audit readiness & CJIS (Criminal Justice Information Services) alignment',
+          'Build multi-tenant tenant isolation layer with role-based cryptographic access control (RBAC)',
+          'Implement client-side Web Crypto API for zero-knowledge SHA-256 exhibit hashing'
+        ],
+        costScaffolding: [
+          { item: 'GovCloud Hosting & Dedicated HSM Vaults (18 mo reserve)', cost: '$180,000' },
+          { item: 'SOC2 Type II & Third-Party Security Penetration Audits', cost: '$120,000' },
+          { item: 'Senior Distributed Systems & Cryptography Engineers (2 FTE)', cost: '$260,000' },
+          { item: 'CJIS Compliance Legal Counsel & Regulatory Filings', cost: '$90,000' }
+        ]
+      },
+      {
+        id: 'phase-2',
+        phaseNumber: 'Phase 2',
+        name: 'High-Compute AI GPU Pipeline & 4K Multi-Cam Frame Synchronizer',
+        timeline: 'Q1 2027 (Months 5–7)',
+        budget: '$850,000',
+        percentOfSeed: '24.3%',
+        status: 'Scheduled',
+        statusColor: 'bg-indigo-950 text-indigo-300 border-indigo-700',
+        lead: 'Head of Computer Vision & Neural Audio Processing',
+        keyDeliverables: [
+          'Provision dedicated NVIDIA H100 GPU compute clusters for sub-frame 4K bodycam redaction',
+          'Deploy acoustic cross-correlation neural network for automatic decibel alignment',
+          'Build real-time facial PII blurring and audio bleeping pipeline with 99.4% precision',
+          'Finalize Veritas Deposition AI with real-time transcript impeachment & cross-examination'
+        ],
+        costScaffolding: [
+          { item: 'High-Throughput NVIDIA GPU Compute Cluster (Reserved)', cost: '$290,000' },
+          { item: 'Computer Vision & Speech-to-Text AI Research Engineers (2 FTE)', cost: '$320,000' },
+          { item: 'Video Transcoding & Object Storage Pipelines (1PB Tier)', cost: '$140,000' },
+          { item: 'Benchmarking Datasets & Model Fine-Tuning Infrastructure', cost: '$100,000' }
+        ]
+      },
+      {
+        id: 'phase-3',
+        phaseNumber: 'Phase 3',
+        name: '50-State Integrated Brady API & Municipal Pilot Integrations',
+        timeline: 'Q2 2027 (Months 8–11)',
+        budget: '$750,000',
+        percentOfSeed: '21.4%',
+        status: 'Scheduled',
+        statusColor: 'bg-purple-950 text-purple-300 border-purple-700',
+        lead: 'VP of GovTech Partnerships & Data Engineering',
+        keyDeliverables: [
+          'Launch automated municipal FOIA request & court docket web scrapers across all 50 states',
+          'Build Monell pattern-and-practice liability detector linking cross-county wandering officers',
+          'Secure 5 municipal oversight pilot contracts (Major Metro Civilian Review Boards)',
+          'Deploy GraphQL/REST Enterprise Data Feed for insurance risk pool underwriting'
+        ],
+        costScaffolding: [
+          { item: 'GovTech Enterprise Sales Director & Field Account Executives', cost: '$280,000' },
+          { item: 'Data Scraping & Cross-Jurisdiction Docket ETL Engineers (2 FTE)', cost: '$250,000' },
+          { item: 'Pilot Integration Subsidies & Municipal Onboarding Support', cost: '$130,000' },
+          { item: 'State Bar Association Partnerships & Ethics Review Board', cost: '$90,000' }
+        ]
+      },
+      {
+        id: 'phase-4',
+        phaseNumber: 'Phase 4',
+        name: 'National Legal Marketplace & Contingency Retainer Engine',
+        timeline: 'Q3 2027 (Months 12–15)',
+        budget: '$650,000',
+        percentOfSeed: '18.6%',
+        status: 'Scheduled',
+        statusColor: 'bg-pink-950 text-pink-300 border-pink-700',
+        lead: 'Head of Legal Marketplace & Litigator Growth',
+        keyDeliverables: [
+          'Launch vetted contingency retainer matchmaker for high-value civil rights recoveries',
+          'Build Escrow & Milestone clearinghouse for forensic expert witness bookings',
+          'Roll out State Bar accredited CLE Academy masterclasses ($399/yr subscription)',
+          'Scale paid law firm SaaS subscriber base from 120 to 500+ active practices'
+        ],
+        costScaffolding: [
+          { item: 'Litigator Community Marketing & Bar Conference Roadshows', cost: '$210,000' },
+          { item: 'Fintech Escrow & Legal Marketplace Compliance Infrastructure', cost: '$150,000' },
+          { item: 'CLE Course Production & Former Federal Magistrate Faculty Fees', cost: '$140,000' },
+          { item: 'Customer Success & Legal Engineering Support Pod (2 FTE)', cost: '$150,000' }
+        ]
+      },
+      {
+        id: 'phase-5',
+        phaseNumber: 'Phase 5',
+        name: 'Federal Court Rule 1006 Certification & Nationwide Enterprise Scale',
+        timeline: 'Q4 2027 – 2028 (Months 16–18+)',
+        budget: '$600,000',
+        percentOfSeed: '17.1%',
+        status: 'Scheduled',
+        statusColor: 'bg-amber-950 text-amber-300 border-amber-700',
+        lead: 'CEO & General Counsel',
+        keyDeliverables: [
+          'Direct integration with Federal Court CM/ECF electronic pleading & docket filing systems',
+          'Establish verified Federal Rule of Evidence 1006 judicial admissibility precedent in 3 Circuits',
+          'Expand to 1,350+ paying law firms and 110+ government oversight nodes ($16M+ ARR)',
+          'Execute Series A Institutional Financing ($15M–$25M Round)'
+        ],
+        costScaffolding: [
+          { item: 'CM/ECF Federal E-Filing API Gateway & Court Integration Engineers', cost: '$220,000' },
+          { item: 'Appellate Amicus Brief Strategy & Judicial Conference Engagements', cost: '$130,000' },
+          { item: 'Series A Preparation, Audited Financials & Legal Due Diligence', cost: '$150,000' },
+          { item: 'Executive Talent Expansion (CFO & VP Enterprise Sales)', cost: '$100,000' }
+        ]
+      }
+    ]
+  },
+
+  costScaffoldingBreakdown: [
+    {
+      category: 'Core Engineering & AI Infrastructure',
+      allocation: '$1,330,000',
+      percentage: 38,
+      color: 'bg-purple-500',
+      description: 'NVIDIA H100 GPU compute clusters, AWS GovCloud, video transcoding pipeline, sub-frame acoustic waveform engine, full-stack engineers (4 FTE).'
+    },
+    {
+      category: 'Security, CJIS Compliance & Cryptographic Auditing',
+      allocation: '$630,000',
+      percentage: 18,
+      color: 'bg-indigo-500',
+      description: 'SOC2 Type II audits, FIPS 140-3 HSM key custody, penetration testing, third-party security certifications, CJIS regulatory compliance.'
+    },
+    {
+      category: 'Enterprise GovTech & Law Firm Sales Distribution',
+      allocation: '$630,000',
+      percentage: 18,
+      color: 'bg-emerald-500',
+      description: 'Direct sales to top 5,000 trial litigators, municipal oversight pilot integrations, state bar roadshows, CLE partnership programs.'
+    },
+    {
+      category: 'Legal Engineering, FRE 1006 & Judicial Standards',
+      allocation: '$560,000',
+      percentage: 16,
+      color: 'bg-amber-500',
+      description: 'Former federal magistrates & appellate advisors, CM/ECF federal e-filing gateway, expert witness clearinghouse, evidence admissibility benchmarks.'
+    },
+    {
+      category: 'Grassroots Sanctuary & Community Defense Reserve',
+      allocation: '$350,000',
+      percentage: 10,
+      color: 'bg-pink-500',
+      description: 'Grassroots legal observer mobile units, SOS cloud storage subsidies for low-income citizens, victim family memorial trust reserve.'
+    }
   ]
 };
