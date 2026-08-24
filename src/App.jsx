@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import RightSidebar from './components/RightSidebar';
@@ -37,6 +37,7 @@ import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
 import AcademyView from './components/Academy/AcademyView';
 import SettlementCalculatorView from './components/SettlementCalculator/SettlementCalculatorView';
 import GrandJurySimulatorView from './components/JurySimulator/GrandJurySimulatorView';
+import CommandPaletteModal from './components/CommandPalette/CommandPaletteModal';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
 import SplashScreen from './components/Splash/SplashScreen';
 import Toast from './components/Common/Toast';
@@ -56,6 +57,7 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isEvidenceSuiteOpen, setIsEvidenceSuiteOpen] = useState(false);
   const [evidenceInitialTab, setEvidenceInitialTab] = useState('corkboard');
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
   // Data State
   const [cases, setCases] = useState(initialCases);
@@ -78,6 +80,18 @@ export default function App() {
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
     badge: 'Verified Organizer'
   });
+
+  // Global Ctrl + K / Command + K Listener
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Real-time Notifications List
   const [notifications, setNotifications] = useState([
@@ -253,6 +267,7 @@ export default function App() {
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
         onOpenEvidenceSuite={() => handleOpenEvidenceSuite('corkboard')}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
         onReplaySplash={() => setShowSplash(true)}
         onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         activeTab={activeTab}
@@ -509,6 +524,16 @@ export default function App() {
           showToast={showToast}
         />
       )}
+
+      <CommandPaletteModal
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onNavigate={(tab) => setActiveTab(tab)}
+        onOpenSOSModal={() => setIsSOSModalOpen(true)}
+        onOpenEvidenceSuite={(subTab) => handleOpenEvidenceSuite(subTab)}
+        onOpenReportModal={() => setIsReportModalOpen(true)}
+        onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
+      />
 
       <CreatePostModal
         isOpen={isCreatePostOpen}
