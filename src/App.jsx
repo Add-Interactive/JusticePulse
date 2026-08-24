@@ -16,7 +16,7 @@ import DonateModal from './components/Support/DonateModal';
 import RightsGuideView from './components/RightsGuide/RightsGuideView';
 import EmergencyRecorderModal from './components/RightsGuide/EmergencyRecorderModal';
 import NationalAnalyticsView from './components/Analytics/NationalAnalyticsView';
-import EvidenceVaultView from './components/EvidenceVault/EvidenceVaultView';
+import UnifiedEvidenceDashboard from './components/EvidenceSuite/UnifiedEvidenceDashboard';
 import InvestorPitchModal from './components/Investor/InvestorPitchModal';
 import StateHeatmapView from './components/Map/StateHeatmapView';
 import FOIAGeneratorView from './components/FOIAGenerator/FOIAGeneratorView';
@@ -27,17 +27,12 @@ import ProfileView from './components/Profile/ProfileView';
 import DepartmentScorecardsView from './components/Departments/DepartmentScorecardsView';
 import EventsView from './components/Events/EventsView';
 import LawLibraryView from './components/LawLibrary/LawLibraryView';
-import WhistleblowerView from './components/Whistleblower/WhistleblowerView';
 import TownhallView from './components/Townhall/TownhallView';
 import BudgetSandboxView from './components/Budget/BudgetSandboxView';
 import LegislationTrackerView from './components/Legislation/LegislationTrackerView';
 import FieldObserverView from './components/FieldMode/FieldObserverView';
 import OralHistoryPlayerView from './components/AudioHub/OralHistoryPlayerView';
 import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
-import FBIEvidenceHUD from './components/InvestigationBoard/FBIEvidenceHUD';
-import MultiCamStudioView from './components/MultiCam/MultiCamStudioView';
-import DepositionSimulatorView from './components/Deposition/DepositionSimulatorView';
-import ComplaintGeneratorView from './components/ComplaintGenerator/ComplaintGeneratorView';
 import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
 import AcademyView from './components/Academy/AcademyView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
@@ -299,34 +294,24 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'pleadings' && (
-            <ComplaintGeneratorView
+          {/* UNIFIED FORENSIC EVIDENCE COMMAND SUITE */}
+          {(activeTab === 'evidence_suite' || activeTab === 'whiteboard' || activeTab === 'multicam' || activeTab === 'deposition' || activeTab === 'vault' || activeTab === 'whistleblower' || activeTab === 'pleadings') && (
+            <UnifiedEvidenceDashboard
               showToast={showToast}
+              onOpenCaseDetail={handleOpenCaseDetail}
+              initialSubTab={
+                activeTab === 'multicam' ? 'multicam' :
+                activeTab === 'deposition' ? 'deposition' :
+                activeTab === 'vault' ? 'vault' :
+                activeTab === 'whistleblower' ? 'whistleblower' :
+                activeTab === 'pleadings' ? 'pleadings' : 'corkboard'
+              }
             />
           )}
 
           {activeTab === 'audiohub' && (
             <OralHistoryPlayerView
               onOpenDonateModal={handleOpenDonateModal}
-              showToast={showToast}
-            />
-          )}
-
-          {activeTab === 'whiteboard' && (
-            <FBIEvidenceHUD
-              showToast={showToast}
-              onOpenCaseDetail={handleOpenCaseDetail}
-            />
-          )}
-
-          {activeTab === 'multicam' && (
-            <MultiCamStudioView
-              showToast={showToast}
-            />
-          )}
-
-          {activeTab === 'deposition' && (
-            <DepositionSimulatorView
               showToast={showToast}
             />
           )}
@@ -415,12 +400,6 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'whistleblower' && (
-            <WhistleblowerView
-              showToast={showToast}
-            />
-          )}
-
           {activeTab === 'support' && (
             <SupportHubView
               onOpenDonateModal={handleOpenDonateModal}
@@ -460,12 +439,6 @@ export default function App() {
 
           {activeTab === 'analytics' && (
             <NationalAnalyticsView
-              showToast={showToast}
-            />
-          )}
-
-          {activeTab === 'vault' && (
-            <EvidenceVaultView
               showToast={showToast}
             />
           )}

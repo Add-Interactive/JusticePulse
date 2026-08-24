@@ -9,7 +9,6 @@ import {
   FolderLock, 
   Sparkles, 
   LifeBuoy, 
-  FileCheck2, 
   Map, 
   FileText, 
   Flame, 
@@ -17,7 +16,6 @@ import {
   Radio, 
   Building2, 
   Calendar, 
-  EyeOff, 
   User, 
   MessagesSquare, 
   Sliders, 
@@ -25,11 +23,9 @@ import {
   ShieldCheck, 
   Volume2, 
   CheckSquare,
-  Network,
+  Layers,
   PhoneCall,
-  GraduationCap,
-  Video,
-  Gavel
+  GraduationCap
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
@@ -49,22 +45,17 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     {
       group: 'Accountability & Evidence',
       items: [
-        { id: 'whiteboard', label: 'Evidence HUD & Pins', subtitle: 'FBI Detective Corkboard', icon: Network, badge: 'FBI', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
-        { id: 'multicam', label: 'Multi-Cam Studio', subtitle: 'Synchronized Video Replay', icon: Video, badge: 'Sync', badgeColor: 'bg-teal-950 text-teal-300 border border-teal-800' },
-        { id: 'deposition', label: 'Deposition Simulator', subtitle: 'AI Cross-Examination', icon: Gavel, badge: 'Trial', badgeColor: 'bg-rose-950 text-rose-300 border border-rose-800' },
+        { id: 'evidence_suite', label: 'Evidence Command Suite', subtitle: 'Unified Forensic Matrix', icon: Layers, badge: 'ALL-IN-1', badgeColor: 'bg-indigo-600 text-white font-bold animate-pulse shadow-glow' },
         { id: 'cases', label: 'The Docket', subtitle: 'Verified Case Registry', icon: Scale, badge: '2.4k', badgeColor: 'bg-slate-800 text-slate-300' },
         { id: 'officers', label: 'Officer Index', subtitle: 'Repeat Offender & Brady', icon: ShieldAlert, badge: 'Flagged', badgeColor: 'bg-crimson-900 text-crimson-200 border border-crimson-700/50' },
         { id: 'departments', label: 'Agency Scorecards', subtitle: 'Police Dept Benchmark', icon: Building2, badge: 'Grades', badgeColor: 'bg-slate-800 text-slate-300' },
         { id: 'copwatch', label: 'Cop-Watch Radar', subtitle: 'Live Observer Streaming', icon: Radio, badge: 'Live', badgeColor: 'bg-crimson-950 text-crimson-400 border border-crimson-800' },
-        { id: 'fieldmode', label: 'Field Witness Toolkit', subtitle: 'Tactical Observer Mode', icon: ShieldCheck, badge: 'Field', badgeColor: 'bg-crimson-950 text-crimson-400 border border-crimson-800' },
-        { id: 'vault', label: 'Evidence Vault', subtitle: 'SHA-256 Custody Locker', icon: FolderLock, badge: 'Log', badgeColor: 'bg-slate-800 text-slate-300' },
-        { id: 'whistleblower', label: 'Whistleblower Vault', subtitle: 'Ethical Officer Intake', icon: EyeOff, badge: 'Secure', badgeColor: 'bg-emerald-950 text-emerald-300 border border-emerald-800' }
+        { id: 'fieldmode', label: 'Field Witness Toolkit', subtitle: 'Tactical Observer Mode', icon: ShieldCheck, badge: 'Field', badgeColor: 'bg-crimson-950 text-crimson-400 border border-crimson-800' }
       ]
     },
     {
       group: 'Legal Tools & Sandbox',
       items: [
-        { id: 'pleadings', label: '§ 1983 Complaint Studio', subtitle: 'Federal Pleading Generator', icon: FileText, badge: 'Draft', badgeColor: 'bg-blue-950 text-blue-300 border border-blue-800' },
         { id: 'academy', label: 'Civil Rights Academy', subtitle: 'Interactive Courses & Certs', icon: GraduationCap, badge: 'CLE', badgeColor: 'bg-purple-950 text-purple-300 border border-purple-800' },
         { id: 'map', label: '50-State Shield Map', subtitle: 'State Laws & Circuit Ratings', icon: Map, badge: 'Map', badgeColor: 'bg-justice-950 text-justice-300 border border-justice-800' },
         { id: 'foia', label: 'FOIA Generator', subtitle: 'Draft Open Records Demands', icon: FileText, badge: 'Draft', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
