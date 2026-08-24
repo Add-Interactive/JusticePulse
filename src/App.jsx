@@ -261,9 +261,13 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col selection:bg-justice-500 selection:text-white transition-colors duration-200 ${currentTheme} ${isHighContrast ? 'high-contrast-mode' : ''} ${fontScaleClass}`}>
-      {/* Official Agency Splash Loading Screen */}
+      {/* Official Agency Splash Loading Screen with Theme Synchronization */}
       {showSplash && (
-        <SplashScreen onFinish={() => setShowSplash(false)} />
+        <SplashScreen 
+          onFinish={() => setShowSplash(false)} 
+          currentTheme={currentTheme}
+          isHighContrast={isHighContrast}
+        />
       )}
 
       {/* STANDALONE UNCONSTRAINED FULL-SCREEN EVIDENCE COMMAND SUITE ENTITY WITH THEMES */}
