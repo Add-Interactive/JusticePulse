@@ -21,7 +21,8 @@ import {
   Type,
   Maximize2,
   Minimize2,
-  Sliders
+  Sliders,
+  Palette
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -30,6 +31,7 @@ export default function Navbar({
   onOpenInvestorModal, 
   onOpenEvidenceSuite,
   onOpenCommandPalette,
+  onOpenSettingsModal,
   onReplaySplash,
   onOpenMobileMenu,
   activeTab, 
@@ -49,19 +51,12 @@ export default function Navbar({
 }) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showAccessMenu, setShowAccessMenu] = useState(false);
 
   const availableRoles = [
     { name: 'Dr. Kimberly Adams', role: 'Civil Rights Advocate', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80', badge: 'Verified Organizer' },
     { name: 'Attorney Marcus Vance', role: 'Civil Rights Litigator', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80', badge: 'Bar Verified' },
     { name: 'Elena Rostova', role: 'Eyewitness & Community Member', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80', badge: 'Community Hero' }
   ];
-
-  const toggleFontSize = () => {
-    if (fontSizeScale === 'normal') setFontSizeScale('large');
-    else if (fontSizeScale === 'large') setFontSizeScale('xlarge');
-    else setFontSizeScale('normal');
-  };
 
   return (
     <header className="sticky top-0 z-40 bg-[#0c101c]/98 backdrop-blur-md border-b-2 border-[#243147] shadow-xl">
@@ -82,28 +77,15 @@ export default function Navbar({
 
         {/* Header Right Actions */}
         <div className="flex items-center space-x-2 sm:space-x-3 text-[11px] flex-shrink-0">
-          {/* Quick High Contrast Toggle */}
+          {/* Quick Settings & Themes Button */}
           <button
-            onClick={() => setIsHighContrast(!isHighContrast)}
-            className={`px-2 py-1 rounded-md text-[10px] font-mono font-bold flex items-center gap-1 transition-all border ${
-              isHighContrast
-                ? 'bg-amber-400 text-black border-amber-300 shadow-glow'
-                : 'bg-[#111726] text-slate-300 border-slate-700 hover:border-slate-500'
-            }`}
-            title="Toggle Ultra High Contrast OLED Mode"
+            onClick={onOpenSettingsModal}
+            className="px-2.5 py-1 bg-[#111726] hover:bg-[#1c273a] text-slate-200 hover:text-white border-2 border-slate-700 rounded-lg text-[10px] font-mono font-bold flex items-center gap-1.5 transition-all shadow-sm active:scale-95"
+            title="Open Visual Themes (10 Styles) & Accessibility Settings"
           >
-            <Eye className="w-3 h-3" />
-            <span className="hidden sm:inline">{isHighContrast ? 'Contrast: HIGH' : 'High Contrast'}</span>
-          </button>
-
-          {/* Quick Font Size Toggle */}
-          <button
-            onClick={toggleFontSize}
-            className="px-2 py-1 bg-[#111726] hover:bg-[#1c273a] text-slate-300 border border-slate-700 rounded-md text-[10px] font-mono font-bold flex items-center gap-1 transition-all"
-            title="Cycle Font Size: 100% / 115% / 125%"
-          >
-            <Type className="w-3 h-3 text-indigo-400" />
-            <span>{fontSizeScale === 'normal' ? 'Text: 100%' : fontSizeScale === 'large' ? 'Text: 115%' : 'Text: 125%'}</span>
+            <Palette className="w-3.5 h-3.5 text-indigo-400" />
+            <span className="hidden sm:inline">10 Themes & Settings</span>
+            <span className="sm:hidden">Themes</span>
           </button>
 
           <button
@@ -220,6 +202,15 @@ export default function Navbar({
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Report</span>
+          </button>
+
+          {/* Settings & Themes Button */}
+          <button
+            onClick={onOpenSettingsModal}
+            className="p-2 rounded-xl bg-[#111726] hover:bg-slate-800 text-slate-200 border-2 border-slate-700 transition-all"
+            title="Settings & Themes (10 Styles)"
+          >
+            <Sliders className="w-4 h-4 text-indigo-400" />
           </button>
 
           {/* Notifications Popover */}

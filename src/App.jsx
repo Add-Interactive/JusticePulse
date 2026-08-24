@@ -39,6 +39,7 @@ import SettlementCalculatorView from './components/SettlementCalculator/Settleme
 import GrandJurySimulatorView from './components/JurySimulator/GrandJurySimulatorView';
 import CommandPaletteModal from './components/CommandPalette/CommandPaletteModal';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
+import SettingsModal from './components/Settings/SettingsModal';
 import SplashScreen from './components/Splash/SplashScreen';
 import Toast from './components/Common/Toast';
 
@@ -50,9 +51,12 @@ export default function App() {
   // Splash Screen State
   const [showSplash, setShowSplash] = useState(true);
 
-  // Accessibility & Visual Density State
-  const [isHighContrast, setIsHighContrast] = useState(false);
+  // 10 Visual Themes & Accessibility State
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    return localStorage.getItem('justice_pulse_theme') || 'theme-midnight-navy';
+  });
   const [fontSizeScale, setFontSizeScale] = useState('normal'); // 'normal' | 'large' | 'xlarge'
+  const [isHighContrast, setIsHighContrast] = useState(false);
   const [isFocusMode, setIsFocusMode] = useState(false);
 
   // Navigation & UI State
@@ -63,6 +67,7 @@ export default function App() {
   const [isEvidenceSuiteOpen, setIsEvidenceSuiteOpen] = useState(false);
   const [evidenceInitialTab, setEvidenceInitialTab] = useState('corkboard');
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
   // Data State
   const [cases, setCases] = useState(initialCases);
@@ -255,7 +260,7 @@ export default function App() {
       : 'font-scale-normal';
 
   return (
-    <div className={`min-h-screen flex flex-col selection:bg-justice-500 selection:text-white ${isHighContrast ? 'high-contrast-mode' : 'bg-[#090d16] text-slate-100'} ${fontScaleClass}`}>
+    <div className={`min-h-screen flex flex-col selection:bg-justice-500 selection:text-white transition-colors duration-200 ${currentTheme} ${isHighContrast ? 'high-contrast-mode' : ''} ${fontScaleClass}`}>
       {/* Official Agency Splash Loading Screen */}
       {showSplash && (
         <SplashScreen onFinish={() => setShowSplash(false)} />
@@ -273,13 +278,14 @@ export default function App() {
         />
       )}
 
-      {/* Global Navbar with High-Contrast & Text Scaling Controls */}
+      {/* Global Navbar with Settings & Themes Trigger */}
       <Navbar
         onOpenReportModal={() => setIsReportModalOpen(true)}
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
         onOpenEvidenceSuite={() => handleOpenEvidenceSuite('corkboard')}
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
         onReplaySplash={() => setShowSplash(true)}
         onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         activeTab={activeTab}
@@ -532,7 +538,23 @@ export default function App() {
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
         onOpenEvidenceSuite={() => handleOpenEvidenceSuite('corkboard')}
+        onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
         currentUser={currentUser}
+      />
+
+      {/* Settings & 10 Visual Themes Modal */}
+      <SettingsModal
+        isOpen={isSettingsModalOpen}
+        onClose={() => setIsSettingsModalOpen(false)}
+        currentTheme={currentTheme}
+        setCurrentTheme={setCurrentTheme}
+        fontSizeScale={fontSizeScale}
+        setFontSizeScale={setFontSizeScale}
+        isHighContrast={isHighContrast}
+        setIsHighContrast={setIsHighContrast}
+        isFocusMode={isFocusMode}
+        setIsFocusMode={setIsFocusMode}
+        showToast={showToast}
       />
 
       {/* Global Modals */}

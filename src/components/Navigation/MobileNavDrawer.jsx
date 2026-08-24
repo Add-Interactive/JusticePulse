@@ -30,7 +30,8 @@ import {
   PhoneCall, 
   GraduationCap, 
   Calculator, 
-  Users 
+  Users,
+  Palette
 } from 'lucide-react';
 
 export default function MobileNavDrawer({ 
@@ -41,7 +42,8 @@ export default function MobileNavDrawer({
   onOpenReportModal, 
   onOpenSOSModal, 
   onOpenInvestorModal, 
-  onOpenEvidenceSuite, 
+  onOpenEvidenceSuite,
+  onOpenSettingsModal,
   currentUser 
 }) {
   if (!isOpen) return null;
@@ -172,6 +174,25 @@ export default function MobileNavDrawer({
 
         {/* Scrollable Nav Groups */}
         <div className="p-3.5 flex-1 overflow-y-auto space-y-4">
+          {/* Settings & Themes Button at Top of Drawer */}
+          <div>
+            <button
+              onClick={() => {
+                onClose();
+                onOpenSettingsModal();
+              }}
+              className="w-full p-2.5 bg-gradient-to-r from-indigo-950 via-[#111726] to-purple-950 rounded-2xl border-2 border-indigo-500/70 text-left flex items-center justify-between text-xs font-bold text-white shadow-md active:scale-95 transition-all"
+            >
+              <div className="flex items-center space-x-2">
+                <Palette className="w-4 h-4 text-indigo-400" />
+                <span>10 Visual Themes & Settings</span>
+              </div>
+              <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-indigo-600 text-white font-black">
+                10 Styles
+              </span>
+            </button>
+          </div>
+
           {navGroups.map((group, gIdx) => (
             <div key={gIdx} className="space-y-1.5">
               <div className="px-2 py-1 flex items-center justify-between border-b border-[#1c273a] pb-1">
