@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   ShieldCheck, 
   AlertTriangle, 
@@ -60,11 +60,11 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
   const [selectedStatusFilter, setSelectedStatusFilter] = useState('ALL');
   const [selectedTypeFilter, setSelectedTypeFilter] = useState('ALL');
 
-  // Interactive Whiteboard Canvas Panning & Zooming
+  // Interactive Whiteboard Canvas Position & Zoom
   const [zoomLevel, setZoomLevel] = useState(1);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 }); // Moves canvas workspace
+  const [draggingPinId, setDraggingPinId] = useState(null);
   const [isPanning, setIsPanning] = useState(false);
-  const [panStart, setPanStart] = useState({ x: 0, y: 0 });
 
   // Pin Selection & Connection State
   const [inspectedPin, setInspectedPin] = useState(null);
@@ -98,35 +98,179 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
     { label: 'Eyewitness Witness', url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80' }
   ];
 
-  // Dragging & Touch State for Individual Pins
-  const [draggingPinId, setDraggingPinId] = useState(null);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const touchStartRef = useRef({ time: 0, x: 0, y: 0, pinId: null });
+  // DOM Refs
   const canvasViewportRef = useRef(null);
+
+  // Synchronous State Machine for Flawless Mutual Exclusion
+  const interactionRef = useRef({
+    type: 'IDLE', // 'IDLE' | 'PANNING' | 'DRAGGING_PIN'
+    pinId: null,
+    startX: 0,
+    startY: 0,
+    currentX: 0,
+    currentY: 0,
+    initialPanX: 0,
+    initialPanY: 0,
+    initialPinX: 0,
+    initialPinY: 0,
+    startTime: 0
+  });
 
   const activeBoard = boards.find(b => b.id === activeBoardId) || boards[0];
 
-  // Lock out native page scrolling completely when dragging/touching inside the canvas viewport
+  // Keep interactionRef state synced with current panOffset and zoomLevel
+  const panOffsetRef = useRef(panOffset);
+  panOffsetRef.current = panOffset;
+
+  const zoomLevelRef = useRef(zoomLevel);
+  zoomLevelRef.current = zoomLevel;
+
+  const activeBoardRef = useRef(activeBoard);
+  activeBoardRef.current = activeBoard;
+
+  // =========================================================================
+  // STRICT ATOMIC INTERACTION ENGINE (DELTA COORDINATE MATHEMATICS)
+  // =========================================================================
+
+  // 1. Start Canvas Panning (Empty Space Pressed)
+  const startCanvasPan = (clientX, clientY) => {
+    interactionRef.current = {
+      type: 'PANNING',
+      pinId: null,
+      startX: clientX,
+      startY: clientY,
+      currentX: clientX,
+      currentY: clientY,
+      initialPanX: panOffsetRef.current.x,
+      initialPanY: panOffsetRef.current.y,
+      initialPinX: 0,
+      initialPinY: 0,
+      startTime: Date.now()
+    };
+    setIsPanning(true);
+    setDraggingPinId(null);
+  };
+
+  // 2. Start Pin Dragging (Evidence Card Pressed)
+  const startPinDrag = (clientX, clientY, pin) => {
+    if (isConnectMode) {
+      handlePinConnectClick(pin.id);
+      return;
+    }
+
+    interactionRef.current = {
+      type: 'DRAGGING_PIN',
+      pinId: pin.id,
+      startX: clientX,
+      startY: clientY,
+      currentX: clientX,
+      currentY: clientY,
+      initialPanX: panOffsetRef.current.x,
+      initialPanY: panOffsetRef.current.y,
+      initialPinX: pin.x,
+      initialPinY: pin.y,
+      startTime: Date.now()
+    };
+    setDraggingPinId(pin.id);
+    setIsPanning(false);
+  };
+
+  // 3. Move Pointer (Processes ONLY Pin movement OR Canvas Pan)
+  const movePointer = (clientX, clientY) => {
+    const act = interactionRef.current;
+    act.currentX = clientX;
+    act.currentY = clientY;
+
+    if (act.type === 'DRAGGING_PIN') {
+      // ONLY MOVE THE PIN (Canvas Pan is 100% frozen)
+      const deltaX = (clientX - act.startX) / zoomLevelRef.current;
+      const deltaY = (clientY - act.startY) / zoomLevelRef.current;
+
+      const newX = Math.max(10, Math.min(2200, Math.round(act.initialPinX + deltaX)));
+      const newY = Math.max(10, Math.min(1400, Math.round(act.initialPinY + deltaY)));
+
+      setBoards(prevBoards => prevBoards.map(b => {
+        if (b.id === activeBoardId) {
+          return {
+            ...b,
+            pins: b.pins.map(p => p.id === act.pinId ? { ...p, x: newX, y: newY } : p)
+          };
+        }
+        return b;
+      }));
+      return;
+    }
+
+    if (act.type === 'PANNING') {
+      // ONLY MOVE THE CANVAS (Pins are 100% frozen)
+      const deltaX = clientX - act.startX;
+      const deltaY = clientY - act.startY;
+
+      setPanOffset({
+        x: Math.round(act.initialPanX + deltaX),
+        y: Math.round(act.initialPanY + deltaY)
+      });
+    }
+  };
+
+  // 4. Release Pointer (Determines Quick Tap vs Finished Drag)
+  const endPointer = () => {
+    const act = interactionRef.current;
+
+    if (act.type === 'DRAGGING_PIN') {
+      const duration = Date.now() - act.startTime;
+      const moveDistance = Math.hypot(act.currentX - act.startX, act.currentY - act.startY);
+
+      // If quick tap (< 280ms and moved < 8px) ➔ Open Deep Exhibit Inspector
+      if (duration < 280 && moveDistance < 8 && !isConnectMode) {
+        const targetPin = activeBoardRef.current.pins.find(p => p.id === act.pinId);
+        if (targetPin) {
+          setInspectedPin(targetPin);
+        }
+      }
+    }
+
+    interactionRef.current = {
+      type: 'IDLE',
+      pinId: null,
+      startX: 0,
+      startY: 0,
+      currentX: 0,
+      currentY: 0,
+      initialPanX: 0,
+      initialPanY: 0,
+      initialPinX: 0,
+      initialPinY: 0,
+      startTime: 0
+    };
+    setDraggingPinId(null);
+    setIsPanning(false);
+  };
+
+  // Attach global non-passive pointer & touch listeners directly to canvas container
   useEffect(() => {
     const viewport = canvasViewportRef.current;
     if (!viewport) return;
 
-    const preventPageScroll = (e) => {
+    // Prevent page scroll when touching inside whiteboard
+    const handleNativeTouchMove = (e) => {
       e.preventDefault();
+      if (e.touches.length === 1) {
+        movePointer(e.touches[0].clientX, e.touches[0].clientY);
+      }
     };
 
-    // Non-passive touchmove listener to guarantee no page scrolling
-    viewport.addEventListener('touchmove', preventPageScroll, { passive: false });
-    
-    // Prevent mouse wheel from scrolling page over canvas
+    const handleNativeTouchEnd = (e) => {
+      endPointer();
+    };
+
+    // Wheel zooming & internal canvas scrolling without page scroll
     const handleWheel = (e) => {
       e.preventDefault();
       if (e.ctrlKey || e.metaKey) {
-        // Zoom on pinch/ctrl-wheel
         const delta = e.deltaY < 0 ? 0.05 : -0.05;
         setZoomLevel(prev => Math.min(1.6, Math.max(0.5, parseFloat((prev + delta).toFixed(2)))));
       } else {
-        // Pan on wheel
         setPanOffset(prev => ({
           x: prev.x - e.deltaX * 0.8,
           y: prev.y - e.deltaY * 0.8
@@ -134,33 +278,39 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
       }
     };
 
-    viewport.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      viewport.removeEventListener('touchmove', preventPageScroll);
-      viewport.removeEventListener('wheel', handleWheel);
-    };
-  }, [activeTab]);
-
-  // Window-level safety release so dragging pins never get stuck if pointer leaves container
-  useEffect(() => {
-    const handleGlobalMouseUp = () => {
-      if (draggingPinId || isPanning) {
-        setDraggingPinId(null);
-        setIsPanning(false);
+    // Window-level safety release so mouse drag never gets trapped outside container
+    const handleWindowMouseMove = (e) => {
+      if (interactionRef.current.type !== 'IDLE') {
+        movePointer(e.clientX, e.clientY);
       }
     };
 
-    window.addEventListener('mouseup', handleGlobalMouseUp);
-    window.addEventListener('touchend', handleGlobalMouseUp);
+    const handleWindowMouseUp = () => {
+      if (interactionRef.current.type !== 'IDLE') {
+        endPointer();
+      }
+    };
+
+    viewport.addEventListener('touchmove', handleNativeTouchMove, { passive: false });
+    viewport.addEventListener('touchend', handleNativeTouchEnd, { passive: false });
+    viewport.addEventListener('touchcancel', handleNativeTouchEnd, { passive: false });
+    viewport.addEventListener('wheel', handleWheel, { passive: false });
+
+    window.addEventListener('mousemove', handleWindowMouseMove);
+    window.addEventListener('mouseup', handleWindowMouseUp);
 
     return () => {
-      window.removeEventListener('mouseup', handleGlobalMouseUp);
-      window.removeEventListener('touchend', handleGlobalMouseUp);
-    };
-  }, [draggingPinId, isPanning]);
+      viewport.removeEventListener('touchmove', handleNativeTouchMove);
+      viewport.removeEventListener('touchend', handleNativeTouchEnd);
+      viewport.removeEventListener('touchcancel', handleNativeTouchEnd);
+      viewport.removeEventListener('wheel', handleWheel);
 
-  // Status Styling & Badges
+      window.removeEventListener('mousemove', handleWindowMouseMove);
+      window.removeEventListener('mouseup', handleWindowMouseUp);
+    };
+  }, [activeTab]);
+
+  // Status Badges
   const getStatusBadge = (status) => {
     switch (status) {
       case 'VERIFIED_TRUE':
@@ -199,163 +349,6 @@ export default function FBIEvidenceHUD({ showToast, onOpenCaseDetail }) {
           icon: HelpCircle
         };
     }
-  };
-
-  // =========================================================================
-  // CANVAS PANNING (DRAGGING EMPTY SPACE ON CORKBOARD WITH MOUSE)
-  // =========================================================================
-  const handleCanvasMouseDown = (e) => {
-    if (draggingPinId) return;
-    setIsPanning(true);
-    setPanStart({
-      x: e.clientX - panOffset.x,
-      y: e.clientY - panOffset.y
-    });
-  };
-
-  const handleCanvasMouseMove = (e) => {
-    // If user is dragging a specific pin
-    if (draggingPinId) {
-      const rect = canvasViewportRef.current?.getBoundingClientRect();
-      if (!rect) return;
-
-      const newX = Math.max(10, Math.min(2200, Math.round(((e.clientX - rect.left - panOffset.x) / zoomLevel) - dragOffset.x)));
-      const newY = Math.max(10, Math.min(1400, Math.round(((e.clientY - rect.top - panOffset.y) / zoomLevel) - dragOffset.y)));
-
-      setBoards(boards.map(b => {
-        if (b.id === activeBoardId) {
-          return {
-            ...b,
-            pins: b.pins.map(p => p.id === draggingPinId ? { ...p, x: newX, y: newY } : p)
-          };
-        }
-        return b;
-      }));
-      return;
-    }
-
-    // If user is panning the whole canvas
-    if (isPanning) {
-      setPanOffset({
-        x: e.clientX - panStart.x,
-        y: e.clientY - panStart.y
-      });
-    }
-  };
-
-  const handleCanvasMouseUp = () => {
-    setIsPanning(false);
-    setDraggingPinId(null);
-  };
-
-  // Pin Mouse Down (Starts moving ONLY the pin, disables canvas panning)
-  const handlePinMouseDown = (e, pin) => {
-    e.stopPropagation(); // Prevents triggering canvas pan
-    setIsPanning(false);
-
-    if (isConnectMode) {
-      handlePinConnectClick(pin.id);
-      return;
-    }
-
-    const rect = canvasViewportRef.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    setDraggingPinId(pin.id);
-    setDragOffset({
-      x: ((e.clientX - rect.left - panOffset.x) / zoomLevel) - pin.x,
-      y: ((e.clientY - rect.top - panOffset.y) / zoomLevel) - pin.y
-    });
-  };
-
-  // =========================================================================
-  // TOUCH GESTURES (SWIPING EMPTY SPACE OR DRAGGING PINS ON PHONES / TABLETS)
-  // =========================================================================
-  const handleCanvasTouchStart = (e) => {
-    if (e.touches.length !== 1 || draggingPinId) return;
-    const touch = e.touches[0];
-    setIsPanning(true);
-    setPanStart({
-      x: touch.clientX - panOffset.x,
-      y: touch.clientY - panOffset.y
-    });
-  };
-
-  const handlePinTouchStart = (e, pin) => {
-    e.stopPropagation();
-    setIsPanning(false); // Lock canvas pan so only the pin moves
-    if (e.touches.length !== 1) return;
-    const touch = e.touches[0];
-    const rect = canvasViewportRef.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    touchStartRef.current = {
-      time: Date.now(),
-      x: touch.clientX,
-      y: touch.clientY,
-      pinId: pin.id
-    };
-
-    if (isConnectMode) {
-      handlePinConnectClick(pin.id);
-      return;
-    }
-
-    setDraggingPinId(pin.id);
-    setDragOffset({
-      x: ((touch.clientX - rect.left - panOffset.x) / zoomLevel) - pin.x,
-      y: ((touch.clientY - rect.top - panOffset.y) / zoomLevel) - pin.y
-    });
-  };
-
-  const handleCanvasTouchMove = (e) => {
-    if (e.touches.length !== 1) return;
-    const touch = e.touches[0];
-
-    // Dragging pin on touch (Moves ONLY the pin!)
-    if (draggingPinId) {
-      e.preventDefault();
-      const rect = canvasViewportRef.current?.getBoundingClientRect();
-      if (!rect) return;
-
-      const newX = Math.max(10, Math.min(2200, Math.round(((touch.clientX - rect.left - panOffset.x) / zoomLevel) - dragOffset.x)));
-      const newY = Math.max(10, Math.min(1400, Math.round(((touch.clientY - rect.top - panOffset.y) / zoomLevel) - dragOffset.y)));
-
-      setBoards(boards.map(b => {
-        if (b.id === activeBoardId) {
-          return {
-            ...b,
-            pins: b.pins.map(p => p.id === draggingPinId ? { ...p, x: newX, y: newY } : p)
-          };
-        }
-        return b;
-      }));
-      return;
-    }
-
-    // Panning canvas on touch
-    if (isPanning) {
-      e.preventDefault();
-      setPanOffset({
-        x: touch.clientX - panStart.x,
-        y: touch.clientY - panStart.y
-      });
-    }
-  };
-
-  const handleCanvasTouchEnd = () => {
-    if (draggingPinId) {
-      const touchDuration = Date.now() - touchStartRef.current.time;
-      const targetPin = activeBoard.pins.find(p => p.id === draggingPinId);
-
-      // If quick tap without move, open inspector
-      if (touchDuration < 260 && !isConnectMode && targetPin) {
-        setInspectedPin(targetPin);
-      }
-    }
-
-    setIsPanning(false);
-    setDraggingPinId(null);
   };
 
   // Reset Canvas View to Origin
@@ -567,7 +560,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
             Collaborative Detective Corkboard & Verification Matrix
           </h2>
           <p className="text-xs text-slate-300 max-w-2xl mt-1 leading-relaxed">
-            Drag empty space to move the canvas. Drag individual polaroid cards to place evidence. Tap pins to inspect forensic details.
+            Drag empty space to move the whiteboard canvas. Drag individual polaroid cards to place evidence. Tap pins to inspect forensic details.
           </p>
         </div>
 
@@ -651,7 +644,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
               </span>
               <div className="h-3.5 w-px bg-slate-700 hidden sm:block"></div>
               <span className="text-[11px] text-amber-300 font-mono flex items-center gap-1.5 font-bold">
-                <Hand className="w-3.5 h-3.5 text-amber-400 animate-pulse" /> Drag empty corkboard to move canvas • Drag card to position
+                <Hand className="w-3.5 h-3.5 text-amber-400 animate-pulse" /> Drag empty space to move board • Drag cards to position
               </span>
             </div>
 
@@ -695,17 +688,21 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
             </div>
           </div>
 
-          {/* Draggable Viewport Container with Locked Page Scroll (touch-none overscroll-none) */}
+          {/* Draggable Viewport Container with Strict Gesture Isolation */}
           <div 
             ref={canvasViewportRef}
-            onMouseDown={handleCanvasMouseDown}
-            onMouseMove={handleCanvasMouseMove}
-            onMouseUp={handleCanvasMouseUp}
-            onMouseLeave={handleCanvasMouseUp}
-            onTouchStart={handleCanvasTouchStart}
-            onTouchMove={handleCanvasTouchMove}
-            onTouchEnd={handleCanvasTouchEnd}
-            onTouchCancel={handleCanvasTouchEnd}
+            onMouseDown={(e) => {
+              // If user clicked directly on canvas background (not on a pin)
+              if (e.target === canvasViewportRef.current || e.target.classList.contains('corkboard-bg')) {
+                startCanvasPan(e.clientX, e.clientY);
+              }
+            }}
+            onTouchStart={(e) => {
+              // If user touched directly on canvas background
+              if (e.touches.length === 1 && (e.target === canvasViewportRef.current || e.target.classList.contains('corkboard-bg'))) {
+                startCanvasPan(e.touches[0].clientX, e.touches[0].clientY);
+              }
+            }}
             style={{ touchAction: 'none' }}
             className={`bg-[#17120e] rounded-3xl border-4 border-[#3e2c1c] shadow-2xl relative h-[560px] sm:h-[700px] overflow-hidden select-none touch-none overscroll-none ${
               draggingPinId ? 'cursor-grabbing' : isPanning ? 'cursor-grabbing' : 'cursor-grab'
@@ -713,7 +710,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
           >
             {/* Corkboard Background Pattern */}
             <div 
-              className="absolute inset-0 opacity-40 bg-[radial-gradient(#4a3525_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"
+              className="corkboard-bg absolute inset-0 opacity-40 bg-[radial-gradient(#4a3525_1px,transparent_1px)] [background-size:16px_16px]"
             ></div>
 
             {/* D-Pad Floating Navigation Compass (Bottom-Right) */}
@@ -739,11 +736,21 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
 
             {/* Transformable Canvas Workspace Layer (Moves with Pan & Zoom) */}
             <div
+              onMouseDown={(e) => {
+                if (e.target === e.currentTarget || e.target.classList.contains('corkboard-canvas-layer')) {
+                  startCanvasPan(e.clientX, e.clientY);
+                }
+              }}
+              onTouchStart={(e) => {
+                if (e.touches.length === 1 && (e.target === e.currentTarget || e.target.classList.contains('corkboard-canvas-layer'))) {
+                  startCanvasPan(e.touches[0].clientX, e.touches[0].clientY);
+                }
+              }}
               style={{ 
                 transform: `translate(${panOffset.x}px, ${panOffset.y}px) scale(${zoomLevel})`, 
                 transformOrigin: '0 0' 
               }}
-              className="absolute top-0 left-0 w-[2400px] h-[1600px] touch-none"
+              className="corkboard-canvas-layer absolute top-0 left-0 w-[2400px] h-[1600px] touch-none"
             >
               {/* Dynamic SVG Red Strings Layer */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none z-10">
@@ -811,7 +818,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                 </div>
               )}
 
-              {/* Polaroid Evidence Pins */}
+              {/* Polaroid Evidence Pins (Mutually Exclusive Touch / Mouse Handlers) */}
               {activeBoard.pins.map((pin) => {
                 const statusInfo = getStatusBadge(pin.status);
                 const isSelected = inspectedPin?.id === pin.id;
@@ -821,12 +828,14 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                 return (
                   <div
                     key={pin.id}
-                    onMouseDown={(e) => handlePinMouseDown(e, pin)}
-                    onTouchStart={(e) => handlePinTouchStart(e, pin)}
-                    onClick={(e) => {
+                    onMouseDown={(e) => {
                       e.stopPropagation();
-                      if (!isConnectMode && !isBeingDragged) {
-                        setInspectedPin(pin);
+                      startPinDrag(e.clientX, e.clientY, pin);
+                    }}
+                    onTouchStart={(e) => {
+                      e.stopPropagation();
+                      if (e.touches.length === 1) {
+                        startPinDrag(e.touches[0].clientX, e.touches[0].clientY, pin);
                       }
                     }}
                     style={{
@@ -835,7 +844,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                       cursor: isConnectMode ? 'pointer' : isBeingDragged ? 'grabbing' : 'grab',
                       touchAction: 'none'
                     }}
-                    className={`absolute w-40 sm:w-44 bg-[#f4ebd0] text-slate-900 rounded-sm shadow-2xl p-2.5 pb-3.5 transition-all select-none group border border-[#d6c7a1] touch-none ${
+                    className={`absolute w-40 sm:w-44 bg-[#f4ebd0] text-slate-900 rounded-sm shadow-2xl p-2.5 pb-3.5 transition-shadow select-none group border border-[#d6c7a1] touch-none ${
                       isBeingDragged
                         ? 'z-50 shadow-[0_25px_50px_rgba(0,0,0,0.9)] scale-105 ring-4 ring-indigo-400 -rotate-1'
                         : isSelected
@@ -846,7 +855,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                     }`}
                   >
                     {/* Metallic Push Pin at Top */}
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-lg border-2 border-amber-900 flex items-center justify-center cursor-pointer z-30">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-lg border-2 border-amber-900 flex items-center justify-center cursor-pointer z-30 pointer-events-none">
                       <div className="w-1.5 h-1.5 rounded-full bg-white opacity-80"></div>
                     </div>
 
@@ -856,6 +865,8 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                         e.stopPropagation();
                         handleDeletePin(pin.id);
                       }}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onTouchStart={(e) => e.stopPropagation()}
                       className="absolute top-1 right-1 p-1 rounded-full bg-black/70 hover:bg-crimson-600 text-white transition-all z-40"
                       title="Remove Pin"
                     >
@@ -863,11 +874,11 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                     </button>
 
                     {/* Photo Area */}
-                    <div className="w-full h-24 sm:h-28 bg-slate-950 rounded-sm overflow-hidden mb-2 relative border border-[#d6c7a1]">
+                    <div className="w-full h-24 sm:h-28 bg-slate-950 rounded-sm overflow-hidden mb-2 relative border border-[#d6c7a1] pointer-events-none">
                       <img
                         src={pin.photo}
                         alt={pin.title}
-                        className="w-full h-full object-cover grayscale-[25%] contrast-110 group-hover:grayscale-0 transition-all pointer-events-none"
+                        className="w-full h-full object-cover grayscale-[25%] contrast-110 group-hover:grayscale-0 transition-all"
                       />
                       {/* Status Stamp */}
                       <div className="absolute bottom-1 left-1 right-1">
@@ -878,7 +889,7 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                     </div>
 
                     {/* Handwritten Title & Role */}
-                    <div className="space-y-0.5 font-mono">
+                    <div className="space-y-0.5 font-mono pointer-events-none">
                       <h4 className="text-[11px] font-black text-slate-950 truncate leading-tight uppercase">
                         {pin.title}
                       </h4>
@@ -888,12 +899,12 @@ Generated by Justice Pulse Forensic Evidence Matrix (Rule 1006 Compliant)
                     </div>
 
                     {/* Notes Snippet */}
-                    <p className="text-[8.5px] text-slate-800 leading-snug line-clamp-2 mt-1 italic font-serif">
+                    <p className="text-[8.5px] text-slate-800 leading-snug line-clamp-2 mt-1 italic font-serif pointer-events-none">
                       "{pin.notes}"
                     </p>
 
                     {/* Inspector Click / Tap Hint */}
-                    <div className="mt-1.5 pt-1 border-t border-[#d6c7a1] flex items-center justify-between text-[8px] font-mono text-indigo-900 font-bold">
+                    <div className="mt-1.5 pt-1 border-t border-[#d6c7a1] flex items-center justify-between text-[8px] font-mono text-indigo-900 font-bold pointer-events-none">
                       <span>Tap to Inspect</span>
                       <ChevronRight className="w-3 h-3" />
                     </div>
