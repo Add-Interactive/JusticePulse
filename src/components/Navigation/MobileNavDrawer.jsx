@@ -29,7 +29,8 @@ import {
   PlusCircle,
   Video,
   ExternalLink,
-  Network
+  Network,
+  PhoneCall
 } from 'lucide-react';
 
 export default function MobileNavDrawer({ 
@@ -50,6 +51,7 @@ export default function MobileNavDrawer({
       items: [
         { id: 'feed', label: 'The Public Square', subtitle: 'Feed & Dispatches', icon: MessageSquare, badge: 'Live', badgeColor: 'bg-justice-500 text-white' },
         { id: 'townhall', label: 'Townhall Caucus', subtitle: 'Strategy Chat', icon: MessagesSquare, badge: 'Chat', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
+        { id: 'nexus', label: 'United Front Nexus', subtitle: 'Hotlines & Socials', icon: PhoneCall, badge: '24/7', badgeColor: 'bg-crimson-950 text-crimson-400 border border-crimson-800' },
         { id: 'audiohub', label: 'Voices of Movement', subtitle: 'Oral Histories', icon: Volume2, badge: 'Audio', badgeColor: 'bg-amber-950 text-amber-300 border border-amber-800' },
         { id: 'events', label: 'Actions & Vigils', subtitle: 'Hearings & Vigils', icon: Calendar, badge: 'Events', badgeColor: 'bg-purple-950 text-purple-300 border border-purple-800' },
         { id: 'memorial', label: 'Memorial Sanctuary', subtitle: 'Candle Vigil', icon: Flame, badge: 'Honor', badgeColor: 'bg-amber-950 text-amber-300 border border-amber-800' },

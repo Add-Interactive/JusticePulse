@@ -35,6 +35,7 @@ import FieldObserverView from './components/FieldMode/FieldObserverView';
 import OralHistoryPlayerView from './components/AudioHub/OralHistoryPlayerView';
 import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
 import InvestigationCanvasView from './components/InvestigationBoard/InvestigationCanvasView';
+import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
 import SplashScreen from './components/Splash/SplashScreen';
 import Toast from './components/Common/Toast';
@@ -277,6 +278,12 @@ export default function App() {
           {activeTab === 'townhall' && (
             <TownhallView
               currentUser={currentUser}
+              showToast={showToast}
+            />
+          )}
+
+          {activeTab === 'nexus' && (
+            <EmergencyNexusView
               showToast={showToast}
             />
           )}

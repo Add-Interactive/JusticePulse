@@ -25,7 +25,8 @@ import {
   ShieldCheck, 
   Volume2, 
   CheckSquare,
-  Network
+  Network,
+  PhoneCall
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
@@ -35,6 +36,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
       items: [
         { id: 'feed', label: 'The Public Square', subtitle: 'Community Feed & Dispatches', icon: MessageSquare, badge: 'Live', badgeColor: 'bg-justice-500 text-white' },
         { id: 'townhall', label: 'Townhall Caucus', subtitle: 'Real-Time Strategy Chat', icon: MessagesSquare, badge: 'Chat', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
+        { id: 'nexus', label: 'United Front Nexus', subtitle: 'Emergency Hotlines & Groups', icon: PhoneCall, badge: '24/7', badgeColor: 'bg-crimson-950 text-crimson-400 border border-crimson-800' },
         { id: 'audiohub', label: 'Voices of Movement', subtitle: 'Oral Histories & Audio', icon: Volume2, badge: 'Audio', badgeColor: 'bg-amber-950 text-amber-300 border border-amber-800' },
         { id: 'events', label: 'Actions & Vigils', subtitle: 'Hearings & Demonstrations', icon: Calendar, badge: 'Events', badgeColor: 'bg-purple-950 text-purple-300 border border-purple-800' },
         { id: 'memorial', label: 'Memorial Sanctuary', subtitle: 'Light a Candle & Honor', icon: Flame, badge: 'Honor', badgeColor: 'bg-amber-950 text-amber-300 border border-amber-800' },
@@ -119,7 +121,10 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         </div>
 
         {/* 24/7 Crisis Hotline Fast Card */}
-        <div className="bg-gradient-to-br from-crimson-950/70 via-slate-900 to-slate-900 rounded-2xl p-4 border border-crimson-900/50 shadow-lg relative overflow-hidden">
+        <div 
+          onClick={() => setActiveTab('nexus')}
+          className="bg-gradient-to-br from-crimson-950/70 via-slate-900 to-slate-900 rounded-2xl p-4 border border-crimson-900/50 shadow-lg relative overflow-hidden cursor-pointer hover:border-crimson-600/80 transition-all"
+        >
           <div className="flex items-center space-x-2 text-crimson-400 mb-1.5">
             <LifeBuoy className="w-4 h-4 animate-spin" style={{ animationDuration: '8s' }} />
             <span className="text-xs font-bold uppercase tracking-wider font-mono">Emergency Intake</span>
