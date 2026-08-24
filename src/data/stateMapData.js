@@ -1,0 +1,122 @@
+export const stateMapData = [
+  {
+    code: 'IL',
+    name: 'Illinois',
+    circuit: '7th Federal Circuit',
+    totalSettlements10Yr: '$890M+',
+    qiShieldRate: '81%',
+    gypsyCopLaw: 'Partial (2021 SAFE-T Act created decertification board)',
+    bodycamMandate: 'Mandatory statewide by 2025',
+    activeDockets: ['Sonya Massey Fatal Shooting (Sangamon County)', 'Laquan McDonald Reforms (Chicago CPD)'],
+    proBonoPartner: 'MacArthur Justice Center (Chicago)',
+    rating: 'C+ (Reform in progress, hiring bypasses persist)'
+  },
+  {
+    code: 'TN',
+    name: 'Tennessee',
+    circuit: '6th Federal Circuit',
+    totalSettlements10Yr: '$210M+',
+    qiShieldRate: '88%',
+    gypsyCopLaw: 'Weak (POST commission rarely revokes licenses for non-felonies)',
+    bodycamMandate: 'Not mandated statewide (Department discretion)',
+    activeDockets: ['Tyre Nichols SCORPION Unit Federal Trial (Memphis)'],
+    proBonoPartner: 'Tennessee Justice Center & Just City Memphis',
+    rating: 'D (High immunity rate, lack of uniform state oversight)'
+  },
+  {
+    code: 'KY',
+    name: 'Kentucky',
+    circuit: '6th Federal Circuit',
+    totalSettlements10Yr: '$165M+',
+    qiShieldRate: '85%',
+    gypsyCopLaw: 'Weak (Fired officers routinely re-hired in rural counties)',
+    bodycamMandate: 'Not mandated statewide',
+    activeDockets: ['Breonna Taylor Federal Civil Rights Retrial (Louisville)'],
+    proBonoPartner: 'ACLU of Kentucky & Chandra Law Alliance',
+    rating: 'D+ (DOJ Consent Decree in LMPD; state laws lag)'
+  },
+  {
+    code: 'CO',
+    name: 'Colorado',
+    circuit: '10th Federal Circuit',
+    totalSettlements10Yr: '$195M+',
+    qiShieldRate: '42% (State Qualified Immunity Abolished in 2020 via SB 20-217)',
+    gypsyCopLaw: 'Strong (POST database publicly searchable)',
+    bodycamMandate: 'Mandatory statewide with penalty of license revocation',
+    activeDockets: ['Elijah McClain Paramedic & Officer Liability (Aurora)'],
+    proBonoPartner: 'Killmer, Lane & Newman, LLP (Denver)',
+    rating: 'A- (National pioneer in ending state-level Qualified Immunity)'
+  },
+  {
+    code: 'NY',
+    name: 'New York',
+    circuit: '2nd Federal Circuit',
+    totalSettlements10Yr: '$1.42B+',
+    qiShieldRate: '79%',
+    gypsyCopLaw: 'Moderate (Repeal of 50-a unsealed disciplinary records in 2020)',
+    bodycamMandate: 'Mandated for all uniformed patrol officers',
+    activeDockets: ['Stop-and-Frisk Monitor Compliance', 'Eric Garner Legacy Reforms'],
+    proBonoPartner: 'Center for Constitutional Rights & NYCLU',
+    rating: 'B- (Transparency improved, fiscal payout burden remains #1)'
+  },
+  {
+    code: 'CA',
+    name: 'California',
+    circuit: '9th Federal Circuit',
+    totalSettlements10Yr: '$1.15B+',
+    qiShieldRate: '74%',
+    gypsyCopLaw: 'Strong (SB 2 established statewide decertification in 2023)',
+    bodycamMandate: 'Mandated for state agencies; local adoption >90%',
+    activeDockets: ['Stephon Clark Settlement Monitor', 'Vallejo PD Badge Bending Inquiries'],
+    proBonoPartner: 'Equal Justice Society & ACLU Northern CA',
+    rating: 'B+ (Robust decertification framework, active oversight)'
+  },
+  {
+    code: 'TX',
+    name: 'Texas',
+    circuit: '5th Federal Circuit',
+    totalSettlements10Yr: '$440M+',
+    qiShieldRate: '92% (5th Circuit strictest immunity precedent)',
+    gypsyCopLaw: 'Weak (F-5 termination discharge codes easily appealed/erased)',
+    bodycamMandate: 'State grant funded, but no criminal penalty for deactivation',
+    activeDockets: ['Marcus Delgado Civil Rights Inquiry (Houston HCSO)', 'Sandra Bland Legacy Enforcement'],
+    proBonoPartner: 'Texas Civil Rights Project (Austin/Houston)',
+    rating: 'F (5th Circuit maintains highest barrier to civil rights relief)'
+  },
+  {
+    code: 'OH',
+    name: 'Ohio',
+    circuit: '6th Federal Circuit',
+    totalSettlements10Yr: '$290M+',
+    qiShieldRate: '84%',
+    gypsyCopLaw: 'Weak (No mandatory state registry of forced resignations)',
+    bodycamMandate: 'Varies by municipality',
+    activeDockets: ['Tamir Rice Settlement & Decertification Reform (Cleveland)'],
+    proBonoPartner: 'The Chandra Law Firm & Ohio Innocence Project',
+    rating: 'D (Small departments regularly hire officers forced out of big cities)'
+  },
+  {
+    code: 'MN',
+    name: 'Minnesota',
+    circuit: '8th Federal Circuit',
+    totalSettlements10Yr: '$310M+',
+    qiShieldRate: '76%',
+    gypsyCopLaw: 'Moderate (POST Board expanded authority post-2020)',
+    bodycamMandate: 'Mandated for all municipal departments',
+    activeDockets: ['George Floyd Consent Decree Implementation (MPD)', 'Philando Castile Traffic Reform'],
+    proBonoPartner: 'Communities United Against Police Brutality (CUAPB)',
+    rating: 'B (Strong community oversight, comprehensive state consent decree)'
+  },
+  {
+    code: 'GA',
+    name: 'Georgia',
+    circuit: '11th Federal Circuit',
+    totalSettlements10Yr: '$180M+',
+    qiShieldRate: '89%',
+    gypsyCopLaw: 'Weak (Local sheriff autonomous hiring loopholes)',
+    bodycamMandate: 'Discretionary',
+    activeDockets: ['Rayshard Brooks Inquiry', 'Clayton County Jail Excessive Force'],
+    proBonoPartner: 'Southern Center for Human Rights (Atlanta)',
+    rating: 'D- (Qualified immunity doctrine rarely overcome in 11th Circuit)'
+  }
+];
