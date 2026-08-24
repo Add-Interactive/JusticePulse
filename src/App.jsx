@@ -34,7 +34,7 @@ import LegislationTrackerView from './components/Legislation/LegislationTrackerV
 import FieldObserverView from './components/FieldMode/FieldObserverView';
 import OralHistoryPlayerView from './components/AudioHub/OralHistoryPlayerView';
 import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
-import InvestigationCanvasView from './components/InvestigationBoard/InvestigationCanvasView';
+import FBIEvidenceHUD from './components/InvestigationBoard/FBIEvidenceHUD';
 import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
 import AcademyView from './components/Academy/AcademyView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
@@ -304,8 +304,9 @@ export default function App() {
           )}
 
           {activeTab === 'whiteboard' && (
-            <InvestigationCanvasView
+            <FBIEvidenceHUD
               showToast={showToast}
+              onOpenCaseDetail={handleOpenCaseDetail}
             />
           )}
 
@@ -426,6 +427,7 @@ export default function App() {
               currentUser={currentUser}
               setCurrentUser={setCurrentUser}
               showToast={showToast}
+              onOpenCaseDetail={handleOpenCaseDetail}
             />
           )}
 

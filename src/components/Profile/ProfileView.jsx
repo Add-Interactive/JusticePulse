@@ -14,12 +14,13 @@ import {
   CheckCircle2, 
   Trash2, 
   Lock,
+  Layers,
   Network
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import InvestigationCanvasView from '../InvestigationBoard/InvestigationCanvasView';
+import FBIEvidenceHUD from '../InvestigationBoard/FBIEvidenceHUD';
 
-export default function ProfileView({ currentUser, setCurrentUser, showToast }) {
+export default function ProfileView({ currentUser, setCurrentUser, showToast, onOpenCaseDetail }) {
   const [activeTab, setActiveTab] = useState('whiteboard');
   const [emergencyContacts, setEmergencyContacts] = useState([
     { id: '1', name: 'Maya Linnea Johnson', phone: '(555) 392-8812', relation: 'Legal Observer Lead' },
@@ -95,7 +96,7 @@ export default function ProfileView({ currentUser, setCurrentUser, showToast }) 
                 {currentUser.badge}
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-1 font-medium">{currentUser.role} • Enterprise Evidence Workspace</p>
+            <p className="text-xs text-slate-400 mt-1 font-medium">{currentUser.role} • FBI-Grade Evidence HUD</p>
             <p className="text-[11px] text-slate-500 font-mono mt-0.5">UID: JP-CIVIC-889102-SEC • SHA-256 Vault Active</p>
           </div>
         </div>
@@ -104,7 +105,7 @@ export default function ProfileView({ currentUser, setCurrentUser, showToast }) 
         <div className="flex items-center space-x-3 bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
           <div className="text-center px-3 border-r border-slate-800">
             <span className="text-xs font-extrabold font-mono text-indigo-400">2 Boards</span>
-            <p className="text-[10px] text-slate-400 uppercase font-semibold">Whiteboard</p>
+            <p className="text-[10px] text-slate-400 uppercase font-semibold">Corkboards</p>
           </div>
           <div className="text-center px-3 border-r border-slate-800">
             <span className="text-xs font-extrabold font-mono text-emerald-400">$325.00</span>
@@ -120,7 +121,7 @@ export default function ProfileView({ currentUser, setCurrentUser, showToast }) 
       {/* Sub-Tabs */}
       <div className="border-b border-slate-800 flex space-x-4 overflow-x-auto">
         {[
-          { id: 'whiteboard', label: 'Enterprise Evidence Whiteboard & Connection Matrix' },
+          { id: 'whiteboard', label: '🕵️ FBI Evidence HUD & Detective Corkboard' },
           { id: 'badges', label: 'Civic Badges & Credentials' },
           { id: 'sos-contacts', label: 'SOS Emergency Contacts (SMS Dispatch)' },
           { id: 'donations', label: 'Mutual Aid Receipts (Tax Deductible)' },
@@ -140,10 +141,10 @@ export default function ProfileView({ currentUser, setCurrentUser, showToast }) 
         ))}
       </div>
 
-      {/* Tab 0: Enterprise Evidence Whiteboard */}
+      {/* Tab 0: FBI Evidence HUD & Detective Corkboard */}
       {activeTab === 'whiteboard' && (
         <div className="animation-fade-in">
-          <InvestigationCanvasView showToast={showToast} />
+          <FBIEvidenceHUD showToast={showToast} onOpenCaseDetail={onOpenCaseDetail} />
         </div>
       )}
 
