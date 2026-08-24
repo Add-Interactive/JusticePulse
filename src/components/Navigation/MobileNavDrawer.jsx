@@ -22,15 +22,15 @@ import {
   Landmark, 
   ShieldCheck, 
   Volume2, 
-  CheckSquare,
-  PlusCircle,
-  Video,
-  ExternalLink,
-  Layers,
-  PhoneCall,
-  GraduationCap,
-  Calculator,
-  Users
+  CheckSquare, 
+  PlusCircle, 
+  Video, 
+  ExternalLink, 
+  Layers, 
+  PhoneCall, 
+  GraduationCap, 
+  Calculator, 
+  Users 
 } from 'lucide-react';
 
 export default function MobileNavDrawer({ 
@@ -101,15 +101,21 @@ export default function MobileNavDrawer({
   };
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden flex justify-end bg-slate-950/85 backdrop-blur-sm animation-fade-in select-none">
-      <div className="w-full max-w-xs sm:max-w-sm bg-[#111726] border-l-2 border-[#243147] h-full flex flex-col justify-between shadow-2xl overflow-hidden">
-        {/* Drawer Header */}
-        <div className="p-4 border-b border-[#1c273a] bg-[#080c14] flex items-center justify-between">
-          <div className="flex items-center space-x-2.5">
+    <div 
+      onClick={onClose}
+      className="fixed inset-0 z-50 lg:hidden flex justify-start bg-slate-950/85 backdrop-blur-sm animation-fade-in select-none"
+    >
+      <div 
+        onClick={(e) => e.stopPropagation()}
+        className="w-[85vw] max-w-xs sm:max-w-sm bg-[#111726] border-r-2 border-[#243147] h-full flex flex-col justify-between shadow-2xl overflow-hidden animate-slide-right"
+      >
+        {/* Drawer Header - Left-Aligned with Brand & Avatar */}
+        <div className="p-4 border-b border-[#1c273a] bg-[#080c14] flex items-center justify-between flex-shrink-0">
+          <div className="flex items-center space-x-2.5 min-w-0">
             <img
               src={currentUser.avatar}
               alt={currentUser.name}
-              className="w-9 h-9 rounded-full object-cover border-2 border-justice-400"
+              className="w-9 h-9 rounded-full object-cover border-2 border-justice-400 flex-shrink-0"
             />
             <div className="min-w-0">
               <p className="text-xs font-black text-white truncate">{currentUser.name}</p>
@@ -119,14 +125,14 @@ export default function MobileNavDrawer({
 
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800"
+            className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 flex-shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Master Standalone Evidence Platform Launcher in Drawer */}
-        <div className="p-3 bg-gradient-to-r from-indigo-950 via-purple-950 to-indigo-950 border-b border-indigo-800/80">
+        <div className="p-3 bg-gradient-to-r from-indigo-950 via-purple-950 to-indigo-950 border-b border-indigo-800/80 flex-shrink-0">
           <button
             onClick={() => {
               onClose();
@@ -135,12 +141,12 @@ export default function MobileNavDrawer({
             className="w-full py-3 px-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-xs font-black shadow-glow-indigo border-2 border-indigo-300 flex items-center justify-center space-x-2 transition-all active:scale-95"
           >
             <Layers className="w-4 h-4 animate-pulse" />
-            <span className="tracking-wide uppercase font-mono">Launch Evidence Platform ➔</span>
+            <span className="tracking-wide uppercase font-mono text-xs">Launch Evidence Platform ➔</span>
           </button>
         </div>
 
         {/* Fast Action Buttons in Drawer */}
-        <div className="p-3 bg-[#080c14] border-b border-[#1c273a] grid grid-cols-2 gap-2">
+        <div className="p-3 bg-[#080c14] border-b border-[#1c273a] grid grid-cols-2 gap-2 flex-shrink-0">
           <button
             onClick={() => {
               onClose();
@@ -228,7 +234,7 @@ export default function MobileNavDrawer({
         </div>
 
         {/* Drawer Footer */}
-        <div className="p-3 bg-[#080c14] border-t border-[#1c273a] text-center text-[10px] text-slate-400 font-mono">
+        <div className="p-3 bg-[#080c14] border-t border-[#1c273a] text-center text-[10px] text-slate-400 font-mono flex-shrink-0">
           <a
             href="https://www.addinteractive.com"
             target="_blank"
