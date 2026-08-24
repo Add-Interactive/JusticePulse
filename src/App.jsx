@@ -37,6 +37,7 @@ import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
 import FBIEvidenceHUD from './components/InvestigationBoard/FBIEvidenceHUD';
 import MultiCamStudioView from './components/MultiCam/MultiCamStudioView';
 import DepositionSimulatorView from './components/Deposition/DepositionSimulatorView';
+import ComplaintGeneratorView from './components/ComplaintGenerator/ComplaintGeneratorView';
 import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
 import AcademyView from './components/Academy/AcademyView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
@@ -294,6 +295,12 @@ export default function App() {
           {activeTab === 'academy' && (
             <AcademyView
               currentUser={currentUser}
+              showToast={showToast}
+            />
+          )}
+
+          {activeTab === 'pleadings' && (
+            <ComplaintGeneratorView
               showToast={showToast}
             />
           )}

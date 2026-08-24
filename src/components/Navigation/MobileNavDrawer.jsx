@@ -78,6 +78,7 @@ export default function MobileNavDrawer({
     {
       group: 'Legal Tools & Policy Sandbox',
       items: [
+        { id: 'pleadings', label: '§ 1983 Complaint Studio', subtitle: 'Federal Pleadings', icon: FileText, badge: 'Draft', badgeColor: 'bg-blue-950 text-blue-300 border border-blue-800' },
         { id: 'academy', label: 'Civil Rights Academy', subtitle: 'Courses & Certs', icon: GraduationCap, badge: 'CLE', badgeColor: 'bg-purple-950 text-purple-300 border border-purple-800' },
         { id: 'map', label: '50-State Shield Map', subtitle: 'QI Laws & Circuits', icon: Map, badge: 'Map', badgeColor: 'bg-justice-950 text-justice-300 border border-justice-800' },
         { id: 'foia', label: 'FOIA Generator', subtitle: 'Draft Demands', icon: FileText, badge: 'Draft', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
