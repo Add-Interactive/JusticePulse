@@ -6,7 +6,6 @@ import {
   HeartHandshake, 
   BookOpen, 
   BarChart3, 
-  FolderLock, 
   Sparkles, 
   LifeBuoy, 
   Map, 
@@ -23,7 +22,6 @@ import {
   ShieldCheck, 
   Volume2, 
   CheckSquare,
-  Layers,
   PhoneCall,
   GraduationCap
 } from 'lucide-react';
@@ -43,9 +41,8 @@ export default function Sidebar({ activeTab, setActiveTab }) {
       ]
     },
     {
-      group: 'Accountability & Evidence',
+      group: 'Accountability & Investigations',
       items: [
-        { id: 'evidence_suite', label: 'Evidence Command Suite', subtitle: 'Unified Forensic Matrix', icon: Layers, badge: 'ALL-IN-1', badgeColor: 'bg-indigo-600 text-white font-bold animate-pulse shadow-glow' },
         { id: 'cases', label: 'The Docket', subtitle: 'Verified Case Registry', icon: Scale, badge: '2.4k', badgeColor: 'bg-slate-800 text-slate-300' },
         { id: 'officers', label: 'Officer Index', subtitle: 'Repeat Offender & Brady', icon: ShieldAlert, badge: 'Flagged', badgeColor: 'bg-crimson-900 text-crimson-200 border border-crimson-700/50' },
         { id: 'departments', label: 'Agency Scorecards', subtitle: 'Police Dept Benchmark', icon: Building2, badge: 'Grades', badgeColor: 'bg-slate-800 text-slate-300' },

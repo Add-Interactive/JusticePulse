@@ -7,7 +7,6 @@ import {
   HeartHandshake, 
   BookOpen, 
   BarChart3, 
-  FolderLock, 
   Sparkles, 
   LifeBuoy, 
   Map, 
@@ -40,6 +39,7 @@ export default function MobileNavDrawer({
   onOpenReportModal, 
   onOpenSOSModal, 
   onOpenInvestorModal, 
+  onOpenEvidenceSuite,
   currentUser 
 }) {
   if (!isOpen) return null;
@@ -58,9 +58,8 @@ export default function MobileNavDrawer({
       ]
     },
     {
-      group: 'Accountability & Evidence',
+      group: 'Accountability & Investigations',
       items: [
-        { id: 'evidence_suite', label: 'Evidence Command Suite', subtitle: 'All-In-1 Forensic Matrix', icon: Layers, badge: 'ALL-IN-1', badgeColor: 'bg-indigo-600 text-white font-bold' },
         { id: 'cases', label: 'The Docket', subtitle: 'Verified Cases', icon: Scale, badge: '2.4k', badgeColor: 'bg-slate-800 text-slate-300' },
         { id: 'officers', label: 'Officer Index', subtitle: 'Brady Registry', icon: ShieldAlert, badge: 'Flagged', badgeColor: 'bg-crimson-900 text-crimson-200 border border-crimson-700/50' },
         { id: 'departments', label: 'Agency Scorecards', subtitle: 'Police Benchmarks', icon: Building2, badge: 'Grades', badgeColor: 'bg-slate-800 text-slate-300' },
@@ -116,7 +115,21 @@ export default function MobileNavDrawer({
           </button>
         </div>
 
-        {/* Emergency Fast Action Buttons in Drawer */}
+        {/* Master Standalone Evidence Platform Launcher in Drawer */}
+        <div className="p-3 bg-gradient-to-r from-indigo-950/90 via-purple-950/90 to-indigo-950/90 border-b border-indigo-800/60">
+          <button
+            onClick={() => {
+              onClose();
+              onOpenEvidenceSuite();
+            }}
+            className="w-full py-3 px-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-xs font-black shadow-glow-indigo border border-indigo-300 flex items-center justify-center space-x-2 transition-all active:scale-95"
+          >
+            <Layers className="w-4 h-4 animate-pulse" />
+            <span className="tracking-wide uppercase">Launch Evidence Platform</span>
+          </button>
+        </div>
+
+        {/* Fast Action Buttons in Drawer */}
         <div className="p-3 bg-slate-950/60 border-b border-slate-800 grid grid-cols-2 gap-2">
           <button
             onClick={() => {

@@ -234,13 +234,10 @@ export default function App() {
       )}
 
       {/* STANDALONE UNCONSTRAINED FULL-SCREEN EVIDENCE COMMAND SUITE ENTITY */}
-      {(isEvidenceSuiteOpen || activeTab === 'evidence_suite') && (
+      {isEvidenceSuiteOpen && (
         <UnifiedEvidenceDashboard
           onClose={() => {
             setIsEvidenceSuiteOpen(false);
-            if (activeTab === 'evidence_suite') {
-              setActiveTab('feed');
-            }
           }}
           showToast={showToast}
           onOpenCaseDetail={handleOpenCaseDetail}
@@ -274,8 +271,6 @@ export default function App() {
           setActiveTab={(tab) => {
             if (tab === 'investor') {
               setIsInvestorModalOpen(true);
-            } else if (tab === 'evidence_suite') {
-              handleOpenEvidenceSuite('corkboard');
             } else {
               setActiveTab(tab);
             }
@@ -481,17 +476,11 @@ export default function App() {
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         activeTab={activeTab}
-        setActiveTab={(tab) => {
-          if (tab === 'evidence_suite') {
-            setIsMobileMenuOpen(false);
-            handleOpenEvidenceSuite('corkboard');
-          } else {
-            setActiveTab(tab);
-          }
-        }}
+        setActiveTab={setActiveTab}
         onOpenReportModal={() => setIsReportModalOpen(true)}
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
+        onOpenEvidenceSuite={() => handleOpenEvidenceSuite('corkboard')}
         currentUser={currentUser}
       />
 

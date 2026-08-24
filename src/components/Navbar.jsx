@@ -7,16 +7,14 @@ import {
   Video, 
   Sparkles, 
   ChevronDown, 
-  Briefcase, 
-  AlertTriangle,
-  Scale,
-  Users,
-  CheckCircle,
-  FileText,
-  Play,
-  Menu,
-  X,
-  Layers
+  Scale, 
+  Users, 
+  CheckCircle, 
+  Play, 
+  Menu, 
+  X, 
+  Layers,
+  Network
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -47,36 +45,41 @@ export default function Navbar({
 
   return (
     <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
-      {/* Breaking Alert Banner */}
-      <div className="bg-gradient-to-r from-crimson-900/90 via-slate-900 to-crimson-950 px-3 sm:px-4 py-1.5 text-xs text-slate-200 border-b border-crimson-800/40 flex items-center justify-between overflow-hidden">
+      {/* Top Banner with Direct Evidence Platform Launcher */}
+      <div className="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 px-3 sm:px-4 py-1.5 text-xs text-slate-200 border-b border-indigo-800/50 flex items-center justify-between overflow-hidden">
         <div className="flex items-center space-x-2 truncate">
           <span className="flex h-2 w-2 relative flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
           </span>
-          <span className="font-semibold text-red-400 uppercase tracking-wider text-[10px] bg-red-950/80 px-1.5 py-0.5 rounded border border-red-800/50 flex-shrink-0">
-            Alert
+          <span className="font-bold text-indigo-300 uppercase tracking-wider text-[10px] bg-indigo-900/80 px-2 py-0.5 rounded border border-indigo-700 font-mono flex-shrink-0">
+            FBI-GRADE FORENSICS
           </span>
-          <span className="truncate text-[11px] sm:text-xs">
-            Illinois State Board opens inquiry into Sangamon Sheriff hiring records bypass.
+          <span className="truncate text-[11px] sm:text-xs text-slate-300">
+            Detective Whiteboard, Multi-Angle Video Studio & SHA-256 Vault active.
           </span>
         </div>
-        <div className="hidden md:flex items-center space-x-4 text-[11px] text-slate-400 flex-shrink-0">
-          <button 
-            onClick={onReplaySplash}
-            className="flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors font-mono cursor-pointer"
-            title="Replay Official Agency Splash"
+
+        {/* Header Right Actions */}
+        <div className="flex items-center space-x-3 text-[11px] flex-shrink-0">
+          <button
+            onClick={onOpenEvidenceSuite}
+            className="flex items-center space-x-1.5 px-3 py-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black rounded-lg shadow-glow-indigo border border-indigo-300 animate-pulse transition-all"
+            title="Launch Standalone Full-Screen Evidence Command Platform"
           >
-            <Play className="w-3 h-3 fill-amber-400" /> Replay Agency Intro
+            <Layers className="w-3.5 h-3.5" />
+            <span className="uppercase tracking-wider font-mono text-[10px]">Launch Evidence Platform ➔</span>
           </button>
-          <span className="text-slate-600">|</span>
-          <span className="flex items-center gap-1 text-justice-300">
-            <Scale className="w-3.5 h-3.5" /> 2,400+ Verified Cases Tracked
-          </span>
-          <span className="text-slate-600">|</span>
-          <span className="flex items-center gap-1 text-emerald-400">
-            <Users className="w-3.5 h-3.5" /> $11.8M Mutual Aid Disbursed
-          </span>
+
+          <div className="hidden md:flex items-center space-x-3 text-slate-400">
+            <span className="text-slate-600">|</span>
+            <button 
+              onClick={onReplaySplash}
+              className="flex items-center gap-1 text-amber-400 hover:text-amber-300 transition-colors font-mono cursor-pointer"
+            >
+              <Play className="w-3 h-3 fill-amber-400" /> Intro
+            </button>
+          </div>
         </div>
       </div>
 
@@ -115,12 +118,12 @@ export default function Navbar({
         </div>
 
         {/* Center: Search Bar on Desktop */}
-        <div className="flex-1 max-w-lg hidden md:block">
+        <div className="flex-1 max-w-md hidden md:block">
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search cases, badge #, officer registry, or legal dockets..."
+              placeholder="Search cases, badge #, officer registry, or dockets..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-slate-800/80 border border-slate-700/80 rounded-full pl-10 pr-4 py-1.5 text-xs text-slate-100 placeholder-slate-400 focus:outline-none focus:border-justice-400 focus:ring-2 focus:ring-justice-500/20 transition-all"
@@ -136,7 +139,7 @@ export default function Navbar({
           </div>
         </div>
 
-        {/* Right: Actions & User Controls */}
+        {/* Right: Master Top Action Buttons */}
         <div className="flex items-center space-x-1.5 sm:space-x-2.5">
           {/* Mobile Search Toggle */}
           <button
@@ -147,32 +150,38 @@ export default function Navbar({
             <Search className="w-4 h-4" />
           </button>
 
-          {/* Direct Launch Evidence Command Suite Window */}
+          {/* MAIN UNIFIED EVIDENCE SYSTEM BUTTON AT THE TOP */}
           <button
             onClick={onOpenEvidenceSuite}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white text-xs font-bold shadow-glow border border-indigo-400/40 transition-all active:scale-95"
-            title="Open Dedicated Full-Screen Evidence Command Center"
+            className="flex items-center space-x-2 px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-black shadow-glow-indigo border border-indigo-300/70 transition-all active:scale-95 group ring-2 ring-indigo-500/30"
+            title="Open Dedicated Full-Screen FBI Evidence System Platform"
           >
-            <Layers className="w-3.5 h-3.5 animate-pulse" />
-            <span className="hidden sm:inline">Evidence Matrix</span>
-            <span className="sm:hidden text-[11px]">Matrix</span>
+            <Network className="w-4 h-4 text-indigo-200 group-hover:rotate-12 transition-transform" />
+            <div className="text-left">
+              <div className="text-[11px] sm:text-xs font-black uppercase tracking-wide font-mono leading-tight">
+                EVIDENCE SYSTEM
+              </div>
+              <div className="text-[8px] text-indigo-200 font-mono leading-none hidden sm:block">
+                STANDALONE PLATFORM
+              </div>
+            </div>
           </button>
 
           {/* Quick SOS Encounter Mode on Navbar */}
           <button
             onClick={onOpenSOSModal}
-            className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-crimson-600/90 hover:bg-crimson-500 text-white text-xs font-bold shadow-glow-crimson transition-all active:scale-95"
+            className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-crimson-600 hover:bg-crimson-500 text-white text-xs font-bold shadow-glow-crimson transition-all active:scale-95 border border-crimson-400/40"
             title="Immediate live cloud audio/video backup with geo-tagged legal alert"
           >
             <Video className="w-3.5 h-3.5 animate-pulse" />
-            <span className="hidden sm:inline">SOS Mode</span>
+            <span className="hidden sm:inline">SOS Live</span>
             <span className="sm:hidden text-[11px]">SOS</span>
           </button>
 
           {/* Report Incident CTA */}
           <button
             onClick={onOpenReportModal}
-            className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-justice-600 hover:bg-justice-500 text-white text-xs font-semibold shadow-glow transition-all"
+            className="hidden lg:flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-justice-600 hover:bg-justice-500 text-white text-xs font-semibold shadow-glow transition-all"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Report</span>
@@ -182,7 +191,7 @@ export default function Navbar({
           <div className="relative">
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="p-1.5 sm:p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 relative border border-slate-700 transition-all"
+              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 relative border border-slate-700 transition-all"
               aria-label="Notifications"
             >
               <Bell className="w-4 h-4" />
