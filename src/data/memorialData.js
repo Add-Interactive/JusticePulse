@@ -15,6 +15,21 @@ export const initialMemorials = [
     ]
   },
   {
+    id: 'mem-roger-fortson',
+    name: 'Senior Airman Roger Fortson',
+    years: '2001 – 2024 (Age 23)',
+    location: 'Fort Walton Beach, Florida / Atlanta, Georgia',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+    tribute: 'Dedicated active-duty U.S. Air Force special operations member, devoted son, and patriot whose discipline and service touched everyone around him.',
+    candlesLit: 24800,
+    quote: '"A proud Airman whose dream was to buy a home for his mother and serve his nation with honor."',
+    fundId: 'ma-fortson',
+    communityNotes: [
+      { author: 'Marlyn Fortson (Mother)', text: 'My son was a protector. He died in his own home doing nothing wrong. We will get him full justice.', date: '2 days ago' },
+      { author: '4th Special Operations Squadron Comrade', text: 'Aim High, brother. Your service will never be forgotten.', date: '5 days ago' }
+    ]
+  },
+  {
     id: 'mem-elijah',
     name: 'Elijah McClain',
     years: '1996 – 2019 (Age 23)',
@@ -55,6 +70,20 @@ export const initialMemorials = [
     communityNotes: [
       { author: 'RowVaughn Wells (Mother)', text: 'My beautiful son loved the sunsets. Every sunset belongs to Tyre now.', date: '4 days ago' },
       { author: 'Skateparks of America', text: 'Wheels roll in your honor, Tyre. Peace and justice.', date: '1 week ago' }
+    ]
+  },
+  {
+    id: 'mem-george',
+    name: 'George Floyd',
+    years: '1973 – 2020 (Age 46)',
+    location: 'Minneapolis, Minnesota / Houston, Texas',
+    image: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=600&auto=format&fit=crop&q=80',
+    tribute: 'Father, brother, athlete, and mentor whose tragic passing galvanized the largest global movement for constitutional equality in modern history.',
+    candlesLit: 125000,
+    quote: '"Your voice sparked a global demand that every human life be valued with dignity under law."',
+    communityNotes: [
+      { author: 'Bridgett Floyd (Sister)', text: 'We are changing laws across this country so no other family experiences this heartbreak.', date: '3 days ago' },
+      { author: 'Minneapolis Community Sanctuary', text: 'Rest in power. The fight for true constitutional accountability continues.', date: '1 week ago' }
     ]
   }
 ];

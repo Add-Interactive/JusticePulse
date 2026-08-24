@@ -50,6 +50,41 @@ export const initialPosts = [
     ]
   },
   {
+    id: 'post-fortson-update',
+    author: {
+      name: 'National Military Veterans for Civil Rights',
+      handle: '@veterans_justice',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+      badge: 'Veterans Coalition Verified',
+      role: 'Veterans Legal Advocacy'
+    },
+    timestamp: '1 hour ago',
+    type: 'INCIDENT_REPORT',
+    caseTag: {
+      id: 'case-roger-fortson',
+      title: 'Senior Airman Roger Fortson Case'
+    },
+    content: '⚖️ BREAKING LEGAL ACCOUNTABILITY: Former Okaloosa County Deputy Eddie Duran has been formally charged with first-degree felony manslaughter with a firearm in the fatal shooting of 23-year-old active duty Airman Roger Fortson.\n\nThe sheriff\'s own internal investigation found that Fortson committed no crime, posed no threat, and was lawfully holding his firearm pointed at the floor in his own home when Duran fired within 2 seconds of opening the door.\n\nThis confirms what community advocates have stated from day one: being a lawful gun owner in your own home is not probable cause for lethal force.',
+    likesCount: 4120,
+    supportsCount: 2980,
+    sharesCount: 1840,
+    commentsCount: 312,
+    userHasLiked: true,
+    userHasSupported: true,
+    userReaction: 'stand_with_them',
+    comments: [
+      {
+        id: 'cf1',
+        author: 'Dr. Kimberly Adams',
+        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+        badge: 'Verified Organizer',
+        text: 'An important indictment, but the criminal trial is only step one. The Fortson family deserves full justice.',
+        timestamp: '40m ago',
+        likes: 92
+      }
+    ]
+  },
+  {
     id: 'post-2',
     author: {
       name: 'Elijah McClain Legal & Family Defense',
@@ -145,7 +180,7 @@ export const initialPosts = [
     },
     timestamp: '7 hours ago',
     type: 'LEGAL_GUIDE',
-    content: '⚖️ POCKET LEGAL SURVIVAL GUIDE: What to do if stopped while filming police in public:\n\n1. You have a First Amendment constitutional right to record police officers performing duties in public spaces (Circuit Court consensus in all federal circuits).\n2. Maintain a reasonable distance (10-15 feet) so they cannot claim "obstruction of justice".\n3. Say out loud: "I am exercising my First Amendment right to record. I am not interfering."\n4. Never physically unlock your phone or surrender biometric passcode. Police cannot search your phone without a warrant under Riley v. California (2014).\n\nUse our platform\'s Emergency SOS Cloud Recorder tool to automatically stream and save your footage in real-time.',
+    content: '⚖️ POCKET LEGAL SURVIVAL GUIDE: What to do if stopped while filming police in public:\n\n1. You have a First Amendment constitutional right to record police officers performing duties in public spaces (Circuit Court consensus across all federal circuits).\n2. Maintain a reasonable distance (10-15 feet) so they cannot claim "obstruction of justice".\n3. Say out loud: "I am exercising my First Amendment right to record. I am not interfering."\n4. Never physically unlock your phone or surrender biometric passcode. Police cannot search your phone without a warrant under Riley v. California (2014).\n\nUse our platform\'s Emergency SOS Cloud Recorder tool to automatically stream and save your footage in real-time.',
     likesCount: 7820,
     supportsCount: 4900,
     sharesCount: 4120,

@@ -10,11 +10,11 @@ export const initialCases = [
     status: 'Indicted / Trial Pending',
     outcomeCategory: 'Indicted',
     qualifiedImmunity: 'Denied (Criminal Charges Filed)',
-    summary: 'Sonya Massey, a 36-year-old mother, called 911 to report a suspected prowler. Deputy Sean Grayson entered her home, ordered her to move a pot of boiling water from the stove, and then shot her in the face after shouting profanities. Records revealed Grayson had worked for six different law enforcement agencies in four years with prior misconduct and DUI convictions.',
+    summary: 'Sonya Massey, a 36-year-old mother, called 911 to report a suspected prowler outside her home. Deputy Sean Grayson entered her home, ordered her to move a pot of boiling water from the stove, and then fatally shot her in the face after shouting profanities. Records revealed Grayson had worked for six different law enforcement agencies in four years with prior misconduct and DUI convictions.',
     keyInjustices: [
-      'Officer previously discharged from the Army for serious misconduct',
-      'Worked at 6 different police departments in 4 years (Gypsy Cop syndrome)',
-      'Ignored standard de-escalation protocols on a distress caller',
+      'Officer previously discharged from the U.S. Army for serious misconduct',
+      'Employed across 6 different police departments in 4 years (Gypsy Cop pattern)',
+      'Ignored standard de-escalation protocols on a distressed 911 caller',
       'Sheriff\'s office failed to conduct rigorous background check before hiring'
     ],
     officersInvolved: [
@@ -41,8 +41,91 @@ export const initialCases = [
       { date: '2024-07-06 00:50', title: '911 Call', description: 'Sonya Massey calls 911 reporting an intruder outside her home.' },
       { date: '2024-07-06 01:12', title: 'Fatal Encounter', description: 'Deputy Sean Grayson fires three shots after verbal confrontation over water pot.' },
       { date: '2024-07-17', title: 'Grand Jury Indictment', description: 'Grayson indicted on 3 counts of first-degree murder, aggravated battery, and official misconduct.' },
-      { date: '2024-07-22', title: 'Bodycam Release', description: 'Illinois State Police release full body camera footage sparking national outrage and DOJ inquiry.' },
+      { date: '2024-07-22', title: 'Bodycam Release', description: 'Illinois State Police release full body camera footage sparking national outrage.' },
       { date: '2024-08-15', title: 'DOJ Civil Rights Review', description: 'Department of Justice launches comprehensive review of Sangamon County hiring practices.' }
+    ]
+  },
+  {
+    id: 'case-roger-fortson',
+    title: 'Senior Airman Roger Fortson Wrong-Door Shooting',
+    victim: 'Roger Fortson',
+    age: 23,
+    date: '2024-05-03',
+    location: 'Fort Walton Beach, Florida',
+    jurisdiction: 'Okaloosa County Sheriff\'s Office',
+    status: 'Deputy Fired & Charged with Felony Manslaughter',
+    outcomeCategory: 'Indicted',
+    qualifiedImmunity: 'Denied (State Criminal Charges Filed)',
+    summary: 'Senior Airman Roger Fortson, an active-duty 23-year-old U.S. Air Force special operations member, was relaxing in his apartment on FaceTime with his girlfriend. Deputy Eddie Duran was dispatched to the wrong apartment on a vague disturbance call. Fortson heard aggressive banging, retrieved his legally owned firearm, and held it pointed safely toward the ground. When Fortson opened the door, Duran immediately shot him six times without giving any verbal warning to drop the weapon.',
+    keyInjustices: [
+      'Deputy went to the wrong apartment without verifying unit number or disturbance origin',
+      'Airman Fortson was legally holding his firearm pointed downward with zero aggressive motion',
+      'Deputy fired within 2 seconds of the door opening before giving any instruction to disarm',
+      'Internal affairs investigation determined Fortson acted with complete legality inside his own home'
+    ],
+    officersInvolved: [
+      {
+        name: 'Eddie Duran',
+        badge: 'Deputy #718',
+        status: 'Fired & Charged with Manslaughter with a Firearm (Aug 2024)',
+        priorIncidents: 'Internal affairs found lethal force was unjustified and objectively unreasonable',
+        repeatOffender: true
+      }
+    ],
+    settlementAmount: 'Federal Wrongful Death Civil Rights Lawsuit Filed',
+    taxpayerCost: 'Okaloosa County municipal defense and liability insurance',
+    bodycamAvailable: true,
+    bodycamDuration: '4 mins 18 secs (Bodycam Released by Sheriff)',
+    evidenceCount: 16,
+    petitionSignatures: 450000,
+    petitionGoal: 500000,
+    familyFundRaised: 620000,
+    familyFundGoal: 750000,
+    attorney: 'Ben Crump & Associates',
+    tags: ['Active Duty Military', 'Wrong Door', 'Manslaughter Charges', 'Bodycam Released'],
+    timeline: [
+      { date: '2024-05-03 16:30', title: 'Fatal Encounter', description: 'Deputy Eddie Duran knocks on apartment door; fires 6 shots upon door opening.' },
+      { date: '2024-05-31', title: 'Internal Affairs Finding', description: 'Okaloosa County Sheriff fires Duran, ruling Fortson committed no crime and posed no threat.' },
+      { date: '2024-08-23', title: 'Criminal Charges Filed', description: 'Florida State Attorney formally charges Eddie Duran with first-degree felony manslaughter with a firearm.' }
+    ]
+  },
+  {
+    id: 'case-dexter-reed',
+    title: 'Dexter Reed 96-Shot Traffic Stop Escalation',
+    victim: 'Dexter Reed',
+    age: 26,
+    date: '2024-03-21',
+    location: 'Chicago, Illinois (Humboldt Park)',
+    jurisdiction: 'Chicago Police Department (Tactical Unit)',
+    status: 'Under COPA & State Attorney Investigation',
+    outcomeCategory: 'Active Investigation',
+    qualifiedImmunity: 'Challenged in Federal Court',
+    summary: 'Dexter Reed was pulled over in Humboldt Park by five tactical officers in an unmarked CPD vehicle for an alleged seatbelt violation. During the stop, officers surrounded the vehicle with guns drawn. Gunfire erupted, and four officers discharged 96 rounds in 41 seconds, including firing three shots after Reed had exited the vehicle and lay motionless on the ground. COPA raised grave concerns regarding the pretextual nature of the stop and officer credibility.',
+    keyInjustices: [
+      'Five tactical officers in plainclothes deployed for a minor alleged seatbelt violation',
+      'Officers discharged 96 rounds in 41 seconds in a residential neighborhood',
+      'COPA questioned officer honesty regarding whether they could have seen a seatbelt through heavily tinted windows',
+      'Continued fire directed at the suspect after he was already incapacitated on the pavement'
+    ],
+    officersInvolved: [
+      { name: 'Officer A. Curley', badge: 'Tactical #4419', status: 'Under COPA Investigation', repeatOffender: true },
+      { name: 'Officer B. Martinez', badge: 'Tactical #3812', status: 'Relieved of Police Powers', repeatOffender: false }
+    ],
+    settlementAmount: 'Federal Civil Rights Lawsuit Pending',
+    taxpayerCost: 'City of Chicago outside defense counsel',
+    bodycamAvailable: true,
+    bodycamDuration: '30+ Video Files Released by COPA',
+    evidenceCount: 38,
+    petitionSignatures: 165000,
+    petitionGoal: 200000,
+    familyFundRaised: 180000,
+    familyFundGoal: 250000,
+    attorney: 'Andrew M. Stroth (Action Injury Law Group)',
+    tags: ['Pretextual Stop', '96 Shots', 'Tactical Unit', 'COPA Inquiry'],
+    timeline: [
+      { date: '2024-03-21', title: 'Traffic Stop', description: 'Tactical unit stops Reed; 96 shots fired in 41 seconds.' },
+      { date: '2024-04-09', title: 'COPA Evidence Release', description: 'COPA releases 30+ body camera videos and 911 audio recordings.' },
+      { date: '2024-04-24', title: 'Federal Lawsuit Filed', description: 'Reed family files civil rights lawsuit alleging unconstitutional pretextual stops.' }
     ]
   },
   {
@@ -53,7 +136,7 @@ export const initialCases = [
     date: '2023-01-07',
     location: 'Memphis, Tennessee',
     jurisdiction: 'Memphis Police Department (SCORPION Unit)',
-    status: 'Multiple Convictions / Civil Settlement Pending',
+    status: 'Multiple Federal Convictions / Civil Settlement Pending',
     outcomeCategory: 'Convicted / Settlement',
     qualifiedImmunity: 'Denied',
     summary: 'Tyre Nichols was pulled over for alleged reckless driving (unsubstantiated by video). Officers dragged him from his car, pepper-sprayed him, and pursued him on foot before brutally beating him while he was restrained, calling out for his mother. The specialized SCORPION unit had a pattern of unconstitutional aggressive tactics that had been repeatedly ignored by leadership.',
@@ -64,11 +147,11 @@ export const initialCases = [
       'Officers colluded on police radio to fabricate a resisting-arrest narrative'
     ],
     officersInvolved: [
-      { name: 'Tadarrius Bean', badge: '#4412', status: 'Convicted in Federal Court', repeatOffender: true },
-      { name: 'Demetrius Haley', badge: '#3891', status: 'Convicted of Civil Rights Violations', repeatOffender: true },
-      { name: 'Emmitt Martin III', badge: '#2910', status: 'Pled Guilty (Federal)', repeatOffender: false },
-      { name: 'Justin Smith', badge: '#5102', status: 'Convicted', repeatOffender: false },
-      { name: 'Desmond Mills Jr.', badge: '#1834', status: 'Pled Guilty', repeatOffender: false }
+      { name: 'Tadarrius Bean', badge: '#4412', status: 'Convicted in Federal Court (Oct 2024)', repeatOffender: true },
+      { name: 'Demetrius Haley', badge: '#3891', status: 'Convicted of Civil Rights Violations (Oct 2024)', repeatOffender: true },
+      { name: 'Emmitt Martin III', badge: '#2910', status: 'Pled Guilty to Federal Civil Rights Charges', repeatOffender: false },
+      { name: 'Justin Smith', badge: '#5102', status: 'Convicted in Federal Court (Oct 2024)', repeatOffender: false },
+      { name: 'Desmond Mills Jr.', badge: '#1834', status: 'Pled Guilty to Federal Charges', repeatOffender: false }
     ],
     settlementAmount: '$550M Federal Civil Suit Filed',
     taxpayerCost: '$12M+ in municipal legal defense & unit restructuring costs',
@@ -86,7 +169,7 @@ export const initialCases = [
       { date: '2023-01-10', title: 'Passing', description: 'Tyre Nichols succumbs to internal injuries in the hospital.' },
       { date: '2023-01-20', title: 'Officers Fired', description: 'MPD terminates 5 officers after internal investigation.' },
       { date: '2023-01-27', title: 'Footage Released', description: 'City of Memphis releases pole camera and body camera footage.' },
-      { date: '2024-10-03', title: 'Federal Verdicts', description: 'Federal jury finds Haley, Bean, and Smith guilty of witness tampering and civil rights offenses.' }
+      { date: '2024-10-03', title: 'Federal Jury Verdicts', description: 'Federal jury finds Haley, Bean, and Smith guilty of witness tampering and civil rights offenses.' }
     ]
   },
   {
@@ -108,9 +191,9 @@ export const initialCases = [
       'Original incident report listed injuries as "None" and forced entry as "No"'
     ],
     officersInvolved: [
-      { name: 'Joshua Jaynes', badge: 'Det. #8812', status: 'Convicted of Civil Rights Violation & Deprivation of Liberty', repeatOffender: true },
+      { name: 'Joshua Jaynes', badge: 'Det. #8812', status: 'DOJ Indictment for Falsifying Warrant Affidavit', repeatOffender: true },
       { name: 'Kelly Goodlett', badge: 'Det. #7621', status: 'Pled Guilty to Conspiracy in Federal Court', repeatOffender: false },
-      { name: 'Brett Hankison', badge: 'Officer #4190', status: 'Convicted in Federal Retrial of Excessive Force', repeatOffender: true },
+      { name: 'Brett Hankison', badge: 'Officer #4190', status: 'Convicted in Federal Retrial of Excessive Force (Nov 2024)', repeatOffender: true },
       { name: 'Myles Cosgrove', badge: 'Officer #5531', status: 'Fired by LMPD; hired by Carroll County Sheriff', repeatOffender: true }
     ],
     settlementAmount: '$12,000,000 Paid to Estate',
@@ -129,7 +212,7 @@ export const initialCases = [
       { date: '2020-09-15', title: 'City Settlement', description: 'Louisville agrees to $12M settlement and police reforms.' },
       { date: '2022-08-04', title: 'DOJ Indictments', description: 'Federal civil rights charges filed against 4 officers for falsifying warrant.' },
       { date: '2023-03-08', title: 'DOJ Findings', description: 'DOJ finds LMPD engaged in pattern of unconstitutional searches and discrimination.' },
-      { date: '2024-11-01', title: 'Hankison Conviction', description: 'Hankison found guilty in federal court of violating Taylor’s civil rights.' }
+      { date: '2024-11-01', title: 'Hankison Federal Conviction', description: 'Hankison found guilty in federal court of violating Taylor’s civil rights.' }
     ]
   },
   {
@@ -176,43 +259,45 @@ export const initialCases = [
     ]
   },
   {
-    id: 'case-marcus-delgado-2025',
-    title: 'Marcus Delgado Unlawful Pursuit & Property Seizure',
-    victim: 'Marcus Delgado',
-    age: 31,
-    date: '2025-01-14',
-    location: 'Houston, Texas',
-    jurisdiction: 'Harris County Sheriff\'s Office',
-    status: 'Active Community Investigation / Evidence Under Review',
-    outcomeCategory: 'Active Investigation',
-    qualifiedImmunity: 'Claimed by Officer Defense Counsel',
-    summary: 'Marcus Delgado was wrongfully targeted in an unmarked vehicle pursuit after being misidentified as a suspect in a commercial burglary. After stopping and complying with hands visible, officers smashed his car windows, pulled him onto asphalt, and seized his phone while he was streaming live to Facebook. The phone footage was deleted before being recovered via cloud sync.',
+    id: 'case-george-floyd',
+    title: 'George Floyd Murder & Minneapolis Police Dept Consent Decree',
+    victim: 'George Floyd',
+    age: 46,
+    date: '2020-05-25',
+    location: 'Minneapolis, Minnesota',
+    jurisdiction: 'Minneapolis Police Department (MPD)',
+    status: 'State & Federal Convictions / $27M Settlement',
+    outcomeCategory: 'Convicted / Settlement',
+    qualifiedImmunity: 'Denied (Murder & Federal Civil Rights Convictions)',
+    summary: 'George Floyd was arrested outside Cup Foods for an alleged counterfeit $20 bill. Officer Derek Chauvin knelt on Floyd\'s neck for 9 minutes and 29 seconds while Floyd was handcuffed face-down on asphalt pleading "I can\'t breathe." Three other officers assisted in restraining Floyd and holding back horrified civilian bystanders. The incident triggered global civil rights uprisings and a comprehensive DOJ civil rights finding against MPD.',
     keyInjustices: [
-      'Unmarked vehicle pursuit violated department chase policy (HCSO General Order 401)',
-      'Officers attempted to destroy smartphone digital evidence by deleting local camera roll',
-      'Qualified immunity invoked to protect officers from property damage and civil claims',
-      'Refusal of internal affairs to release cruiser dashcam footage for 90+ days'
+      'Lethal knee-to-neck restraint applied for 9 minutes and 29 seconds on an incapacitated person',
+      'Officers prevented off-duty firefighter and civilian witnesses from administering CPR',
+      'Initial MPD press release titled incident "Man Dies After Medical Incident During Police Interaction"',
+      'DOJ investigation revealed decades-long pattern of excessive force and racial discrimination'
     ],
     officersInvolved: [
-      { name: 'K. Vance', badge: 'Deputy #8109', status: 'On Paid Administrative Duty', repeatOffender: true },
-      { name: 'R. Sterling', badge: 'Deputy #7234', status: 'Active Duty', repeatOffender: false }
+      { name: 'Derek Chauvin', badge: 'Officer #1087', status: 'Convicted of 2nd Degree Murder (22.5 yrs) & Federal Civil Rights Violation (21 yrs)', repeatOffender: true },
+      { name: 'Tou Thao', badge: 'Officer #7162', status: 'Convicted in State & Federal Court (4.75 yrs)', repeatOffender: true },
+      { name: 'J. Alexander Kueng', badge: 'Officer #8911', status: 'Convicted in State & Federal Court (3.5 yrs)', repeatOffender: false },
+      { name: 'Thomas Lane', badge: 'Officer #4102', status: 'Convicted in State & Federal Court (3 yrs)', repeatOffender: false }
     ],
-    settlementAmount: 'Pre-Litigation Demand: $1.25M',
-    taxpayerCost: 'Estimated $200k in preliminary administrative review fees',
+    settlementAmount: '$27,000,000 Paid to Floyd Family',
+    taxpayerCost: '$27M municipal settlement + millions in consent decree compliance monitoring',
     bodycamAvailable: true,
-    bodycamDuration: 'Recovered Cloud Live-Stream (8 mins)',
-    evidenceCount: 12,
-    petitionSignatures: 48200,
-    petitionGoal: 50000,
-    familyFundRaised: 38500,
-    familyFundGoal: 60000,
-    attorney: 'Civil Rights Coalition of Texas',
-    tags: ['Evidence Tampering', 'Live-Stream Preserved', 'Qualified Immunity Fight', 'Chokehold Violation'],
+    bodycamDuration: 'Darnella Frazier Eyewitness Video + 4 Officer Bodycams',
+    evidenceCount: 88,
+    petitionSignatures: 19500000,
+    petitionGoal: 20000000,
+    familyFundRaised: 14200000,
+    familyFundGoal: 15000000,
+    attorney: 'Ben Crump & Antonio Romanucci',
+    tags: ['Landmark Conviction', 'DOJ Findings', 'Eyewitness Video', 'Federal Civil Rights'],
     timeline: [
-      { date: '2025-01-14 21:40', title: 'Traffic Stop Escalation', description: 'Unmarked cruiser rams Delgado vehicle; windows shattered.' },
-      { date: '2025-01-15', title: 'Cloud Evidence Recovery', description: 'Delgado family recovers auto-backed cloud live stream.' },
-      { date: '2025-01-28', title: 'IA Complaint Filed', description: 'Formal complaint filed documenting evidence destruction.' },
-      { date: '2025-02-10', title: 'Legal Aid Representation', description: 'Texas Civil Rights Coalition takes case pro bono.' }
+      { date: '2020-05-25', title: 'Fatal Encounter', description: 'George Floyd held in neck restraint for 9:29; Darnella Frazier records video.' },
+      { date: '2020-05-26', title: 'Officers Fired', description: 'Minneapolis Chief Medaria Arradondo fires all 4 officers.' },
+      { date: '2021-04-20', title: 'Chauvin Verdict', description: 'Derek Chauvin found guilty of second-degree murder, third-degree murder, and manslaughter.' },
+      { date: '2023-06-16', title: 'DOJ Findings Report', description: 'DOJ releases scathing Section 14141 report documenting unconstitutional force by MPD.' }
     ]
   },
   {

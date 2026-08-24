@@ -22,6 +22,24 @@ export const initialOfficers = [
     notes: 'Prior discharge from US Army for serious misconduct. 2 civilian DUI convictions omitted from initial application disclosures.'
   },
   {
+    id: 'off-eddie-duran',
+    name: 'Eddie Duran',
+    badge: 'Deputy #718 (Former OCSO)',
+    department: 'Okaloosa County Sheriff\'s Office',
+    state: 'Florida',
+    totalComplaints: 6,
+    sustainedComplaints: 3,
+    settlementsPaid: 'Pending Federal Civil Rights Litigation',
+    bradyListStatus: 'Fired & Charged (Brady List Disclosed)',
+    repeatOffenderScore: '94/100 (Severe Risk)',
+    departmentsServed: [
+      { name: 'Okaloosa County Sheriff', years: '2019-2024', reasonForLeaving: 'Fired following internal affairs finding of unjustified lethal force' }
+    ],
+    casesInvolved: ['Senior Airman Roger Fortson Wrong-Door Shooting'],
+    status: 'Charged with Felony Manslaughter with a Firearm (State of Florida)',
+    notes: 'Internal affairs investigation found Duran dispatched to wrong apartment and shot Fortson within 2 seconds of door opening while victim was lawfully holding firearm pointed at floor.'
+  },
+  {
     id: 'off-brett-hankison',
     name: 'Brett Hankison',
     badge: 'Officer #4190 (Former LMPD)',
@@ -33,7 +51,7 @@ export const initialOfficers = [
     bradyListStatus: 'Flagged on Brady List',
     repeatOffenderScore: '92/100 (High Risk)',
     departmentsServed: [
-      { name: 'Louisville Metro PD', years: '2003-2020', reasonForLeaving: 'Fired for blindly firing 10 rounds through patio door' }
+      { name: 'Louisville Metro PD', years: '2003-2020', reasonForLeaving: 'Fired for blindly firing 10 rounds through covered patio door' }
     ],
     casesInvolved: ['Breonna Taylor No-Knock Raid', 'Multiple Prior Sexual Harassment & Unlawful Search Claims'],
     status: 'Convicted in Federal Court (Nov 2024)',
