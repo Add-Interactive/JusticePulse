@@ -17,7 +17,10 @@ import {
   Flame,
   AlertTriangle,
   FileSpreadsheet,
-  Download
+  Download,
+  Layers,
+  Users,
+  Calculator
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import CourtroomExportModal from '../Discovery/CourtroomExportModal';
@@ -26,6 +29,8 @@ export default function CaseDetailModal({
   caseData, 
   onClose, 
   onOpenDonateModal, 
+  onOpenEvidenceSuite,
+  onOpenGrandJury,
   showToast 
 }) {
   const [activeTab, setActiveTab] = useState('overview');
@@ -110,6 +115,42 @@ export default function CaseDetailModal({
               <X className="w-6 h-6" />
             </button>
           </div>
+        </div>
+
+        {/* Action Fast Launch Bar */}
+        <div className="px-5 py-2.5 bg-indigo-950/40 border-b border-slate-800 flex items-center justify-between flex-wrap gap-2 text-xs">
+          <div className="flex items-center space-x-2">
+            <span className="text-[10px] uppercase font-bold text-slate-400 font-mono">Case Actions:</span>
+            {onOpenEvidenceSuite && (
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenEvidenceSuite();
+                }}
+                className="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg flex items-center gap-1 shadow-glow transition-all"
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>Open Evidence Platform</span>
+              </button>
+            )}
+
+            {onOpenGrandJury && (
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenGrandJury();
+                }}
+                className="px-3 py-1 bg-purple-900 hover:bg-purple-800 text-purple-200 border border-purple-700 font-bold rounded-lg flex items-center gap-1 transition-all"
+              >
+                <Users className="w-3.5 h-3.5" />
+                <span>Citizen Grand Jury</span>
+              </button>
+            )}
+          </div>
+
+          <span className="text-[11px] font-mono text-emerald-400">
+            {caseData.evidenceCount || 12} Verified Exhibits
+          </span>
         </div>
 
         {/* Navigation Tabs Inside Modal */}

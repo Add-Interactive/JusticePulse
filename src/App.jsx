@@ -504,6 +504,8 @@ export default function App() {
           caseData={selectedCaseData}
           onClose={() => setSelectedCaseId(null)}
           onOpenDonateModal={handleOpenDonateModal}
+          onOpenEvidenceSuite={() => handleOpenEvidenceSuite('corkboard')}
+          onOpenGrandJury={() => setActiveTab('jury_simulator')}
           showToast={showToast}
         />
       )}
