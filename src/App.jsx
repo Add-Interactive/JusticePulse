@@ -35,6 +35,7 @@ import FieldObserverView from './components/FieldMode/FieldObserverView';
 import OralHistoryPlayerView from './components/AudioHub/OralHistoryPlayerView';
 import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
 import FBIEvidenceHUD from './components/InvestigationBoard/FBIEvidenceHUD';
+import MultiCamStudioView from './components/MultiCam/MultiCamStudioView';
 import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
 import AcademyView from './components/Academy/AcademyView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
@@ -307,6 +308,12 @@ export default function App() {
             <FBIEvidenceHUD
               showToast={showToast}
               onOpenCaseDetail={handleOpenCaseDetail}
+            />
+          )}
+
+          {activeTab === 'multicam' && (
+            <MultiCamStudioView
+              showToast={showToast}
             />
           )}
 

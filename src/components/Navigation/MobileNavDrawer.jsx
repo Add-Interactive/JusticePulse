@@ -62,7 +62,8 @@ export default function MobileNavDrawer({
     {
       group: 'Accountability & Evidence',
       items: [
-        { id: 'whiteboard', label: 'Evidence Whiteboard', subtitle: 'Visual Matrix', icon: Network, badge: 'Canvas', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
+        { id: 'whiteboard', label: 'Evidence HUD & Pins', subtitle: 'Detective Corkboard', icon: Network, badge: 'FBI', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
+        { id: 'multicam', label: 'Multi-Cam Studio', subtitle: 'Synchronized Video', icon: Video, badge: 'Sync', badgeColor: 'bg-teal-950 text-teal-300 border border-teal-800' },
         { id: 'cases', label: 'The Docket', subtitle: 'Verified Cases', icon: Scale, badge: '2.4k', badgeColor: 'bg-slate-800 text-slate-300' },
         { id: 'officers', label: 'Officer Index', subtitle: 'Brady Registry', icon: ShieldAlert, badge: 'Flagged', badgeColor: 'bg-crimson-900 text-crimson-200 border border-crimson-700/50' },
         { id: 'departments', label: 'Agency Scorecards', subtitle: 'Police Benchmarks', icon: Building2, badge: 'Grades', badgeColor: 'bg-slate-800 text-slate-300' },

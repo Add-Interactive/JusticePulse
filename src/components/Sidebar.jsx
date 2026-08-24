@@ -27,7 +27,8 @@ import {
   CheckSquare,
   Network,
   PhoneCall,
-  GraduationCap
+  GraduationCap,
+  Video
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
@@ -47,7 +48,8 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     {
       group: 'Accountability & Evidence',
       items: [
-        { id: 'whiteboard', label: 'Evidence Whiteboard', subtitle: 'Visual Connection Matrix', icon: Network, badge: 'Canvas', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
+        { id: 'whiteboard', label: 'Evidence HUD & Pins', subtitle: 'FBI Detective Corkboard', icon: Network, badge: 'FBI', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
+        { id: 'multicam', label: 'Multi-Cam Studio', subtitle: 'Synchronized Video Replay', icon: Video, badge: 'Sync', badgeColor: 'bg-teal-950 text-teal-300 border border-teal-800' },
         { id: 'cases', label: 'The Docket', subtitle: 'Verified Case Registry', icon: Scale, badge: '2.4k', badgeColor: 'bg-slate-800 text-slate-300' },
         { id: 'officers', label: 'Officer Index', subtitle: 'Repeat Offender & Brady', icon: ShieldAlert, badge: 'Flagged', badgeColor: 'bg-crimson-900 text-crimson-200 border border-crimson-700/50' },
         { id: 'departments', label: 'Agency Scorecards', subtitle: 'Police Dept Benchmark', icon: Building2, badge: 'Grades', badgeColor: 'bg-slate-800 text-slate-300' },
