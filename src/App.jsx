@@ -36,6 +36,7 @@ import FOIATrackerView from './components/FOIATracker/FOIATrackerView';
 import EmergencyNexusView from './components/EmergencyNexus/EmergencyNexusView';
 import AcademyView from './components/Academy/AcademyView';
 import SettlementCalculatorView from './components/SettlementCalculator/SettlementCalculatorView';
+import GrandJurySimulatorView from './components/JurySimulator/GrandJurySimulatorView';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
 import SplashScreen from './components/Splash/SplashScreen';
 import Toast from './components/Common/Toast';
@@ -311,6 +312,12 @@ export default function App() {
           {activeTab === 'academy' && (
             <AcademyView
               currentUser={currentUser}
+              showToast={showToast}
+            />
+          )}
+
+          {activeTab === 'jury_simulator' && (
+            <GrandJurySimulatorView
               showToast={showToast}
             />
           )}

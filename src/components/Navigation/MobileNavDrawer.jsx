@@ -29,7 +29,8 @@ import {
   Layers,
   PhoneCall,
   GraduationCap,
-  Calculator
+  Calculator,
+  Users
 } from 'lucide-react';
 
 export default function MobileNavDrawer({ 
@@ -71,6 +72,7 @@ export default function MobileNavDrawer({
     {
       group: 'Legal Tools & Policy Sandbox',
       items: [
+        { id: 'jury_simulator', label: 'Citizen Grand Jury', subtitle: 'Indictment Voting', icon: Users, badge: 'Jury', badgeColor: 'bg-purple-950 text-purple-300 border border-purple-800' },
         { id: 'settlement_calc', label: 'Settlement Calculator', subtitle: '§ 1983 Estimator', icon: Calculator, badge: 'Calc', badgeColor: 'bg-emerald-950 text-emerald-300 border border-emerald-800' },
         { id: 'academy', label: 'Civil Rights Academy', subtitle: 'Courses & Certs', icon: GraduationCap, badge: 'CLE', badgeColor: 'bg-purple-950 text-purple-300 border border-purple-800' },
         { id: 'map', label: '50-State Shield Map', subtitle: 'QI Laws & Circuits', icon: Map, badge: 'Map', badgeColor: 'bg-justice-950 text-justice-300 border border-justice-800' },
