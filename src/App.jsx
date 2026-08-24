@@ -518,6 +518,7 @@ export default function App() {
               setCurrentUser={setCurrentUser}
               showToast={showToast}
               onOpenCaseDetail={handleOpenCaseDetail}
+              onOpenAuthModal={handleOpenAuthModal}
             />
           )}
 
