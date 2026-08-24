@@ -25,7 +25,8 @@ import {
   PhoneCall,
   GraduationCap,
   Calculator,
-  Users
+  Users,
+  Home
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
@@ -36,6 +37,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
       groupTagColor: 'text-sky-400 bg-sky-950 border-sky-800',
       groupBorder: 'border-l-4 border-l-sky-500',
       items: [
+        { id: 'home', label: 'Public Home Showcase', subtitle: 'Overview, Dockets & Roles', icon: Home, badge: 'Home', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-700', accentBorder: 'border-l-4 border-l-indigo-400' },
         { id: 'feed', label: 'The Public Square', subtitle: 'Community Feed & Dispatches', icon: MessageSquare, badge: 'Live', badgeColor: 'bg-justice-600 text-white', accentBorder: 'border-l-4 border-l-sky-400' },
         { id: 'townhall', label: 'Townhall Caucus', subtitle: 'Real-Time Strategy Chat', icon: MessagesSquare, badge: 'Chat', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-700', accentBorder: 'border-l-4 border-l-indigo-400' },
         { id: 'nexus', label: 'United Front Nexus', subtitle: 'Emergency Hotlines & Groups', icon: PhoneCall, badge: '24/7', badgeColor: 'bg-crimson-950 text-crimson-300 border border-crimson-700', accentBorder: 'border-l-4 border-l-crimson-500' },
@@ -85,69 +87,61 @@ export default function Sidebar({ activeTab, setActiveTab }) {
   return (
     <aside className="w-64 flex-shrink-0 hidden lg:block select-none">
       <div className="sticky top-20 space-y-4">
-        {/* Navigation Section Container with Sharp Contrast Border */}
-        <div className="bg-[#111726] rounded-3xl p-3.5 border-2 border-[#243147] shadow-2xl max-h-[calc(100vh-120px)] overflow-y-auto space-y-4">
-          {navGroups.map((group, gIdx) => (
-            <div key={gIdx} className="space-y-1.5">
-              <div className="px-2 py-1 flex items-center justify-between border-b border-[#1c273a] pb-1 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300 font-mono">{group.group}</span>
-                <span className={`text-[8.5px] font-mono px-1.5 py-0.2 rounded border font-bold ${group.groupTagColor}`}>
+        {/* Navigation Card Container */}
+        <div className="bg-[#111726] border-2 border-[#243147] rounded-3xl p-3 shadow-xl space-y-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
+          {navGroups.map((group, groupIdx) => (
+            <div key={groupIdx} className="space-y-1.5">
+              {/* Category Group Header with Left Color Strip */}
+              <div className={`px-2 py-1 flex items-center justify-between rounded-lg ${group.groupBorder} pl-2 bg-[#080c14]/60`}>
+                <span className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-wider">
+                  {group.group}
+                </span>
+                <span className={`text-[8.5px] font-mono font-bold px-1.5 py-0.5 rounded ${group.groupTagColor}`}>
                   {group.groupTag}
                 </span>
               </div>
 
-              <nav className="space-y-1">
+              {/* Navigation Items in Group */}
+              <div className="space-y-0.5">
                 {group.items.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
+                  
                   return (
                     <button
                       key={item.id}
                       onClick={() => setActiveTab(item.id)}
-                      className={`w-full text-left px-3 py-2 rounded-xl flex items-center justify-between transition-all group border ${item.accentBorder} ${
-                        isActive 
-                          ? 'bg-gradient-to-r from-justice-600 to-justice-700 text-white border-justice-300 shadow-glow' 
-                          : 'bg-[#080c14] border-slate-800 text-slate-200 hover:bg-[#182238] hover:border-slate-600 hover:text-white'
+                      className={`w-full flex items-center justify-between p-2 rounded-2xl text-left transition-all ${
+                        item.accentBorder
+                      } ${
+                        isActive
+                          ? 'bg-gradient-to-r from-justice-900/90 to-indigo-950/90 text-white font-bold border border-justice-500/80 shadow-glow'
+                          : 'bg-[#080c14]/40 hover:bg-[#162035] text-slate-300 hover:text-white border border-transparent'
                       }`}
                     >
                       <div className="flex items-center space-x-2.5 min-w-0">
-                        <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
-                        <div className="truncate">
-                          <div className="text-xs font-bold truncate leading-tight text-white">{item.label}</div>
-                          <div className={`text-[10px] truncate ${isActive ? 'text-justice-100' : 'text-slate-400'}`}>
+                        <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-justice-400' : 'text-slate-400'}`} />
+                        <div className="min-w-0">
+                          <p className={`text-xs truncate ${isActive ? 'font-bold text-white' : 'font-medium text-slate-200'}`}>
+                            {item.label}
+                          </p>
+                          <p className="text-[9px] text-slate-400 truncate leading-tight font-mono">
                             {item.subtitle}
-                          </div>
+                          </p>
                         </div>
                       </div>
+                      
                       {item.badge && (
-                        <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded-md flex-shrink-0 ml-1.5 font-bold ${item.badgeColor}`}>
+                        <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded-full font-bold flex-shrink-0 ml-1 ${item.badgeColor}`}>
                           {item.badge}
                         </span>
                       )}
                     </button>
                   );
                 })}
-              </nav>
+              </div>
             </div>
           ))}
-        </div>
-
-        {/* 24/7 Crisis Hotline Fast Card */}
-        <div 
-          onClick={() => setActiveTab('nexus')}
-          className="bg-gradient-to-br from-crimson-950/90 via-[#111726] to-[#111726] rounded-2xl p-4 border-2 border-crimson-600 shadow-xl relative overflow-hidden cursor-pointer hover:border-crimson-400 transition-all group border-l-4 border-l-crimson-500"
-        >
-          <div className="flex items-center space-x-2 text-crimson-400 mb-1.5">
-            <LifeBuoy className="w-4 h-4 animate-spin" style={{ animationDuration: '8s' }} />
-            <span className="text-xs font-black uppercase tracking-wider font-mono">Emergency Intake</span>
-          </div>
-          <p className="text-xs text-slate-200 font-medium leading-relaxed">
-            Need urgent civil rights counsel or crisis intervention?
-          </p>
-          <div className="mt-2.5 p-2 bg-[#080c14] rounded-xl border-2 border-crimson-700 text-center shadow-inner">
-            <p className="text-[10px] text-slate-400 uppercase font-semibold">Toll-Free Legal Dispatch</p>
-            <p className="text-xs font-mono font-black text-crimson-400 mt-0.5 tracking-wider">1-800-555-JUSTICE</p>
-          </div>
         </div>
       </div>
     </aside>

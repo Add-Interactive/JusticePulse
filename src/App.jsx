@@ -5,6 +5,7 @@ import RightSidebar from './components/RightSidebar';
 import Footer from './components/Footer';
 import MobileBottomBar from './components/Navigation/MobileBottomBar';
 import MobileNavDrawer from './components/Navigation/MobileNavDrawer';
+import PublicLandingView from './components/Home/PublicLandingView';
 import FeedView from './components/Feed/FeedView';
 import CreatePostModal from './components/Feed/CreatePostModal';
 import CasesView from './components/Cases/CasesView';
@@ -40,12 +41,14 @@ import GrandJurySimulatorView from './components/JurySimulator/GrandJurySimulato
 import CommandPaletteModal from './components/CommandPalette/CommandPaletteModal';
 import LegalIntakeWizardModal from './components/Intake/LegalIntakeWizardModal';
 import SettingsModal from './components/Settings/SettingsModal';
+import AuthModal from './components/Auth/AuthModal';
 import SplashScreen from './components/Splash/SplashScreen';
 import Toast from './components/Common/Toast';
 
 import { initialCases } from './data/casesData';
 import { initialPosts } from './data/postsData';
 import { initialOfficers } from './data/officersData';
+import { sampleUserPersonas } from './data/rolesData';
 
 export default function App() {
   // Splash Screen State
@@ -60,14 +63,16 @@ export default function App() {
   const [isFocusMode, setIsFocusMode] = useState(false);
 
   // Navigation & UI State
-  const [activeTab, setActiveTab] = useState('feed');
+  const [activeTab, setActiveTab] = useState('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [toast, setToast] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isEvidenceSuiteOpen, setIsEvidenceSuiteOpen] = useState(false);
-  const [evidenceInitialTab, setEvidenceInitialTab] = useState('corkboard');
+  const [evidenceInitialTab, setEvidenceInitialTab] = useState('my_cases');
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState('login');
 
   // Data State
   const [cases, setCases] = useState(initialCases);
@@ -83,12 +88,9 @@ export default function App() {
   const [isLegalIntakeOpen, setIsLegalIntakeOpen] = useState(false);
   const [donationCampaign, setDonationCampaign] = useState(null);
 
-  // Current User Profile Persona
-  const [currentUser, setCurrentUser] = useState({
-    name: 'Dr. Kimberly Adams',
-    role: 'Civil Rights Advocate',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-    badge: 'Verified Organizer'
+  // Current User Profile Persona (Defaults to Civil Rights Defense Attorney Marcus Vance)
+  const [currentUser, setCurrentUser] = useState(() => {
+    return sampleUserPersonas[0];
   });
 
   // Global Ctrl + K / Command + K Listener
@@ -250,6 +252,15 @@ export default function App() {
     setIsEvidenceSuiteOpen(true);
   };
 
+  const handleOpenAuthModal = (mode = 'login') => {
+    setAuthModalMode(mode);
+    setIsAuthModalOpen(true);
+  };
+
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user);
+  };
+
   const selectedCaseData = cases.find(c => c.id === selectedCaseId);
 
   const fontScaleClass = 
@@ -270,7 +281,7 @@ export default function App() {
         />
       )}
 
-      {/* STANDALONE UNCONSTRAINED FULL-SCREEN EVIDENCE COMMAND SUITE ENTITY WITH THEMES */}
+      {/* STANDALONE UNCONSTRAINED FULL-SCREEN EVIDENCE COMMAND SUITE ENTITY WITH THEMES & MY CASES */}
       {isEvidenceSuiteOpen && (
         <UnifiedEvidenceDashboard
           onClose={() => {
@@ -279,6 +290,7 @@ export default function App() {
           showToast={showToast}
           onOpenCaseDetail={handleOpenCaseDetail}
           onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
+          currentUser={currentUser}
           currentTheme={currentTheme}
           isHighContrast={isHighContrast}
           fontSizeScale={fontSizeScale}
@@ -286,7 +298,7 @@ export default function App() {
         />
       )}
 
-      {/* Global Navbar with Settings & Themes Trigger */}
+      {/* Global Navbar with Settings, Role Persona & Auth Trigger */}
       <Navbar
         onOpenReportModal={() => setIsReportModalOpen(true)}
         onOpenSOSModal={() => setIsSOSModalOpen(true)}
@@ -294,6 +306,7 @@ export default function App() {
         onOpenEvidenceSuite={() => handleOpenEvidenceSuite('corkboard')}
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
         onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
+        onOpenAuthModal={handleOpenAuthModal}
         onReplaySplash={() => setShowSplash(true)}
         onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         activeTab={activeTab}
@@ -330,6 +343,15 @@ export default function App() {
 
         {/* Center Main View Area */}
         <div className="flex-1 min-w-0">
+          {activeTab === 'home' && (
+            <PublicLandingView
+              onOpenAuthModal={handleOpenAuthModal}
+              onOpenEvidenceSuite={handleOpenEvidenceSuite}
+              onSelectCase={handleOpenCaseDetail}
+              onNavigateTab={(tab) => setActiveTab(tab)}
+            />
+          )}
+
           {activeTab === 'feed' && (
             <FeedView
               posts={posts}
@@ -547,6 +569,7 @@ export default function App() {
         onOpenInvestorModal={() => setIsInvestorModalOpen(true)}
         onOpenEvidenceSuite={() => handleOpenEvidenceSuite('corkboard')}
         onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
+        onOpenAuthModal={handleOpenAuthModal}
         currentUser={currentUser}
       />
 
@@ -562,6 +585,15 @@ export default function App() {
         setIsHighContrast={setIsHighContrast}
         isFocusMode={isFocusMode}
         setIsFocusMode={setIsFocusMode}
+        showToast={showToast}
+      />
+
+      {/* Role-Based Authentication & Case Association Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+        initialMode={authModalMode}
         showToast={showToast}
       />
 
