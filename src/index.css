@@ -30,7 +30,7 @@
 }
 
 /* ========================================================================= */
-/* 10 DISTINCT VISUAL THEME STYLE SUITES (FULL SITE & EVIDENCE SYSTEM)       */
+/* 10 DISTINCT VISUAL THEME STYLE SUITES (FULL SITE, MODALS & EVIDENCE OS)   */
 /* ========================================================================= */
 
 /* THEME 1: DAYLIGHT JUSTICE (CLEAN CRISP LIGHT MODE) */
@@ -41,7 +41,10 @@
 .theme-daylight-clean .bg-slate-950,
 .theme-daylight-clean .bg-\[\#090d16\],
 .theme-daylight-clean .bg-\[\#0a0e17\],
-.theme-daylight-clean .bg-\[\#0c101c\]\/98 {
+.theme-daylight-clean .bg-\[\#0c101c\],
+.theme-daylight-clean .bg-\[\#0c101c\]\/98,
+.theme-daylight-clean .bg-\[\#0c101c\]\/95,
+.theme-daylight-clean .bg-\[\#1c1236\] {
   background-color: #f8fafc !important;
   color: #0f172a !important;
 }
@@ -86,10 +89,14 @@
 .theme-daylight-clean .border-\[\#243147\],
 .theme-daylight-clean .border-\[\#1c273a\],
 .theme-daylight-clean .border-\[\#1e2a3f\],
-.theme-daylight-clean .border-slate-800 {
+.theme-daylight-clean .border-purple-800\/60,
+.theme-daylight-clean .border-purple-600\/70,
+.theme-daylight-clean .border-slate-800,
+.theme-daylight-clean .border-slate-700 {
   border-color: #cbd5e1 !important;
 }
 .theme-daylight-clean header,
+.theme-daylight-clean footer,
 .theme-daylight-clean aside > div > div {
   border-color: #cbd5e1 !important;
   box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.06) !important;
@@ -102,7 +109,10 @@
 }
 .theme-vintage-parchment .bg-slate-950,
 .theme-vintage-parchment .bg-\[\#090d16\],
-.theme-vintage-parchment .bg-\[\#0c101c\]\/98 {
+.theme-vintage-parchment .bg-\[\#0c101c\],
+.theme-vintage-parchment .bg-\[\#0c101c\]\/98,
+.theme-vintage-parchment .bg-\[\#0c101c\]\/95,
+.theme-vintage-parchment .bg-\[\#1c1236\] {
   background-color: #ece3d4 !important;
   color: #291a0c !important;
 }
@@ -140,7 +150,11 @@
 }
 .theme-vintage-parchment .border-\[\#243147\],
 .theme-vintage-parchment .border-\[\#1c273a\],
-.theme-vintage-parchment .border-slate-800 {
+.theme-vintage-parchment .border-\[\#1e2a3f\],
+.theme-vintage-parchment .border-purple-800\/60,
+.theme-vintage-parchment .border-purple-600\/70,
+.theme-vintage-parchment .border-slate-800,
+.theme-vintage-parchment .border-slate-700 {
   border-color: #d8c8b2 !important;
 }
 
@@ -154,7 +168,10 @@
 .theme-oled-obsidian .bg-\[\#090d16\],
 .theme-oled-obsidian .bg-\[\#0a0e17\],
 .theme-oled-obsidian .bg-\[\#080c14\],
-.theme-oled-obsidian .bg-\[\#0c101c\]\/98 {
+.theme-oled-obsidian .bg-\[\#0c101c\],
+.theme-oled-obsidian .bg-\[\#0c101c\]\/98,
+.theme-oled-obsidian .bg-\[\#0c101c\]\/95,
+.theme-oled-obsidian .bg-\[\#1c1236\] {
   background-color: #000000 !important;
 }
 .theme-oled-obsidian .bg-slate-900,
@@ -178,7 +195,11 @@
 }
 .theme-oled-obsidian .border-\[\#243147\],
 .theme-oled-obsidian .border-\[\#1c273a\],
-.theme-oled-obsidian .border-slate-800 {
+.theme-oled-obsidian .border-\[\#1e2a3f\],
+.theme-oled-obsidian .border-purple-800\/60,
+.theme-oled-obsidian .border-purple-600\/70,
+.theme-oled-obsidian .border-slate-800,
+.theme-oled-obsidian .border-slate-700 {
   border-color: #64748b !important;
 }
 .theme-oled-obsidian .text-slate-400 {
@@ -188,10 +209,14 @@
 /* THEME 4: SANCTUARY EMERALD */
 .theme-sanctuary-emerald {
   background-color: #06140e !important;
+  color: #ecfdf5 !important;
 }
 .theme-sanctuary-emerald .bg-slate-950,
 .theme-sanctuary-emerald .bg-\[\#090d16\],
-.theme-sanctuary-emerald .bg-\[\#0c101c\]\/98 {
+.theme-sanctuary-emerald .bg-\[\#0c101c\],
+.theme-sanctuary-emerald .bg-\[\#0c101c\]\/98,
+.theme-sanctuary-emerald .bg-\[\#0c101c\]\/95,
+.theme-sanctuary-emerald .bg-\[\#1c1236\] {
   background-color: #040e0a !important;
 }
 .theme-sanctuary-emerald .bg-slate-900,
@@ -211,14 +236,25 @@
   border-color: #1a4d38 !important;
   color: #ecfdf5 !important;
 }
+.theme-sanctuary-emerald .border-\[\#243147\],
+.theme-sanctuary-emerald .border-\[\#1c273a\],
+.theme-sanctuary-emerald .border-\[\#1e2a3f\],
+.theme-sanctuary-emerald .border-purple-800\/60,
+.theme-sanctuary-emerald .border-purple-600\/70 {
+  border-color: #1a4d38 !important;
+}
 
 /* THEME 5: FEDERAL COURTROOM (MAHOGANY & GOLD) */
 .theme-courtroom-gold {
   background-color: #120b07 !important;
+  color: #fef3c7 !important;
 }
 .theme-courtroom-gold .bg-slate-950,
 .theme-courtroom-gold .bg-\[\#090d16\],
-.theme-courtroom-gold .bg-\[\#0c101c\]\/98 {
+.theme-courtroom-gold .bg-\[\#0c101c\],
+.theme-courtroom-gold .bg-\[\#0c101c\]\/98,
+.theme-courtroom-gold .bg-\[\#0c101c\]\/95,
+.theme-courtroom-gold .bg-\[\#1c1236\] {
   background-color: #0a0604 !important;
 }
 .theme-courtroom-gold .bg-slate-900,
@@ -238,14 +274,25 @@
   border-color: #4a3020 !important;
   color: #fef3c7 !important;
 }
+.theme-courtroom-gold .border-\[\#243147\],
+.theme-courtroom-gold .border-\[\#1c273a\],
+.theme-courtroom-gold .border-\[\#1e2a3f\],
+.theme-courtroom-gold .border-purple-800\/60,
+.theme-courtroom-gold .border-purple-600\/70 {
+  border-color: #4a3020 !important;
+}
 
 /* THEME 6: CRIMSON ALERT */
 .theme-crimson-alert {
   background-color: #14070a !important;
+  color: #fee2e2 !important;
 }
 .theme-crimson-alert .bg-slate-950,
 .theme-crimson-alert .bg-\[\#090d16\],
-.theme-crimson-alert .bg-\[\#0c101c\]\/98 {
+.theme-crimson-alert .bg-\[\#0c101c\],
+.theme-crimson-alert .bg-\[\#0c101c\]\/98,
+.theme-crimson-alert .bg-\[\#0c101c\]\/95,
+.theme-crimson-alert .bg-\[\#1c1236\] {
   background-color: #0c0406 !important;
 }
 .theme-crimson-alert .bg-slate-900,
@@ -265,14 +312,25 @@
   border-color: #541c27 !important;
   color: #fee2e2 !important;
 }
+.theme-crimson-alert .border-\[\#243147\],
+.theme-crimson-alert .border-\[\#1c273a\],
+.theme-crimson-alert .border-\[\#1e2a3f\],
+.theme-crimson-alert .border-purple-800\/60,
+.theme-crimson-alert .border-purple-600\/70 {
+  border-color: #541c27 !important;
+}
 
 /* THEME 7: CYBERPUNK MATRIX (NEON VIOLET & CYAN) */
 .theme-cyberpunk-neon {
   background-color: #090516 !important;
+  color: #fdf4ff !important;
 }
 .theme-cyberpunk-neon .bg-slate-950,
 .theme-cyberpunk-neon .bg-\[\#090d16\],
-.theme-cyberpunk-neon .bg-\[\#0c101c\]\/98 {
+.theme-cyberpunk-neon .bg-\[\#0c101c\],
+.theme-cyberpunk-neon .bg-\[\#0c101c\]\/98,
+.theme-cyberpunk-neon .bg-\[\#0c101c\]\/95,
+.theme-cyberpunk-neon .bg-\[\#1c1236\] {
   background-color: #05030d !important;
 }
 .theme-cyberpunk-neon .bg-slate-900,
@@ -292,14 +350,25 @@
   border-color: #3b1d75 !important;
   color: #fdf4ff !important;
 }
+.theme-cyberpunk-neon .border-\[\#243147\],
+.theme-cyberpunk-neon .border-\[\#1c273a\],
+.theme-cyberpunk-neon .border-\[\#1e2a3f\],
+.theme-cyberpunk-neon .border-purple-800\/60,
+.theme-cyberpunk-neon .border-purple-600\/70 {
+  border-color: #3b1d75 !important;
+}
 
 /* THEME 8: PACIFIC COBALT */
 .theme-pacific-ocean {
   background-color: #040e1b !important;
+  color: #f0fdfa !important;
 }
 .theme-pacific-ocean .bg-slate-950,
 .theme-pacific-ocean .bg-\[\#090d16\],
-.theme-pacific-ocean .bg-\[\#0c101c\]\/98 {
+.theme-pacific-ocean .bg-\[\#0c101c\],
+.theme-pacific-ocean .bg-\[\#0c101c\]\/98,
+.theme-pacific-ocean .bg-\[\#0c101c\]\/95,
+.theme-pacific-ocean .bg-\[\#1c1236\] {
   background-color: #020810 !important;
 }
 .theme-pacific-ocean .bg-slate-900,
@@ -319,14 +388,25 @@
   border-color: #17427a !important;
   color: #f0fdfa !important;
 }
+.theme-pacific-ocean .border-\[\#243147\],
+.theme-pacific-ocean .border-\[\#1c273a\],
+.theme-pacific-ocean .border-\[\#1e2a3f\],
+.theme-pacific-ocean .border-purple-800\/60,
+.theme-pacific-ocean .border-purple-600\/70 {
+  border-color: #17427a !important;
+}
 
 /* THEME 9: CAPITOL MONOLITH (TITANIUM SLATE) */
 .theme-capitol-monolith {
   background-color: #0f1115 !important;
+  color: #f8fafc !important;
 }
 .theme-capitol-monolith .bg-slate-950,
 .theme-capitol-monolith .bg-\[\#090d16\],
-.theme-capitol-monolith .bg-\[\#0c101c\]\/98 {
+.theme-capitol-monolith .bg-\[\#0c101c\],
+.theme-capitol-monolith .bg-\[\#0c101c\]\/98,
+.theme-capitol-monolith .bg-\[\#0c101c\]\/95,
+.theme-capitol-monolith .bg-\[\#1c1236\] {
   background-color: #08090b !important;
 }
 .theme-capitol-monolith .bg-slate-900,
@@ -344,6 +424,19 @@
 .theme-capitol-monolith textarea {
   background-color: #0c0e12 !important;
   border-color: #38404d !important;
+  color: #f8fafc !important;
+}
+.theme-capitol-monolith .border-\[\#243147\],
+.theme-capitol-monolith .border-\[\#1c273a\],
+.theme-capitol-monolith .border-\[\#1e2a3f\],
+.theme-capitol-monolith .border-purple-800\/60,
+.theme-capitol-monolith .border-purple-600\/70 {
+  border-color: #38404d !important;
+}
+
+/* THEME 10: MIDNIGHT NAVY (DEFAULT) */
+.theme-midnight-navy {
+  background-color: #090d16 !important;
   color: #f8fafc !important;
 }
 
