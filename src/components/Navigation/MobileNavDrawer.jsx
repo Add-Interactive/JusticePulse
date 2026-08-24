@@ -28,7 +28,8 @@ import {
   ExternalLink,
   Layers,
   PhoneCall,
-  GraduationCap
+  GraduationCap,
+  Calculator
 } from 'lucide-react';
 
 export default function MobileNavDrawer({ 
@@ -39,7 +40,7 @@ export default function MobileNavDrawer({
   onOpenReportModal, 
   onOpenSOSModal, 
   onOpenInvestorModal, 
-  onOpenEvidenceSuite,
+  onOpenEvidenceSuite, 
   currentUser 
 }) {
   if (!isOpen) return null;
@@ -70,6 +71,7 @@ export default function MobileNavDrawer({
     {
       group: 'Legal Tools & Policy Sandbox',
       items: [
+        { id: 'settlement_calc', label: 'Settlement Calculator', subtitle: '§ 1983 Estimator', icon: Calculator, badge: 'Calc', badgeColor: 'bg-emerald-950 text-emerald-300 border border-emerald-800' },
         { id: 'academy', label: 'Civil Rights Academy', subtitle: 'Courses & Certs', icon: GraduationCap, badge: 'CLE', badgeColor: 'bg-purple-950 text-purple-300 border border-purple-800' },
         { id: 'map', label: '50-State Shield Map', subtitle: 'QI Laws & Circuits', icon: Map, badge: 'Map', badgeColor: 'bg-justice-950 text-justice-300 border border-justice-800' },
         { id: 'foia', label: 'FOIA Generator', subtitle: 'Draft Demands', icon: FileText, badge: 'Draft', badgeColor: 'bg-indigo-950 text-indigo-300 border border-indigo-800' },
