@@ -266,7 +266,7 @@ export default function App() {
         <SplashScreen onFinish={() => setShowSplash(false)} />
       )}
 
-      {/* STANDALONE UNCONSTRAINED FULL-SCREEN EVIDENCE COMMAND SUITE ENTITY */}
+      {/* STANDALONE UNCONSTRAINED FULL-SCREEN EVIDENCE COMMAND SUITE ENTITY WITH THEMES */}
       {isEvidenceSuiteOpen && (
         <UnifiedEvidenceDashboard
           onClose={() => {
@@ -274,6 +274,10 @@ export default function App() {
           }}
           showToast={showToast}
           onOpenCaseDetail={handleOpenCaseDetail}
+          onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
+          currentTheme={currentTheme}
+          isHighContrast={isHighContrast}
+          fontSizeScale={fontSizeScale}
           initialSubTab={evidenceInitialTab}
         />
       )}

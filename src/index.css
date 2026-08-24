@@ -30,7 +30,7 @@
 }
 
 /* ========================================================================= */
-/* 10 DISTINCT VISUAL THEME STYLE SUITES                                     */
+/* 10 DISTINCT VISUAL THEME STYLE SUITES (FULL SITE & EVIDENCE SYSTEM)       */
 /* ========================================================================= */
 
 /* THEME 1: DAYLIGHT JUSTICE (CLEAN CRISP LIGHT MODE) */
@@ -59,6 +59,17 @@
   background-color: #f1f5f9 !important;
   border-color: #e2e8f0 !important;
   color: #1e293b !important;
+}
+.theme-daylight-clean input,
+.theme-daylight-clean select,
+.theme-daylight-clean textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+.theme-daylight-clean select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
 }
 .theme-daylight-clean .text-white,
 .theme-daylight-clean .text-slate-100 {
@@ -108,6 +119,17 @@
   border-color: #d8c8b2 !important;
   color: #3b2814 !important;
 }
+.theme-vintage-parchment input,
+.theme-vintage-parchment select,
+.theme-vintage-parchment textarea {
+  background-color: #fffdf8 !important;
+  border-color: #d8c8b2 !important;
+  color: #291a0c !important;
+}
+.theme-vintage-parchment select option {
+  background-color: #fffdf8 !important;
+  color: #291a0c !important;
+}
 .theme-vintage-parchment .text-white,
 .theme-vintage-parchment .text-slate-100 {
   color: #1e1307 !important;
@@ -143,6 +165,17 @@
   border-width: 2px !important;
   box-shadow: 0 0 0 1px #000000, 0 10px 25px rgba(0, 0, 0, 0.9) !important;
 }
+.theme-oled-obsidian input,
+.theme-oled-obsidian select,
+.theme-oled-obsidian textarea {
+  background-color: #000000 !important;
+  border-color: #4b5563 !important;
+  color: #ffffff !important;
+}
+.theme-oled-obsidian select option {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
 .theme-oled-obsidian .border-\[\#243147\],
 .theme-oled-obsidian .border-\[\#1c273a\],
 .theme-oled-obsidian .border-slate-800 {
@@ -171,6 +204,13 @@
   background-color: #05120c !important;
   border-color: #123828 !important;
 }
+.theme-sanctuary-emerald input,
+.theme-sanctuary-emerald select,
+.theme-sanctuary-emerald textarea {
+  background-color: #040e0a !important;
+  border-color: #1a4d38 !important;
+  color: #ecfdf5 !important;
+}
 
 /* THEME 5: FEDERAL COURTROOM (MAHOGANY & GOLD) */
 .theme-courtroom-gold {
@@ -190,6 +230,13 @@
 .theme-courtroom-gold .bg-\[\#080c14\] {
   background-color: #0e0805 !important;
   border-color: #362215 !important;
+}
+.theme-courtroom-gold input,
+.theme-courtroom-gold select,
+.theme-courtroom-gold textarea {
+  background-color: #0e0805 !important;
+  border-color: #4a3020 !important;
+  color: #fef3c7 !important;
 }
 
 /* THEME 6: CRIMSON ALERT */
@@ -211,6 +258,13 @@
   background-color: #0f0507 !important;
   border-color: #3d141c !important;
 }
+.theme-crimson-alert input,
+.theme-crimson-alert select,
+.theme-crimson-alert textarea {
+  background-color: #0c0406 !important;
+  border-color: #541c27 !important;
+  color: #fee2e2 !important;
+}
 
 /* THEME 7: CYBERPUNK MATRIX (NEON VIOLET & CYAN) */
 .theme-cyberpunk-neon {
@@ -230,6 +284,13 @@
 .theme-cyberpunk-neon .bg-\[\#080c14\] {
   background-color: #0a0618 !important;
   border-color: #27134f !important;
+}
+.theme-cyberpunk-neon input,
+.theme-cyberpunk-neon select,
+.theme-cyberpunk-neon textarea {
+  background-color: #0a0618 !important;
+  border-color: #3b1d75 !important;
+  color: #fdf4ff !important;
 }
 
 /* THEME 8: PACIFIC COBALT */
@@ -251,6 +312,13 @@
   background-color: #051324 !important;
   border-color: #0f2c52 !important;
 }
+.theme-pacific-ocean input,
+.theme-pacific-ocean select,
+.theme-pacific-ocean textarea {
+  background-color: #051324 !important;
+  border-color: #17427a !important;
+  color: #f0fdfa !important;
+}
 
 /* THEME 9: CAPITOL MONOLITH (TITANIUM SLATE) */
 .theme-capitol-monolith {
@@ -270,6 +338,13 @@
 .theme-capitol-monolith .bg-\[\#080c14\] {
   background-color: #0c0e12 !important;
   border-color: #282d36 !important;
+}
+.theme-capitol-monolith input,
+.theme-capitol-monolith select,
+.theme-capitol-monolith textarea {
+  background-color: #0c0e12 !important;
+  border-color: #38404d !important;
+  color: #f8fafc !important;
 }
 
 /* Safe area padding for mobile bottom bar */
