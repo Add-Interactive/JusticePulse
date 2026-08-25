@@ -87,6 +87,7 @@ export default function App() {
   const [isSOSModalOpen, setIsSOSModalOpen] = useState(false);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
   const [isInvestorModalOpen, setIsInvestorModalOpen] = useState(false);
+  const [isICEShieldOpen, setIsICEShieldOpen] = useState(false);
   const [isLegalIntakeOpen, setIsLegalIntakeOpen] = useState(false);
   const [donationCampaign, setDonationCampaign] = useState(null);
 
@@ -321,6 +322,23 @@ export default function App() {
         />
       )}
 
+      {/* STANDALONE FULL-SCREEN DEDICATED ICE & TACTICAL SQUAD ENCOUNTER SHIELD PORTAL */}
+      {(isICEShieldOpen || activeTab === 'ice_shield') && (
+        <ICEShieldView
+          onClose={() => {
+            setIsICEShieldOpen(false);
+            if (activeTab === 'ice_shield') {
+              setActiveTab('home');
+            }
+          }}
+          onOpenSOSModal={() => setIsSOSModalOpen(true)}
+          onOpenSettingsModal={() => setIsSettingsModalOpen(true)}
+          showToast={showToast}
+          currentTheme={currentTheme}
+          isHighContrast={isHighContrast}
+        />
+      )}
+
       {/* Global Navbar with Settings, Role Persona & Auth Trigger */}
       <Navbar
         onOpenReportModal={() => setIsReportModalOpen(true)}
@@ -458,13 +476,6 @@ export default function App() {
 
           {activeTab === 'departments' && (
             <DepartmentScorecardsView
-              showToast={showToast}
-            />
-          )}
-
-          {activeTab === 'ice_shield' && (
-            <ICEShieldView
-              onOpenSOSModal={() => setIsSOSModalOpen(true)}
               showToast={showToast}
             />
           )}
