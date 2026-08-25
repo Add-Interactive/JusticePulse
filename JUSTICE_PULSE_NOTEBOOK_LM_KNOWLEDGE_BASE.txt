@@ -1,367 +1,129 @@
 ================================================================================
-                    JUSTICE PULSE • COMPREHENSIVE KNOWLEDGE BASE
-                     PROJECT OVERVIEW, CONCEPT, PITCH DECK &
-                     INDUSTRY ARCHITECTURE FOR NOTEBOOK LM
+          JUSTICE PULSE • COMPREHENSIVE KNOWLEDGE BASE (LLM NOTEBOOK)
 ================================================================================
-PROJECT:        Justice Pulse — National Civil Rights & Police Accountability Platform
-MOTTO:          « FIAT JUSTITIA RUAT CAELUM » ("Let Justice Be Done Though The Heavens Fall")
+PROJECT:        Justice Pulse — National Civil Rights, Police Accountability 
+                & Encounter Defense Operating System
+LATIN MOTTO:    « FIAT JUSTITIA RUAT CAELUM » ("Let Justice Be Done Though The Heavens Fall")
 PRODUCERS:      Add Interactive Studios (www.addinteractive.com) & BY NEXT Justice Media
-GIT REMOTE:     https://github.com/Add-Interactive/JusticePulse.git
-APPLICATION:    Production Web Application, PWA & Forensic OS
-DOCUMENT TYPE:  LLM Notebook Grounding Source & Master Technical Reference
-VERSION:        v2.4.0 (August 2026)
+GIT REPO:       https://github.com/Add-Interactive/JusticePulse.git
+VERSION:        v2.5.0 Production Release (August 2026)
 ================================================================================
 
---------------------------------------------------------------------------------
-TABLE OF CONTENTS
---------------------------------------------------------------------------------
-1. Executive Summary & Core Mission
-2. Problem Statement & Systemic Industry Need
-3. Solution Architecture & Value Proposition
-4. Comprehensive Feature Matrix & Functional Deep-Dive
-   4.1 FBI-Grade Evidence Command Suite & Detective Matrix
-   4.2 50-State Brady Misconduct & Pattern Registry
-   4.3 9-Role Civic & Legal Authentication Engine
-   4.4 SOS Rapid-Response Emergency Encounter Mode
-   4.5 Sanctuary Mutual Aid & Victim Memorial Trusts
-   4.6 Citizen Grand Jury Deliberation Simulator
-   4.7 10 Dynamic Visual Themes & Accessibility Engine
-5. Legal & Evidentiary Frameworks (FRE 1006, Section 1983, Monell, CJIS)
-6. Business Model, Monetization Strategy & Subscription Tiers
-7. Market Sizing (TAM / SAM / SOM) & Industry Landscape
-8. 5-Year Financial Model, Unit Economics & Pro-Forma
-9. Series Seed Investment Ask ($3.5M) & Capital Allocation
-10. Technical Stack & Deployment Architecture
-11. Frequently Asked Questions (FAQ) for LLM Reasoning
-
-================================================================================
 1. EXECUTIVE SUMMARY & CORE MISSION
-================================================================================
-Justice Pulse is a pioneering vertical LegalTech, GovTech, and civic infrastructure 
-platform engineered to solve the nationwide crisis of police accountability, 
-evidentiary opacity, and civil rights litigation friction. 
+Justice Pulse is a vertical LegalTech, GovTech, and civic infrastructure platform 
+engineered to solve the nationwide crisis of police accountability, evidentiary 
+opacity, ICE/tactical squad stops, and civil rights litigation friction.
 
-Developed jointly by Add Interactive Studios and BY NEXT Justice Media, Justice 
-Pulse bridges the divide between affected citizens, eyewitnesses, civil rights 
-litigators, special prosecutors, presiding judges, and municipal oversight bodies.
+Developed jointly by Add Interactive Studios and BY NEXT Justice Media, Justice Pulse 
+unifies citizens, vulnerable families, eyewitnesses, civil rights trial litigators, 
+special prosecutors, judges, and municipal oversight bodies.
 
-The platform provides:
-  1. FBI-grade cryptographic evidence analysis (Detective Corkboard, Multi-Cam 
-     bodycam synchronization, AI deposition cross-examiners, and SHA-256 ledgers).
-  2. The nation's first unified 50-State Brady Registry tracking repeat police 
-     misconduct, Monell municipal liability patterns, and decertification records.
-  3. Direct community defense, emergency SOS cloud livestreaming, and 0%-fee 
-     victim family memorial sanctuary trusts.
-  4. Role-based legal workspaces customized for attorneys, prosecutors, judges, 
-     paralegals, eyewitnesses, and aggrieved families.
+KEY PLATFORM CAPABILITIES:
+1. Standalone Full-Screen Portals: Dedicated full-screen command portals for Investor 
+   Capital & Production Roadmap, Unified Evidence Command Suite, and ICE & Tactical Shield.
+2. In-HUD Multi-Mode SOS Emergency System: Real-time cloud video streaming with 5 encounter 
+   modes (ICE stops, youth/tactical squads, front door sanctity, traffic checkpoints, general 
+   police stops) and in-HUD legal toolkits.
+3. Dedicated ICE & Tactical Encounter Shield: Full-screen Digital Red Cards (Tarjetas Rojas), 
+   10-language neural voice announcer, optical document OCR scanner (Form I-200 vs Judicial Search 
+   Warrants), youth interrogation protections (J.D.B. v. North Carolina), 50-state sanctuary laws 
+   matrix, and emergency caregiver affidavit generator.
+4. FBI-Grade Cryptographic Evidence Analysis: Detective Corkboard & SVG Red-String Matrix, 
+   Multi-Cam 4K bodycam frame synchronizer, AI deposition cross-examiner, and SHA-256 custody ledgers.
+5. 50-State Brady Registry: Tracking repeat police misconduct, Monell municipal liability patterns, 
+   and decertification dockets across state lines.
+6. Community Defense & Mutual Aid: 1-Tap SOS emergency cloud livestreaming, automated GPS alerts, 
+   and 0%-fee victim memorial sanctuary trusts.
+7. 9-Role Tailored Workspaces: Dedicated workspaces for Defense Attorneys, Prosecutors, Judges, 
+   Paralegals, Eyewitnesses, Victims, and Defendants.
+8. Universal 10-Theme Cascade Engine: Daylight Light, Vintage Parchment, Midnight Navy, OLED 
+   Obsidian, Sanctuary Emerald, Federal Courtroom Gold, Crimson Alert, Cyberpunk Matrix, Pacific Cobalt, 
+   Capitol Monolith.
 
-================================================================================
+--------------------------------------------------------------------------------
 2. PROBLEM STATEMENT & SYSTEMIC INDUSTRY NEED
-================================================================================
-American municipal law enforcement and civil rights litigation face four systemic 
-points of failure:
-
-1. THE $3.4 BILLION MISCONDUCT TAXPAYER CRISIS
-   Over $3.4 billion is paid out annually by American cities and insurance risk 
-   pools to settle police misconduct claims (e.g. $12M Breonna Taylor, $27M George 
-   Floyd, $19M Elijah McClain). Cities lack early-warning telemetry to identify 
-   repeat offender officers before catastrophic liability occurs.
-
-2. THE "BRADY LIST" OPACITY & WANDERING OFFICER PHENOMENON
-   Under Brady v. Maryland (373 U.S. 83), prosecutors must disclose exculpatory 
-   officer credibility issues. However, Brady lists remain siloed in county binders, 
-   allowing officers fired for excessive force or perjury in one jurisdiction to 
-   be rehired one county over ("wandering officers").
-
-3. BODYCAM TAMPERING, REDACTION FRICTION & DISCOVERY CHOKEPOINTS
-   Bodycam and dashcam footage is frequently delayed, selectively leaked, or 
-   heavily redacted behind costly FOIA barriers. Civil rights defense lawyers 
-   spend hundreds of hours manually syncing conflicting video angles and acoustic 
-   timelines without specialized software.
-
-4. ASYMMETRICAL RESOURCES FOR VICTIMS & TRIAL PRACTITIONERS
-   Municipalities deploy taxpayer-funded city attorneys and police union defense 
-   reservoirs, while victims and solo civil rights attorneys work on contingency 
-   with fragmented tools, making Monell pattern-and-practice discovery cost-prohibitive.
-
-================================================================================
-3. SOLUTION ARCHITECTURE & VALUE PROPOSITION
-================================================================================
-Justice Pulse creates an end-to-end digital infrastructure that turns fragmented 
-evidence into court-admissible, cryptographically certified litigation dockets:
-
-• FOR TRIAL ATTORNEYS & PLAINTIFFS:
-  Reduces trial preparation time by 75% using AI multi-camera frame synchronization, 
-  automated § 1983 pleading generation, and instant Brady cross-referencing.
-
-• FOR SPECIAL PROSECUTORS & CIVILIAN REVIEW BOARDS:
-  Provides empirical pattern-and-practice telemetry, internal affairs history 
-  benchmarking, and Grand Jury digital evidence presentations.
-
-• FOR JUDICIAL BENCHES:
-  Enables in-camera sealed evidence reviews, protective order stamping, and 
-  admissibility verification under Federal Rule of Evidence 1006.
-
-• FOR CITIZENS & VICTIMS' FAMILIES:
-  Guarantees 1-tap encrypted SOS cloud recording, direct match with top 1% 
-  contingency litigators, and 100% pass-through mutual aid trusts.
-
-• FOR MUNICIPALITIES & INSURANCE UNDERWRITERS:
-  Provides data feeds to price risk accurately, benchmark departmental conduct, 
-  and reduce multi-million dollar catastrophic wrongful death payouts.
-
-================================================================================
-4. COMPREHENSIVE FEATURE MATRIX & FUNCTIONAL DEEP-DIVE
-================================================================================
+--------------------------------------------------------------------------------
+• The $3.4 Billion Annual Misconduct Taxpayer Crisis: Over $3.4B is paid annually by American 
+  cities to settle excessive force claims ($12M Breonna Taylor, $27M George Floyd, $19M Elijah McClain).
+• Aggressive Specialized Tactical Squads & ICE Encroachment: Vulnerable communities and youth face 
+  aggressive street stops and door-to-door administrative sweeps. Citizens frequently succumb to 
+  coercive entry due to confusing administrative papers (DHS Form I-200/I-205) with valid Judicial Search Warrants.
+• Coercive Interrogation of Minors: School Resource Officers (SROs) subject minors to custodial 
+  interrogations without parental presence, violating J.D.B. v. North Carolina (564 U.S. 261) and In re Gault.
+• Siloed "Brady Lists" & The Wandering Officer Loophole: Brady lists remain siloed in county paper binders, 
+  enabling officers terminated for perjury or brutality in one county to be rehired in another.
+• Bodycam Redaction Bottlenecks & Video Alteration Risks: Multi-camera footage is delayed and 
+  expensive to synchronize manually.
 
 --------------------------------------------------------------------------------
-4.1 FBI-GRADE EVIDENCE COMMAND SUITE (UnifiedEvidenceDashboard.jsx)
+3. COMPREHENSIVE FEATURE MATRIX
 --------------------------------------------------------------------------------
-A full-screen standalone workspace containing six specialized forensic modules:
+• ICE & Tactical Police Squad Defense Platform (ICEShieldView.jsx):
+  - Digital Red Cards (Tarjetas Rojas) in 10 Languages with 1-click printable wallet PDFs.
+  - 10-Language Neural Speech Synthesizer: English, Spanish, Haitian Creole, Mandarin Chinese, 
+    Arabic, Vietnamese, Portuguese, French, Tagalog, and Korean.
+  - Optical Warrant Camera & OCR Scanner: Real-time scanner simulator detecting Form I-200 flags.
+  - Youth Miranda & SRO Interrogation Defense: Enforces J.D.B. v. NC parental presence rights and 
+    Riley v. California smartphone privacy.
+  - 50-State Sanctuary Laws & Detainer Limits Matrix: Compares TRUST Act sanctuary states against 
+    287(g) cooperation mandates.
+  - Family Caregiver Affidavit Generator: Interactive legal wizard for emergency child custody.
+  - Community Raid Radar & Encounter Training Simulator.
 
-• DETECTIVE CORKBOARD & RED-STRING MATRIX (FBIEvidenceHUD.jsx):
-  - Synchronous delta-coordinate gesture engine isolating pin dragging from canvas panning.
-  - Interactive draggable polaroids, officer cards, ballistics exhibits, and autopsy reports.
-  - Real-time SVG elastic red yarn connecting related exhibits with link notes.
-  - Deep exhibit inspector modal with zoom, metadata extraction, and hash validation.
+• In-HUD SOS Emergency Encounter System (EmergencyRecorderModal.jsx):
+  - 5 Selectable Encounter Modes (ICE, Youth, Door, Traffic, General).
+  - In-HUD Red Card, Loudspeaker voice broadcaster, and Warrant verifier.
+  - Encrypted off-device cloud video streaming with SHA-256 fingerprinting.
 
-• MULTI-CAM SYNCHRONIZED VIDEO STUDIO (MultiCamStudioView.jsx):
-  - Simultaneous 4-channel 4K video playback (Officer Bodycam, Dashcam, Bystander Phone, CCTV).
-  - Acoustic decibel waveform timeline syncing audio spikes (gunshots, verbal commands).
-  - Frame-by-frame scrubbing with sub-millisecond timestamp precision.
-
-• VERITAS DEPOSITION CROSS-EXAMINATION ROOM (DepositionSimulatorView.jsx):
-  - AI-driven witness impeachment and judicial cross-examination simulation.
-  - Real-time perjury detection against sworn written affidavits and dispatch audio.
-  - Instant objection rulings (Hearsay, Lack of Foundation, Leading Question).
-
-• CRYPTOGRAPHIC SHA-256 EVIDENCE VAULT (EvidenceVaultView.jsx):
-  - Immutable chain-of-custody ledger with SHA-256 checksum certification.
-  - Tamper-detection audit trail preventing backroom deletion or file alteration.
-  - Time-stamped blockchain-grade forensic deposit records.
-
-• SECTION 1983 PLEADING & DISCOVERY GENERATOR (ComplaintGeneratorView.jsx):
-  - Automated federal court caption complaint drafter for 42 U.S.C. § 1983 claims.
-  - Pre-formatted Monell claim allegations (failure to train, unconstitutional custom).
-  - Rule 1006 Summary of Voluminous Evidence export engine.
-
-• ENCRYPTED WHISTLEBLOWER SANCTUARY (WhistleblowerView.jsx):
-  - Zero-knowledge, metadata-stripped anonymous intake for internal affairs officers.
-  - Client-side EXIF/GPS scrubbing with end-to-end encrypted routing.
+• FBI-Grade Evidence Command Suite (UnifiedEvidenceDashboard.jsx):
+  - Detective Corkboard & SVG Red-String Matrix (FBIEvidenceHUD.jsx).
+  - Multi-Cam Synchronized 4K Video Studio (MultiCamStudioView.jsx).
+  - Veritas Deposition Cross-Examination Room (DepositionSimulatorView.jsx).
+  - Cryptographic SHA-256 Vault & Chain of Custody (EvidenceVaultView.jsx).
+  - Section 1983 Complaint & Monell Pleadings Generator.
 
 --------------------------------------------------------------------------------
-4.2 50-STATE BRADY MISCONDUCT & PATTERN REGISTRY (CasesView & OfficerDirectoryView)
+4. BUSINESS MODEL & SUBSCRIPTION TIERS
 --------------------------------------------------------------------------------
-• Cross-jurisdictional database of police misconduct findings, IA sustained complaints, 
-  civil rights payouts, and Brady Giglio disclosures.
-• Department scorecards rating municipal police agencies on excessive force per 
-  capita, settlement cost burdens, and FOIA response latency.
-• Monell pattern detector aggregating historical complaints against specific departments.
+• Tier 1: Citizen Defense & Advocate ($0 Free Forever) — In-HUD SOS Encounter Modes, Red Cards, 
+  Warrant OCR Scanner, Youth Miranda, Caregiver Wizard.
+• Tier 2: Solo Trial Counsel ($149/mo or $119/mo annual) — 10 active workspaces, Whiteboard, AI Deposition simulator.
+• Tier 3: Civil Rights Litigation Firm ($599/mo or $479/mo annual • 10 Seats) — Unlimited dockets, 
+  1TB SHA-256 vault, AI PII redaction, 50-State Brady index.
+• Tier 4: Enterprise & Municipal Oversight ($2,499/mo+ base) — REST/GraphQL API data feeds, 
+  risk pool predictive telemetry, custom SSO & CJIS node.
 
---------------------------------------------------------------------------------
-4.3 9-ROLE CIVIC & LEGAL AUTHENTICATION ENGINE (AuthModal.jsx & rolesData.js)
---------------------------------------------------------------------------------
-Justice Pulse adapts permissions and views based on verified user roles:
-  1. Civil Rights Defense Attorney (Bar # verification, Discovery lead, Pleading drafter)
-  2. Prosecutor / Special Counsel (Grand Jury division, Indictment workbench)
-  3. Presiding Judge / Magistrate (Article III bench, In-Camera review seals)
-  4. Legal Moderator & Certified Paralegal (NALA certified, PII redaction, Hash auditing)
-  5. System Administrator (Master SHA-256 ledger root access, System audit logs)
-  6. Verified Eyewitness (Subpoena deponent, Multi-angle video submissions)
-  7. Victim / Aggrieved Family Member (Sanctuary trust manager, Direct counsel chat)
-  8. Defendant in Case (Defense discovery file, Alibi timeline sandbox)
-  9. Community Bystander / Civic Advocate (Grand Jury voter, FOIA generator, Petitions)
+ADDITIONAL REVENUE STREAMS:
+• On-Demand Forensic Processing ($499 - $2,500 / docket).
+• Contingency Retainer Marketplace (12% - 15% origination fee).
+• Forensic Expert Witness Directory (20% booking margin).
+• Accredited CLE Academy ($399/yr subscription).
 
 --------------------------------------------------------------------------------
-4.4 SOS RAPID-RESPONSE EMERGENCY ENCOUNTER MODE (EmergencyRecorderModal.jsx)
+5. MARKET SIZING & 5-YEAR FINANCIAL PROJECTIONS
 --------------------------------------------------------------------------------
-• 1-Tap emergency button launching encrypted audio/video recording directly to cloud.
-• Automated SMS dispatch with live GPS coordinates sent to pre-configured trusted contacts.
-• Screen-dimming "Stealth Lock" preventing officer tampering if phone is seized.
-• Real-time legal observer pings alerting nearby community cop-watch witnesses.
+• TAM: $42.8 Billion (Global LegalTech, GovTech, Risk Pools)
+• SAM: $12.4 Billion (US Civil Rights & Police Liability)
+• SOM: $850 Million+ (Top 5,000 Trial Firms & Review Boards)
 
---------------------------------------------------------------------------------
-4.5 SANCTUARY MUTUAL AID & VICTIM MEMORIAL TRUSTS (SupportHubView & MemorialSanctuaryView)
---------------------------------------------------------------------------------
-• 100% pass-through direct peer-to-peer family trusts with 0% platform take-rate.
-• Verified family trustee management for children's education and funeral reservoirs.
-• Digital memorial candle lighting, oral history archival audio recordings, and vigils.
-
---------------------------------------------------------------------------------
-4.6 CITIZEN GRAND JURY DELIBERATION SIMULATOR (GrandJurySimulatorView.jsx)
---------------------------------------------------------------------------------
-• Crowdsourced community mock grand juries reviewing unredacted bodycam evidence.
-• Voting on probable cause for manslaughter, official misconduct, and civil rights charges.
-• Benchmarking community indictment sentiment prior to formal trial proceedings.
+PRO-FORMA ARR:
+• Year 1 (2026): $1.4M ARR • 76% Gross Margin • 120 Paying Firms
+• Year 2 (2027): $5.8M ARR • 80% Gross Margin • 480 Paying Firms (Cashflow Positive)
+• Year 3 (2028): $16.2M ARR • 83% Gross Margin • 1,350 Paying Firms ($4.8M EBITDA)
+• Year 4 (2029): $36.5M ARR • 85% Gross Margin • 2,900 Paying Firms ($12.4M EBITDA)
+• Year 5 (2030): $74.0M ARR • 86% Gross Margin • 5,400 Paying Firms ($28.8M EBITDA)
 
 --------------------------------------------------------------------------------
-4.7 10 DYNAMIC VISUAL THEMES & ACCESSIBILITY ENGINE (themesData.js & index.css)
+6. SERIES SEED FINANCING ASK ($3.5M)
 --------------------------------------------------------------------------------
-Fully synchronized across the entire website, splash screen, and evidence suite:
-  1. Daylight Justice (Pristine clean white light mode with slate typography)
-  2. Vintage Legal Parchment (Warm cream paper light mode with dark espresso ink)
-  3. Midnight Navy (Default dark cybernetic hub with justice blue borders)
-  4. OLED Obsidian (Pure pitch black #000000 with stark white text • WCAG AAA)
-  5. Sanctuary Emerald (Forest slate with mutual aid green glows)
-  6. Federal Courtroom (Mahogany walnut surfaces with warm legal gold brass)
-  7. Crimson Alert (High-urgency tactical dark charcoal with monitoring red)
-  8. Cyberpunk Matrix (Synthwave midnight violet with neon cyan and magenta)
-  9. Pacific Cobalt (Deep nautical indigo with bright ocean teal accents)
-  10. Capitol Monolith (Titanium slate with monochromatic platinum accents)
+• Round Size: $3,500,000 Series Seed (Preferred Equity / SAFE)
+• Pre-Money Valuation: $18,500,000
+• Runway: 18 Months to reach $6.0M ARR and Series A Readiness
 
-================================================================================
-5. LEGAL & EVIDENTIARY FRAMEWORKS
-================================================================================
-Justice Pulse is built strictly around established American jurisprudence:
-
-• FEDERAL RULE OF EVIDENCE 1006 (Summaries to Prove Content):
-  Allows voluminous bodycam video, telemetry logs, and dispatch records to be 
-  presented in courtroom trial proceedings as certified summary charts and matrixes.
-
-• 42 U.S.C. § 1983 (Civil Action for Deprivation of Rights):
-  Primary statutory vehicle for constitutional civil rights claims under the 
-  Fourth, Eighth, and Fourteenth Amendments.
-
-• MONELL V. DEPT. OF SOCIAL SERVICES (436 U.S. 658):
-  Establishes municipal liability when unconstitutional actions implement or execute 
-  a policy statement, ordinance, regulation, or pervasive informal custom.
-
-• BRADY V. MARYLAND (373 U.S. 83) & GIGLIO V. UNITED STATES (405 U.S. 150):
-  Constitutional requirement for prosecution to disclose evidence favorable to the 
-  defense, including officer credibility, prior untruthfulness, and discipline.
-
-• CRIMINAL JUSTICE INFORMATION SERVICES (CJIS) COMPLIANCE:
-  Encryption in transit (TLS 1.3) and at rest (AES-256) with strict role-based 
-  access controls ensuring evidentiary chain of custody.
-
-================================================================================
-6. BUSINESS MODEL, MONETIZATION STRATEGY & SUBSCRIPTION TIERS
-================================================================================
-Justice Pulse operates a diversified multi-engine business model:
-
---------------------------------------------------------------------------------
-6.1 SUBSCRIPTION TIERS
---------------------------------------------------------------------------------
-1. CITIZEN DEFENSE & ADVOCATE: $0 Free Forever
-   - Target: Everyday citizens, observers, community organizers
-   - Features: SOS cloud recording (5GB), SMS alerts, grand jury voting, FOIA maker.
-
-2. SOLO PRACTITIONER & TRIAL COUNSEL: $149/mo ($1,428/yr billed annually)
-   - Target: Solo civil rights litigators, pro bono attorneys, public defenders
-   - Features: 10 active § 1983 workspaces, Whiteboard, AI Deposition simulator, 
-     100GB vault, Rule 1006 packet exporter.
-
-3. CIVIL RIGHTS LITIGATION FIRM: $599/mo ($5,748/yr billed annually • 10 Seats)
-   - Target: Specialized civil rights trial practices and boutique firms
-   - Features: Unlimited active dockets, 10 user seats, 1TB SHA-256 vault, AI PII 
-     face/audio redaction, 50-State Brady index, 3D LIDAR physics sandbox.
-
-4. ENTERPRISE & MUNICIPAL OVERSIGHT: $2,499/mo ($23,988/yr+ custom base)
-   - Target: Civilian oversight boards, State AGs, City Auditors, Insurance Risk Pools
-   - Features: Unlimited seats, REST/GraphQL API data feeds, risk pool liability 
-     predictive telemetry, early-warning IA pattern index, custom SSO & CJIS node.
-
---------------------------------------------------------------------------------
-6.2 ADDITIONAL REVENUE STREAMS
---------------------------------------------------------------------------------
-• ON-DEMAND FORENSIC PROCESSING: $499 - $2,500 per incident docket for AI 4K 
-  redaction, audio acoustic decibel forensics, and certified Rule 1006 packet assembly.
-• CONTINGENCY RETAINER MATCHMAKING: 12% - 15% marketplace origination fee on 
-  qualified multi-million dollar settlement recoveries matched via the platform.
-• FORENSIC EXPERT WITNESS DIRECTORY: 20% marketplace booking and escrow fee.
-• ACCREDITED CLE ACADEMY: $399/yr per litigator for State Bar certified courses.
-
-================================================================================
-7. MARKET SIZING (TAM / SAM / SOM) & INDUSTRY LANDSCAPE
-================================================================================
-• TOTAL ADDRESSABLE MARKET (TAM): $42.8 Billion
-  Global LegalTech ($28B), GovTech Public Safety ($10.4B), and Municipal Risk Pools ($4.4B).
-
-• SERVICEABLE ADDRESSABLE MARKET (SAM): $12.4 Billion
-  US Civil Rights Litigation, Police Liability Defense, and Municipal Oversight Systems.
-
-• SERVICEABLE OBTAINABLE MARKET (SOM): $850 Million+
-  Top 5,000 US Civil Rights Trial Law Firms, Public Defender Offices, and 200+ 
-  Major Metropolitan Civilian Review Boards.
-
-• COMPETITIVE MOAT & UNFAIR ADVANTAGES:
-  - Proprietary 50-State Brady misconduct cross-referencing index.
-  - End-to-end integration: from citizen SOS video capture to courtroom trial pleading.
-  - 100% cryptographic SHA-256 chain-of-custody verification.
-  - Community trust through zero-fee victim memorial sanctuary trusts.
-
-================================================================================
-8. 5-YEAR FINANCIAL MODEL & UNIT ECONOMICS
-================================================================================
-• FINANCIAL PRO-FORMA SUMMARY:
-  ------------------------------------------------------------------------------
-  Metric                  Year 1 (2026)  Year 2 (2027)  Year 3 (2028)  Year 5 (2030)
-  ------------------------------------------------------------------------------
-  Paying Law Firms        120            480            1,350          5,400
-  Enterprise Gov Nodes    8              35             110            620
-  Annual Run-Rate (ARR)   $1.4M          $5.8M          $16.2M         $74.0M
-  Target Gross Margin     76%            80%            83%            86%
-  EBITDA Projection       -$850K         +$420K         +$4.8M         +$28.8M
-  ------------------------------------------------------------------------------
-
-• UNIT ECONOMICS (FIRM TIER):
-  - Average Annual Contract Value (ACV): $5,748
-  - Customer Acquisition Cost (CAC): $1,450
-  - Customer Lifetime Value (LTV): $28,740 (5-Year Horizon)
-  - LTV / CAC Ratio: 19.8x
-  - Net Revenue Retention (NRR): 128% (Seat expansion + Forensic Processing upsells)
-
-================================================================================
-9. SERIES SEED INVESTMENT ASK ($3.5M) & CAPITAL ALLOCATION
-================================================================================
-• FINANCING ROUND: $3,500,000 Series Seed (Preferred Equity / SAFE)
-• PRE-MONEY VALUATION: $18,500,000
-• RUNWAY: 18 Months to reach $6.0M ARR and Series A Readiness
-
-• CAPITAL ALLOCATION BREAKDOWN:
-  1. R&D, AI Forensics & Platform Engineering (40% • $1,400,000):
-     Multi-cam synchronization neural network, automated PII redaction, LIDAR scans.
-  2. Enterprise Sales & Legal Partnership Distribution (30% • $1,050,000):
-     Direct enterprise sales team targeting top 5,000 trial firms and CLE providers.
-  3. Regulatory, CJIS Compliance & Cryptographic Auditing (15% • $525,000):
-     Federal Rule 1006 certification, SOC2 Type II certification, third-party security.
-  4. Community Sanctuary & Mutual Aid Reserve (15% • $525,000):
-     Community defense subsidies, grassroots legal observer hubs, family trust reserve.
-
-================================================================================
-10. TECHNICAL STACK & DEPLOYMENT ARCHITECTURE
-================================================================================
-• FRONTEND ENGINE: React 18, Vite 6, Tailwind CSS 3, Lucide Vector System.
-• INTERACTION REF STATE MACHINE: Custom synchronous delta coordinate engine.
-• FORENSIC GRAPHICS: HTML5 Canvas, SVG Elastic Path Matrix, WebGL LIDAR sandbox.
-• CRYPTOGRAPHY: Client-side SHA-256 Web Crypto API, Immutable Hash Ledgers.
-• PWA CAPABILITIES: Responsive standalone mobile manifest, Service Worker offline caching.
-• COMPLIANCE: WCAG AAA High-Contrast Mode, CJIS Data Handling, Rule 1006 Formats.
-
-================================================================================
-11. FREQUENTLY ASKED QUESTIONS (FAQ) FOR LLM REASONING
-================================================================================
-Q1: What makes Justice Pulse different from generic LegalTech like Clio or Everlaw?
-A1: Clio and Everlaw are generic back-office practice management tools. Justice Pulse 
-    is a vertical litigation and police accountability operating system featuring 
-    multi-camera bodycam synchronization, 50-state Brady misconduct cross-referencing, 
-    AI deposition impeachment, and public community sanctuary mutual aid.
-
-Q2: How does Justice Pulse maintain evidentiary integrity in court?
-A2: Every uploaded bodycam, audio track, and document generates an immediate 
-    cryptographic SHA-256 checksum recorded in an immutable ledger. Discovery packets 
-    are exported under Federal Rule of Evidence 1006 with complete custody hashes.
-
-Q3: How does the platform avoid bias?
-A3: The platform serves both defense litigation counsel and special prosecutors, 
-    as well as presiding judges. Evidence is grounded strictly in raw unredacted 
-    video, timestamped audio telemetry, LIDAR laser measurements, and public Brady 
-    misconduct records.
-
-Q4: Who produces and publishes Justice Pulse?
-A4: Produced by Add Interactive Studios (www.addinteractive.com) and published 
-    by BY NEXT Justice Media.
-
-================================================================================
-                             END OF KNOWLEDGE BASE
+CAPITAL ALLOCATION:
+• R&D, AI Forensics & Platform Engineering: 38% ($1,330,000)
+• Security, CJIS Compliance & Cryptographic Auditing: 18% ($630,000)
+• Enterprise GovTech & Law Firm Sales: 18% ($630,000)
+• Legal Engineering, FRE 1006 & Judicial Standards: 16% ($560,000)
+• Grassroots Sanctuary & Community Defense Reserve: 10% ($350,000)
 ================================================================================

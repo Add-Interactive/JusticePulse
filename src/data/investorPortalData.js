@@ -80,16 +80,19 @@ export const INVESTOR_PORTAL_DATA = {
       priceMonthly: 0,
       priceAnnual: 0,
       billingNote: 'Free Forever For Public Advocates',
-      target: 'Everyday citizens, legal observers, community organizers',
+      target: 'Everyday citizens, legal observers, community organizers, families',
       popular: false,
       features: [
         'SOS 1-Tap Emergency Cloud Video Backup (5GB)',
-        'Automated SMS Alert to 3 Emergency Contacts',
-        'Search 50-State Public Case Dockets',
-        'Citizen Grand Jury Deliberation & Voting',
-        'Know Your Rights Interactive AI Handbook',
+        'In-HUD Multi-Mode Encounter Selector (ICE, Youth, Door, Traffic)',
+        'Digital Red Cards (Tarjetas Rojas) in 10 Languages',
+        '10-Language Neural Speech Synthesizer Loudspeaker',
+        'Optical Document Warrant OCR Camera Scanner',
+        'Youth Miranda & School Interrogation Shield (J.D.B. v. NC)',
+        'Automated GPS Emergency SMS Alert to 3 Contacts',
+        'Search 50-State Public Case Dockets & Sanctuary Matrix',
         'Standard FOIA Open Records Letter Generator',
-        'Community Sanctuary Fund Micro-Donations (0% fee)'
+        'Family Caregiver Emergency Affidavit Wizard'
       ],
       cta: 'Get Started Free',
       ctaStyle: 'bg-slate-800 hover:bg-slate-700 text-white'
