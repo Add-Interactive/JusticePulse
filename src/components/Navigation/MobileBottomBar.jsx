@@ -8,7 +8,8 @@ import {
   Flame, 
   Radio,
   User,
-  Home
+  Home,
+  ShieldAlert
 } from 'lucide-react';
 
 export default function MobileBottomBar({ 
@@ -21,6 +22,7 @@ export default function MobileBottomBar({
     { id: 'home', label: 'Home', icon: Home },
     { id: 'cases', label: 'Docket', icon: Scale },
     { id: 'sos', label: 'SOS', icon: Video, isAction: true },
+    { id: 'ice_shield', label: 'ICE Shield', icon: ShieldAlert },
     { id: 'profile', label: 'Profile', icon: User },
     { id: 'menu', label: 'Menu', icon: Menu, isMenu: true }
   ];

@@ -27,10 +27,10 @@ import {
   ExternalLink,
   ChevronDown
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
-import { ICE_ENCOUNTER_DATA } from '../../data/iceEncounterData';
 import RedCardModal from './RedCardModal';
 import WarrantVerifierModal from './WarrantVerifierModal';
+import FamilySafetyPlanModal from './FamilySafetyPlanModal';
+import WarrantCameraScannerModal from './WarrantCameraScannerModal';
 
 export default function ICEShieldView({ onOpenSOSModal, showToast }) {
   const [activeSubTab, setActiveSubTab] = useState('scenarios'); // 'scenarios' | 'red_card' | 'warrant' | 'family_plan' | 'hotlines' | 'radar'
@@ -41,6 +41,8 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
   // Modals state
   const [isRedCardModalOpen, setIsRedCardModalOpen] = useState(false);
   const [isWarrantModalOpen, setIsWarrantModalOpen] = useState(false);
+  const [isFamilyPlanModalOpen, setIsFamilyPlanModalOpen] = useState(false);
+  const [isScannerModalOpen, setIsScannerModalOpen] = useState(false);
 
   // Community Sighting Radar List
   const [sightings, setSightings] = useState([
@@ -157,29 +159,37 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
           </div>
 
           {/* Quick Action Matrix Buttons */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
             <button
               onClick={() => setIsRedCardModalOpen(true)}
-              className="p-4 rounded-2xl bg-gradient-to-r from-crimson-600 to-pink-600 hover:from-crimson-500 hover:to-pink-500 text-white font-black text-sm shadow-glow-crimson flex items-center justify-center space-x-2.5 transition-all active:scale-95 border border-crimson-400"
+              className="p-4 rounded-2xl bg-gradient-to-r from-crimson-600 to-pink-600 hover:from-crimson-500 hover:to-pink-500 text-white font-black text-xs sm:text-sm shadow-glow-crimson flex items-center justify-center space-x-2 transition-all active:scale-95 border border-crimson-400"
             >
-              <AlertOctagon className="w-5 h-5 animate-pulse" />
-              <span>Display Digital Red Card (Tarjeta Roja)</span>
+              <AlertOctagon className="w-4 h-4 animate-pulse flex-shrink-0" />
+              <span>Display Red Card (Tarjeta Roja)</span>
             </button>
 
             <button
               onClick={() => setIsWarrantModalOpen(true)}
-              className="p-4 rounded-2xl bg-[#111726] hover:bg-[#1a243b] text-indigo-300 hover:text-white font-bold text-sm border-2 border-indigo-600 transition-all flex items-center justify-center space-x-2.5 active:scale-95 shadow-lg"
+              className="p-4 rounded-2xl bg-[#111726] hover:bg-[#1a243b] text-indigo-300 hover:text-white font-bold text-xs sm:text-sm border-2 border-indigo-600 transition-all flex items-center justify-center space-x-2 active:scale-95 shadow-lg"
             >
-              <Scale className="w-5 h-5 text-indigo-400" />
-              <span>Warrant Verifier (Judicial vs. ICE)</span>
+              <Scale className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+              <span>Warrant Checklist (Judge vs ICE)</span>
+            </button>
+
+            <button
+              onClick={() => setIsScannerModalOpen(true)}
+              className="p-4 rounded-2xl bg-[#111726] hover:bg-[#1a243b] text-cyan-300 hover:text-white font-bold text-xs sm:text-sm border-2 border-cyan-600 transition-all flex items-center justify-center space-x-2 active:scale-95 shadow-lg"
+            >
+              <Eye className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+              <span>Warrant OCR Scanner</span>
             </button>
 
             <button
               onClick={onOpenSOSModal}
-              className="p-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm border-2 border-slate-700 transition-all flex items-center justify-center space-x-2.5 active:scale-95 shadow-lg"
+              className="p-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm border-2 border-slate-700 transition-all flex items-center justify-center space-x-2 active:scale-95 shadow-lg"
             >
-              <Video className="w-5 h-5 text-crimson-400 animate-pulse" />
-              <span>1-Tap SOS Live Encounter Stream</span>
+              <Video className="w-4 h-4 text-crimson-400 animate-pulse flex-shrink-0" />
+              <span>1-Tap SOS Live Stream</span>
             </button>
           </div>
         </div>
@@ -496,18 +506,27 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
                 <p className="text-xs text-slate-300 font-mono mt-0.5">
                   Proactive legal steps to safeguard children and financial assets in the event of sudden detention
                 </p>
-              </div>
+                <div className="flex flex-wrap items-center gap-2 mt-4">
+                  <button
+                    onClick={() => setIsFamilyPlanModalOpen(true)}
+                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-glow"
+                  >
+                    <Users className="w-4 h-4" />
+                    <span>Generate Caregiver Affidavit</span>
+                  </button>
 
-              <button
-                onClick={() => {
-                  confetti({ particleCount: 35, spread: 50 });
-                  showToast('Family Emergency Safety Plan (Printable Packet PDF) downloaded!', 'success');
-                }}
-                className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-glow-indigo"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download Safety Packet PDF</span>
-              </button>
+                  <button
+                    onClick={() => {
+                      confetti({ particleCount: 35, spread: 50 });
+                      showToast('Family Emergency Safety Plan (Printable Packet PDF) downloaded!', 'success');
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-glow-indigo"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Download Packet PDF</span>
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -592,6 +611,18 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
       <WarrantVerifierModal
         isOpen={isWarrantModalOpen}
         onClose={() => setIsWarrantModalOpen(false)}
+        showToast={showToast}
+      />
+
+      <FamilySafetyPlanModal
+        isOpen={isFamilyPlanModalOpen}
+        onClose={() => setIsFamilyPlanModalOpen(false)}
+        showToast={showToast}
+      />
+
+      <WarrantCameraScannerModal
+        isOpen={isScannerModalOpen}
+        onClose={() => setIsScannerModalOpen(false)}
         showToast={showToast}
       />
     </div>
