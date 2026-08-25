@@ -56,6 +56,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         { id: 'cases', label: 'The Docket', subtitle: 'Verified Case Registry', icon: Scale, badge: '2.4k', badgeColor: 'bg-slate-800 text-slate-200 border border-slate-700', accentBorder: 'border-l-4 border-l-sky-500' },
         { id: 'officers', label: 'Officer Index', subtitle: 'Repeat Offender & Brady', icon: ShieldAlert, badge: 'Flagged', badgeColor: 'bg-crimson-900 text-crimson-100 border border-crimson-600', accentBorder: 'border-l-4 border-l-crimson-500' },
         { id: 'departments', label: 'Agency Scorecards', subtitle: 'Police Dept Benchmark', icon: Building2, badge: 'Grades', badgeColor: 'bg-slate-800 text-slate-200 border border-slate-700', accentBorder: 'border-l-4 border-l-amber-500' },
+        { id: 'ice_shield', label: 'ICE & Tactical Shield', subtitle: 'Stop Defense, Red Cards & Radar', icon: ShieldAlert, badge: 'SHIELD', badgeColor: 'bg-crimson-600 text-white border border-crimson-400 font-black', accentBorder: 'border-l-4 border-l-crimson-500' },
         { id: 'copwatch', label: 'Cop-Watch Radar', subtitle: 'Live Observer Streaming', icon: Radio, badge: 'Live', badgeColor: 'bg-crimson-950 text-crimson-300 border border-crimson-700', accentBorder: 'border-l-4 border-l-red-500' },
         { id: 'fieldmode', label: 'Field Witness Toolkit', subtitle: 'Tactical Observer Mode', icon: ShieldCheck, badge: 'Field', badgeColor: 'bg-crimson-950 text-crimson-300 border border-crimson-700', accentBorder: 'border-l-4 border-l-rose-500' }
       ]

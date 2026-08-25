@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { rightsScenarios } from '../../data/supportResources';
 
-export default function RightsGuideView({ onOpenSOSModal, showToast }) {
+export default function RightsGuideView({ onOpenSOSModal, onSelectTab, showToast }) {
   const [selectedScenario, setSelectedScenario] = useState('traffic-stop');
   const [quizScore, setQuizScore] = useState(null);
   const [quizAnswer, setQuizAnswer] = useState(null);
@@ -38,6 +38,37 @@ export default function RightsGuideView({ onOpenSOSModal, showToast }) {
 
   return (
     <div className="space-y-6">
+      {/* Dedicated ICE & Tactical Squad Shield Banner */}
+      {onSelectTab && (
+        <div className="bg-gradient-to-r from-crimson-950 via-[#18080c] to-[#0a0204] rounded-2xl p-4 sm:p-5 border-2 border-crimson-600 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 bg-crimson-900 rounded-xl text-white shadow-md flex-shrink-0">
+              <ShieldCheck className="w-6 h-6 text-crimson-300" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <h3 className="text-sm sm:text-base font-black text-white font-display uppercase tracking-tight">
+                  ICE &amp; TACTICAL POLICE SQUAD SHIELD
+                </h3>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-crimson-800 text-crimson-100 font-bold">
+                  NEW SYSTEM
+                </span>
+              </div>
+              <p className="text-xs text-crimson-200">
+                Digital Red Cards (Tarjetas Rojas), 10-Language Audio Announcer, Warrant Verifier &amp; Sighting Radar.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => onSelectTab('ice_shield')}
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-crimson-600 to-pink-600 hover:from-crimson-500 text-white font-mono text-xs font-bold shadow-glow-crimson flex items-center justify-center space-x-1.5 transition-all flex-shrink-0"
+          >
+            <span>Launch ICE Shield ➔</span>
+          </button>
+        </div>
+      )}
+
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-slate-900 via-amber-950/60 to-slate-900 rounded-2xl p-6 border border-amber-900/40 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

@@ -71,6 +71,17 @@ export default function CommandPaletteModal({
       }
     },
     {
+      id: 'cmd-iceshield',
+      title: 'ICE & Tactical Squad Shield (Red Cards, Audio & Warrant Verifier)',
+      category: 'Rapid Defense',
+      icon: ShieldAlert,
+      color: 'text-crimson-400',
+      action: () => {
+        onClose();
+        onNavigate('ice_shield');
+      }
+    },
+    {
       id: 'cmd-sos',
       title: 'Trigger SOS Live Emergency Cloud Recorder',
       category: 'Rapid Defense',

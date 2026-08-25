@@ -17,6 +17,7 @@ import DonateModal from './components/Support/DonateModal';
 import RightsGuideView from './components/RightsGuide/RightsGuideView';
 import EmergencyRecorderModal from './components/RightsGuide/EmergencyRecorderModal';
 import NationalAnalyticsView from './components/Analytics/NationalAnalyticsView';
+import ICEShieldView from './components/ICEShield/ICEShieldView';
 import UnifiedEvidenceDashboard from './components/EvidenceSuite/UnifiedEvidenceDashboard';
 import InvestorPitchModal from './components/Investor/InvestorPitchModal';
 import InvestorPortalView from './components/Investor/InvestorPortalView';
@@ -461,6 +462,13 @@ export default function App() {
             />
           )}
 
+          {activeTab === 'ice_shield' && (
+            <ICEShieldView
+              onOpenSOSModal={() => setIsSOSModalOpen(true)}
+              showToast={showToast}
+            />
+          )}
+
           {activeTab === 'copwatch' && (
             <CopWatchRadarView
               onOpenSOSModal={() => setIsSOSModalOpen(true)}
@@ -524,6 +532,7 @@ export default function App() {
           {activeTab === 'rights' && (
             <RightsGuideView
               onOpenSOSModal={() => setIsSOSModalOpen(true)}
+              onSelectTab={setActiveTab}
               showToast={showToast}
             />
           )}
