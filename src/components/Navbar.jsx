@@ -94,6 +94,15 @@ export default function Navbar({
           </button>
 
           <button
+            onClick={() => setActiveTab('ice_shield')}
+            className="flex items-center space-x-1 px-2.5 py-0.5 sm:px-3 sm:py-1 bg-gradient-to-r from-crimson-600 to-pink-600 hover:from-crimson-500 hover:to-pink-500 text-white font-black rounded-lg shadow-glow-crimson border border-crimson-400 transition-all active:scale-95"
+            title="Launch Standalone Full-Screen ICE & Tactical Encounter Shield"
+          >
+            <ShieldAlert className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+            <span className="uppercase tracking-wider font-mono text-[9.5px] sm:text-[10px]">ICE Shield ➔</span>
+          </button>
+
+          <button
             onClick={onOpenEvidenceSuite}
             className="flex items-center space-x-1 px-2.5 py-0.5 sm:px-3 sm:py-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black rounded-lg shadow-glow-indigo border border-indigo-300 transition-all"
             title="Launch Standalone Full-Screen Evidence Command Platform"
