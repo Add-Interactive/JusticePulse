@@ -122,8 +122,10 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
 
   const subTabs = [
     { id: 'scenarios', label: '⚖️ Tactical & ICE Scenarios' },
+    { id: 'juvenile', label: '🧒 Youth & Juvenile Squad Defense' },
     { id: 'broadcast', label: '🔊 Multilingual Audio Announcer' },
     { id: 'radar', label: '📡 Raid & Checkpoint Radar' },
+    { id: 'sanctuary_map', label: '🗺️ 50-State Sanctuary Policies' },
     { id: 'family_plan', label: '👨‍👩‍👧 Family Safety & Child Lock' },
     { id: 'hotlines', label: '📞 24/7 Rapid Legal Hotlines' }
   ];
@@ -309,6 +311,69 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
       )}
 
       {/* ========================================================================= */}
+      {/* SUB-TAB: YOUTH & JUVENILE SQUAD DEFENSE                                   */}
+      {/* ========================================================================= */}
+      {activeSubTab === 'juvenile' && (
+        <div className="space-y-6 animation-fade-in">
+          <div className="p-6 sm:p-8 rounded-3xl bg-[#111726] border-2 border-indigo-600/80 space-y-6 shadow-2xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#243147]">
+              <div>
+                <span className="text-[9.5px] font-mono px-2.5 py-0.5 rounded-full bg-indigo-950 text-indigo-200 border border-indigo-600 font-bold uppercase">
+                  SUPREME COURT YOUTH INTERROGATION STANDARD
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white font-display mt-1">
+                  Youth Miranda &amp; School Resource Officer (SRO) Defense
+                </h3>
+                <p className="text-xs text-indigo-200/80 font-mono mt-0.5">
+                  Protections under J.D.B. v. North Carolina (564 U.S. 261) and In re Gault (387 U.S. 1)
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  confetti({ particleCount: 35, spread: 50 });
+                  showToast('Youth Pocket Miranda Card downloaded!', 'success');
+                }}
+                className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-glow-indigo flex-shrink-0"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download Youth Miranda Card</span>
+              </button>
+            </div>
+
+            {/* Scenario Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {ICE_ENCOUNTER_DATA.juvenileScenarios.map((juv) => (
+                <div
+                  key={juv.id}
+                  className="p-5 rounded-2xl bg-[#080c14] border border-[#1e2a3f] hover:border-indigo-500/60 transition-all space-y-3 flex flex-col justify-between shadow-xl"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className={`text-[9.5px] font-mono px-2 py-0.5 rounded font-bold uppercase ${juv.badgeColor}`}>
+                        {juv.badge}
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400">{juv.setting}</span>
+                    </div>
+
+                    <h4 className="text-sm font-bold text-white leading-snug">{juv.title}</h4>
+                    <p className="text-xs text-slate-300 leading-relaxed">{juv.rule}</p>
+                  </div>
+
+                  <div className="space-y-2 pt-2 border-t border-[#1c273a]">
+                    <div className="p-2.5 bg-[#111726] rounded-xl border border-indigo-800/60 text-xs font-mono text-indigo-300 italic">
+                      "{juv.script}"
+                    </div>
+                    <p className="text-[10px] text-amber-400 font-mono">{juv.precedent}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
       {/* SUB-TAB 2: MULTILINGUAL AUDIO ANNOUNCER                                   */}
       {/* ========================================================================= */}
       {activeSubTab === 'broadcast' && (
@@ -487,6 +552,51 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
                   <span>Broadcast Community Sighting Alert</span>
                 </button>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* SUB-TAB: 50-STATE SANCTUARY POLICIES & DETAINER LIMITS                    */}
+      {/* ========================================================================= */}
+      {activeSubTab === 'sanctuary_map' && (
+        <div className="space-y-6 animation-fade-in">
+          <div className="p-6 sm:p-8 rounded-3xl bg-[#111726] border-2 border-[#243147] space-y-6 shadow-2xl">
+            <div>
+              <span className="text-[9.5px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-200 border border-emerald-600 font-bold uppercase">
+                SANCTUARY VS. 287(g) COOPERATION MATRIX
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-white font-display mt-1">
+                50-State ICE Sanctuary Laws &amp; Detainer Limits
+              </h3>
+              <p className="text-xs text-slate-300 font-mono mt-0.5">
+                Overview of state statutes restricting local law enforcement from enforcing civil immigration detainers
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {ICE_ENCOUNTER_DATA.sanctuaryStatePolicies.map((st, idx) => (
+                <div
+                  key={idx}
+                  className="p-5 rounded-2xl bg-[#080c14] border border-[#1e2a3f] hover:border-emerald-500/50 transition-all space-y-3 flex flex-col justify-between shadow-xl"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-bold text-white flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 text-emerald-400" />
+                        <span>{st.state} ({st.code})</span>
+                      </span>
+                      <span className={`text-[9px] font-mono px-2 py-0.5 rounded font-bold uppercase ${st.badgeColor}`}>
+                        {st.type}
+                      </span>
+                    </div>
+
+                    <h4 className="text-xs font-mono font-bold text-amber-300">{st.policy}</h4>
+                    <p className="text-xs text-slate-300 leading-relaxed">{st.details}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

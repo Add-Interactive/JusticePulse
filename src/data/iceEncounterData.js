@@ -259,5 +259,81 @@ export const ICE_ENCOUNTER_DATA = {
       title: 'Teach Children Constitutional Rights Protocol',
       desc: 'Instruct children never to open the door to strangers or police, and to immediately call the designated family emergency contact if officers approach the home.'
     }
+  ],
+
+  juvenileScenarios: [
+    {
+      id: 'juv-1',
+      title: 'School Resource Officer (SRO) Questioning on Campus',
+      setting: 'Principal Office / School Hallway',
+      badge: 'CAMPUS DEFENSE',
+      badgeColor: 'bg-indigo-950 text-indigo-300 border-indigo-700',
+      rule: 'Students have the right to request a parent or lawyer before answering questions from an armed officer.',
+      script: 'I want my parents here before I answer any questions or sign any statement. I am exercising my right to remain silent.',
+      precedent: 'J.D.B. v. North Carolina (2011) — Supreme Court established that minor age must be considered in custody interrogations.'
+    },
+    {
+      id: 'juv-2',
+      title: 'Street Squad Demand for Phone Passcode & Social Media',
+      setting: 'Public Sidewalk / Park / Transit Plaza',
+      badge: 'DIGITAL PRIVACY',
+      badgeColor: 'bg-emerald-950 text-emerald-300 border-emerald-700',
+      rule: 'Police CANNOT force a youth to unlock a smartphone, provide social media passwords, or scroll photos without a judicial search warrant.',
+      script: 'I do not consent to unlocking or searching my phone. I do not give permission to look through my photos or accounts.',
+      precedent: 'Riley v. California (2014) — 4th Amendment protects digital contents of smartphones from warrantless search.'
+    },
+    {
+      id: 'juv-3',
+      title: 'Tactical Squad Gang-Database Questioning & Photo Taking',
+      setting: 'Street Corner / Squad Car Confrontation',
+      badge: 'DATABASE SHIELD',
+      badgeColor: 'bg-crimson-950 text-crimson-300 border-crimson-700',
+      rule: 'Youth cannot be compelled to pose for "field interview" gang index photos if not under lawful arrest.',
+      script: 'Am I being arrested? If not, I do not consent to having my photograph taken for any database. Am I free to leave?',
+      precedent: 'Terry v. Ohio (1968) — Stop requires articulable suspicion; detention cannot exceed investigatory scope.'
+    }
+  ],
+
+  sanctuaryStatePolicies: [
+    {
+      state: 'Illinois',
+      code: 'IL',
+      policy: 'TRUST Act Sanctuary State',
+      type: 'Sanctuary (Strict)',
+      badgeColor: 'bg-emerald-950 text-emerald-300 border-emerald-700',
+      details: 'Local police and county sheriffs are strictly prohibited from arresting, detaining, or transferring individuals based on civil immigration detainers (Form I-247A). 287(g) agreements banned.'
+    },
+    {
+      state: 'California',
+      code: 'CA',
+      policy: 'SB 54 (California Values Act)',
+      type: 'Sanctuary (Strict)',
+      badgeColor: 'bg-emerald-950 text-emerald-300 border-emerald-700',
+      details: 'Limits local and state law enforcement resources from assisting federal immigration enforcement. Prohibits questioning regarding immigration status during local stops.'
+    },
+    {
+      state: 'New York',
+      code: 'NY',
+      policy: 'Executive Order & City Detainer Limits',
+      type: 'Sanctuary (Municipal / State)',
+      badgeColor: 'bg-emerald-950 text-emerald-300 border-emerald-700',
+      details: 'NYC and major municipalities prohibit honoring ICE detainers without a judicial criminal warrant signed by a court judge. Sensitive location protections enforced.'
+    },
+    {
+      state: 'Texas',
+      code: 'TX',
+      policy: 'SB 4 Enforcement Mandate',
+      type: 'High Risk (Aggressive Cooperation)',
+      badgeColor: 'bg-crimson-950 text-crimson-300 border-crimson-700',
+      details: 'Requires local police to honor ICE detainers and permits local officers to inquire about immigration status during lawful stops. Heightened caution advised.'
+    },
+    {
+      state: 'Florida',
+      code: 'FL',
+      policy: 'SB 1718 State Enforcement',
+      type: 'High Risk (Local 287g Mandate)',
+      badgeColor: 'bg-crimson-950 text-crimson-300 border-crimson-700',
+      details: 'Mandates E-Verify for employers, penalizes transporting undocumented individuals into the state, and invalidates out-of-state driver licenses issued exclusively to undocumented drivers.'
+    }
   ]
 };
