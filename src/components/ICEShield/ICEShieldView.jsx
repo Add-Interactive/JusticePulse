@@ -27,6 +27,8 @@ import {
   ExternalLink,
   ChevronDown
 } from 'lucide-react';
+import confetti from 'canvas-confetti';
+import { ICE_ENCOUNTER_DATA } from '../../data/iceEncounterData';
 import RedCardModal from './RedCardModal';
 import WarrantVerifierModal from './WarrantVerifierModal';
 import FamilySafetyPlanModal from './FamilySafetyPlanModal';
