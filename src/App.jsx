@@ -249,6 +249,10 @@ export default function App() {
   };
 
   const handleOpenEvidenceSuite = (subTab = 'corkboard') => {
+    setIsInvestorModalOpen(false);
+    if (activeTab === 'investor') {
+      setActiveTab('home');
+    }
     setEvidenceInitialTab(subTab);
     setIsEvidenceSuiteOpen(true);
   };

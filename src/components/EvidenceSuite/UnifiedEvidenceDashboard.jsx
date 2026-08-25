@@ -202,7 +202,7 @@ export default function UnifiedEvidenceDashboard({
       : 'font-scale-normal';
 
   return (
-    <div className={`fixed inset-0 z-50 bg-[#090d16] text-slate-100 flex flex-col overflow-hidden select-none animation-fade-in transition-colors duration-200 ${currentTheme} ${isHighContrast ? 'high-contrast-mode' : ''} ${fontScaleClass}`}>
+    <div className={`fixed inset-0 z-[60] bg-[#090d16] text-slate-100 flex flex-col overflow-hidden select-none animation-fade-in transition-colors duration-200 ${currentTheme} ${isHighContrast ? 'high-contrast-mode' : ''} ${fontScaleClass}`}>
       {/* Top Forensic OS Window Bar */}
       <header className="h-16 bg-[#111726] border-b-2 border-[#243147] px-4 sm:px-6 flex items-center justify-between flex-shrink-0 shadow-2xl">
         {/* Left: Window Identity & Exit Button */}
