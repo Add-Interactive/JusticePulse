@@ -31,6 +31,7 @@ import RedCardModal from './RedCardModal';
 import WarrantVerifierModal from './WarrantVerifierModal';
 import FamilySafetyPlanModal from './FamilySafetyPlanModal';
 import WarrantCameraScannerModal from './WarrantCameraScannerModal';
+import EncounterTrainingSimulatorModal from './EncounterTrainingSimulatorModal';
 
 export default function ICEShieldView({ onOpenSOSModal, showToast }) {
   const [activeSubTab, setActiveSubTab] = useState('scenarios'); // 'scenarios' | 'red_card' | 'warrant' | 'family_plan' | 'hotlines' | 'radar'
@@ -43,6 +44,7 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
   const [isWarrantModalOpen, setIsWarrantModalOpen] = useState(false);
   const [isFamilyPlanModalOpen, setIsFamilyPlanModalOpen] = useState(false);
   const [isScannerModalOpen, setIsScannerModalOpen] = useState(false);
+  const [isTrainingModalOpen, setIsTrainingModalOpen] = useState(false);
 
   // Community Sighting Radar List
   const [sightings, setSightings] = useState([
@@ -254,13 +256,23 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
                 </h3>
               </div>
 
-              <button
-                onClick={() => handleSpeakAloud(currentScenario.urgentRule, 'English')}
-                className="px-4 py-2 rounded-xl bg-crimson-950 hover:bg-crimson-900 text-crimson-300 border border-crimson-700 font-mono text-xs font-bold flex items-center gap-2 transition-all flex-shrink-0"
-              >
-                <Volume2 className="w-4 h-4" />
-                <span>Play Audio Guidance</span>
-              </button>
+              <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
+                <button
+                  onClick={() => setIsTrainingModalOpen(true)}
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-glow-indigo"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Encounter Training Quiz</span>
+                </button>
+
+                <button
+                  onClick={() => handleSpeakAloud(currentScenario.urgentRule, 'English')}
+                  className="px-4 py-2 rounded-xl bg-crimson-950 hover:bg-crimson-900 text-crimson-300 border border-crimson-700 font-mono text-xs font-bold flex items-center gap-2 transition-all"
+                >
+                  <Volume2 className="w-4 h-4" />
+                  <span>Play Audio Guidance</span>
+                </button>
+              </div>
             </div>
 
             {/* Urgent Rule Highlight Banner */}
@@ -733,6 +745,12 @@ export default function ICEShieldView({ onOpenSOSModal, showToast }) {
       <WarrantCameraScannerModal
         isOpen={isScannerModalOpen}
         onClose={() => setIsScannerModalOpen(false)}
+        showToast={showToast}
+      />
+
+      <EncounterTrainingSimulatorModal
+        isOpen={isTrainingModalOpen}
+        onClose={() => setIsTrainingModalOpen(false)}
         showToast={showToast}
       />
     </div>
